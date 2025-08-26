@@ -1,4 +1,4 @@
-// Copyright (C) 2024, Ava Labs, Inc. All rights reserved.
+// Copyright (C) 2025, Dione Protocol, Inc. All rights reserved.
 // See the file LICENSE for licensing terms.
 
 package node
@@ -294,7 +294,7 @@ func provisionAvagoHost(node Node, nodeParams *NodeParams) error {
 		return err
 	}
 	// provide dummy config for promtail
-	if err := node.RunSSHSetupPromtailConfig("127.0.0.1", constants.AvalanchegoLokiPort, node.NodeID, "", ""); err != nil {
+	if err := node.RunSSHSetupPromtailConfig("127.0.0.1", constants.OdysseygoLokiPort, node.NodeID, "", ""); err != nil {
 		return err
 	}
 	if err := node.ComposeSSHSetupNode(nodeParams.Network.HRP(), nodeParams.SubnetIDs, nodeParams.AvalancheGoVersion, withMonitoring); err != nil {

@@ -1,4 +1,4 @@
-// Copyright (C) 2024, Ava Labs, Inc. All rights reserved.
+// Copyright (C) 2025, Dione Protocol, Inc. All rights reserved.
 // See the file LICENSE for licensing terms.
 
 package node
@@ -101,11 +101,11 @@ func getPrometheusTargets(nodes []Node) ([]string, []string, []string) {
 	ltPorts := []string{}
 	for _, host := range nodes {
 		if isAvalancheGoNode(host) {
-			avalancheGoPorts = append(avalancheGoPorts, fmt.Sprintf("'%s:%s'", host.IP, strconv.Itoa(constants.AvalanchegoAPIPort)))
-			machinePorts = append(machinePorts, fmt.Sprintf("'%s:%s'", host.IP, strconv.Itoa(constants.AvalanchegoMachineMetricsPort)))
+			avalancheGoPorts = append(avalancheGoPorts, fmt.Sprintf("'%s:%s'", host.IP, strconv.Itoa(constants.OdysseygoAPIPort)))
+			machinePorts = append(machinePorts, fmt.Sprintf("'%s:%s'", host.IP, strconv.Itoa(constants.OdysseygoMachineMetricsPort)))
 		}
 		if isLoadTestNode(host) {
-			ltPorts = append(ltPorts, fmt.Sprintf("'%s:%s'", host.IP, strconv.Itoa(constants.AvalanchegoLoadTestPort)))
+			ltPorts = append(ltPorts, fmt.Sprintf("'%s:%s'", host.IP, strconv.Itoa(constants.OdysseygoLoadTestPort)))
 		}
 	}
 	return avalancheGoPorts, machinePorts, ltPorts

@@ -37,7 +37,7 @@ func getAssetName(version string) (string, error) {
 
 func InstallLatest(baseDir string, authToken string) (string, error) {
 	return install.InstallGithubRelease(
-		constants.AvaLabsOrg,
+		constants.DioneProtocolOrg,
 		constants.RelayerRepoName,
 		authToken,
 		install.LatestRelease,
@@ -51,7 +51,7 @@ func InstallLatest(baseDir string, authToken string) (string, error) {
 
 func InstallCustomVersion(baseDir string, version string) (string, error) {
 	return install.InstallGithubRelease(
-		constants.AvaLabsOrg,
+		constants.DioneProtocolOrg,
 		constants.RelayerRepoName,
 		"",
 		install.CustomRelease,

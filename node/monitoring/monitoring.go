@@ -1,4 +1,4 @@
-// Copyright (C) 2024, Ava Labs, Inc. All rights reserved.
+// Copyright (C) 2025, Dione Protocol, Inc. All rights reserved.
 // See the file LICENSE for licensing terms.
 
 package monitoring
@@ -121,5 +121,5 @@ func WritePromtailConfig(filePath string, lokiIP string, lokiPort string, host s
 
 // GetGrafanaUrl returns the URL of the Grafana dashboard.
 func GetGrafanaURL(monitoringHostIP string) string {
-	return fmt.Sprintf("http://%s:%d/dashboards", monitoringHostIP, constants.AvalanchegoGrafanaPort)
+	return fmt.Sprintf("http://%s:%d/dashboards", monitoringHostIP, constants.OdysseygoGrafanaPort)
 }

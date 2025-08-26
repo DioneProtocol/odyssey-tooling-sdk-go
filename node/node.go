@@ -1,4 +1,4 @@
-// Copyright (C) 2024, Ava Labs, Inc. All rights reserved.
+// Copyright (C) 2025, Dione Protocol, Inc. All rights reserved.
 // See the file LICENSE for licensing terms.
 
 package node
@@ -360,7 +360,7 @@ func (h *Node) UntimedForward(httpRequest string) ([]byte, error) {
 	}
 	var proxy net.Conn
 	if utils.IsE2E() {
-		avalancheGoEndpoint = fmt.Sprintf("%s:%d", utils.E2EConvertIP(h.IP), constants.AvalanchegoAPIPort)
+		avalancheGoEndpoint = fmt.Sprintf("%s:%d", utils.E2EConvertIP(h.IP), constants.OdysseygoAPIPort)
 		proxy, err = net.Dial("tcp", avalancheGoEndpoint)
 		if err != nil {
 			return nil, fmt.Errorf("unable to port forward E2E to %s", avalancheGoEndpoint)

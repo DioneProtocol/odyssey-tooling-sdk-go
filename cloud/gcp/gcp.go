@@ -1,4 +1,4 @@
-// Copyright (C) 2024, Ava Labs, Inc. All rights reserved.
+// Copyright (C) 2025, Dione Protocol, Inc. All rights reserved.
 // See the file LICENSE for licensing terms.
 
 package gcp
@@ -145,15 +145,15 @@ func (c *GcpCloud) SetupNetwork(ipAddress, networkName string) (*compute.Network
 	if _, err := c.SetFirewallRule("0.0.0.0/0",
 		fmt.Sprintf("%s-%s", networkName, "default"),
 		networkName,
-		[]string{strconv.Itoa(constants.AvalanchegoP2PPort), strconv.Itoa(constants.AvalanchegoLokiPort)}); err != nil {
+		[]string{strconv.Itoa(constants.OdysseygoP2PPort), strconv.Itoa(constants.OdysseygoLokiPort)}); err != nil {
 		return nil, err
 	}
 	if _, err := c.SetFirewallRule(ipAddress,
 		fmt.Sprintf("%s-%s", networkName, strings.ReplaceAll(ipAddress, ".", "")),
 		networkName,
 		[]string{
-			strconv.Itoa(constants.SSHTCPPort), strconv.Itoa(constants.AvalanchegoAPIPort),
-			strconv.Itoa(constants.AvalanchegoMonitoringPort), strconv.Itoa(constants.AvalanchegoGrafanaPort),
+			strconv.Itoa(constants.SSHTCPPort), strconv.Itoa(constants.OdysseygoAPIPort),
+			strconv.Itoa(constants.OdysseygoMonitoringPort), strconv.Itoa(constants.OdysseygoGrafanaPort),
 		}); err != nil {
 		return nil, err
 	}
@@ -354,7 +354,7 @@ func (c *GcpCloud) CheckFirewallExists(firewallName string, checkMonitoring bool
 		if firewall.Name == firewallName {
 			if checkMonitoring {
 				for _, allowed := range firewall.Allowed {
-					if !(slices.Contains(allowed.Ports, strconv.Itoa(constants.AvalanchegoGrafanaPort)) && slices.Contains(allowed.Ports, strconv.Itoa(constants.AvalanchegoMonitoringPort)) && slices.Contains(allowed.Ports, strconv.Itoa(constants.AvalanchegoLokiPort))) {
+					if !(slices.Contains(allowed.Ports, strconv.Itoa(constants.OdysseygoGrafanaPort)) && slices.Contains(allowed.Ports, strconv.Itoa(constants.OdysseygoMonitoringPort)) && slices.Contains(allowed.Ports, strconv.Itoa(constants.OdysseygoLokiPort))) {
 						return false, nil
 					}
 				}

@@ -1,4 +1,4 @@
-// Copyright (C) 2024, Ava Labs, Inc. All rights reserved.
+// Copyright (C) 2025, Dione Protocol, Inc. All rights reserved.
 // See the file LICENSE for licensing terms.
 
 package node
@@ -102,7 +102,7 @@ func (h *Node) WaitForAvalancheGoHealth(timeout time.Duration) error {
 		return fmt.Errorf("node IP is empty")
 	}
 	start := time.Now()
-	if err := h.WaitForPort(constants.AvalanchegoAPIPort, timeout); err != nil {
+	if err := h.WaitForPort(constants.OdysseygoAPIPort, timeout); err != nil {
 		return err
 	}
 

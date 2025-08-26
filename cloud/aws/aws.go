@@ -1,4 +1,4 @@
-// Copyright (C) 2024, Ava Labs, Inc. All rights reserved.
+// Copyright (C) 2025, Dione Protocol, Inc. All rights reserved.
 // See the file LICENSE for licensing terms.
 
 package aws
@@ -472,19 +472,19 @@ func (c *AwsCloud) SetupSecurityGroup(ipAddress, securityGroupName string) (stri
 	if err := c.AddSecurityGroupRule(sgID, "ingress", "tcp", ipAddress, constants.SSHTCPPort); err != nil {
 		return "", err
 	}
-	if err := c.AddSecurityGroupRule(sgID, "ingress", "tcp", ipAddress, constants.AvalanchegoAPIPort); err != nil {
+	if err := c.AddSecurityGroupRule(sgID, "ingress", "tcp", ipAddress, constants.OdysseygoAPIPort); err != nil {
 		return "", err
 	}
-	if err := c.AddSecurityGroupRule(sgID, "ingress", "tcp", ipAddress, constants.AvalanchegoMonitoringPort); err != nil {
+	if err := c.AddSecurityGroupRule(sgID, "ingress", "tcp", ipAddress, constants.OdysseygoMonitoringPort); err != nil {
 		return "", err
 	}
-	if err := c.AddSecurityGroupRule(sgID, "ingress", "tcp", ipAddress, constants.AvalanchegoGrafanaPort); err != nil {
+	if err := c.AddSecurityGroupRule(sgID, "ingress", "tcp", ipAddress, constants.OdysseygoGrafanaPort); err != nil {
 		return "", err
 	}
-	if err := c.AddSecurityGroupRule(sgID, "ingress", "tcp", "0.0.0.0/0", constants.AvalanchegoLokiPort); err != nil {
+	if err := c.AddSecurityGroupRule(sgID, "ingress", "tcp", "0.0.0.0/0", constants.OdysseygoLokiPort); err != nil {
 		return "", err
 	}
-	if err := c.AddSecurityGroupRule(sgID, "ingress", "tcp", "0.0.0.0/0", constants.AvalanchegoP2PPort); err != nil {
+	if err := c.AddSecurityGroupRule(sgID, "ingress", "tcp", "0.0.0.0/0", constants.OdysseygoP2PPort); err != nil {
 		return "", err
 	}
 	return sgID, nil
@@ -812,15 +812,15 @@ func (c *AwsCloud) AddMonitoringSecurityGroupRule(monitoringHostPublicIP, securi
 	if !securityGroupExists {
 		return fmt.Errorf("security group %s doesn't exist", securityGroupName)
 	}
-	metricsPortInSG := CheckIPInSg(&sg, monitoringHostPublicIP, constants.AvalanchegoMachineMetricsPort)
-	apiPortInSG := CheckIPInSg(&sg, monitoringHostPublicIP, constants.AvalanchegoAPIPort)
+	metricsPortInSG := CheckIPInSg(&sg, monitoringHostPublicIP, constants.OdysseygoMachineMetricsPort)
+	apiPortInSG := CheckIPInSg(&sg, monitoringHostPublicIP, constants.OdysseygoAPIPort)
 	if !metricsPortInSG {
-		if err = c.AddSecurityGroupRule(*sg.GroupId, "ingress", "tcp", monitoringHostPublicIP+constants.IPAddressSuffix, constants.AvalanchegoMachineMetricsPort); err != nil {
+		if err = c.AddSecurityGroupRule(*sg.GroupId, "ingress", "tcp", monitoringHostPublicIP+constants.IPAddressSuffix, constants.OdysseygoMachineMetricsPort); err != nil {
 			return err
 		}
 	}
 	if !apiPortInSG {
-		if err = c.AddSecurityGroupRule(*sg.GroupId, "ingress", "tcp", monitoringHostPublicIP+constants.IPAddressSuffix, constants.AvalanchegoAPIPort); err != nil {
+		if err = c.AddSecurityGroupRule(*sg.GroupId, "ingress", "tcp", monitoringHostPublicIP+constants.IPAddressSuffix, constants.OdysseygoAPIPort); err != nil {
 			return err
 		}
 	}

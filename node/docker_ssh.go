@@ -1,4 +1,4 @@
-// Copyright (C) 2024, Ava Labs, Inc. All rights reserved.
+// Copyright (C) 2025, Dione Protocol, Inc. All rights reserved.
 // See the file LICENSE for licensing terms.
 
 package node
@@ -32,9 +32,9 @@ func (h *Node) ComposeSSHSetupNode(networkID string, subnetsToTrack []string, av
 		}
 	}
 	h.Logger.Infof("avalancheCLI folder structure created on remote node %s after %s", folderStructure, time.Since(startTime))
-	avagoDockerImage := fmt.Sprintf("%s:%s", constants.AvalancheGoDockerImage, avalancheGoVersion)
+	avagoDockerImage := fmt.Sprintf("%s:%s", constants.OdysseyGoDockerImage, avalancheGoVersion)
 	h.Logger.Infof("Preparing AvalancheGo Docker image %s on %s[%s]", avagoDockerImage, h.NodeID, h.IP)
-	if err := h.PrepareDockerImageWithRepo(avagoDockerImage, constants.AvalancheGoGitRepo, avalancheGoVersion); err != nil {
+	if err := h.PrepareDockerImageWithRepo(avagoDockerImage, constants.OdysseyGoGitRepo, avalancheGoVersion); err != nil {
 		return err
 	}
 	h.Logger.Infof("AvalancheGo Docker image %s ready on %s[%s] after %s", avagoDockerImage, h.NodeID, h.IP, time.Since(startTime))

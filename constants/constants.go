@@ -1,4 +1,4 @@
-// Copyright (C) 2024, Ava Labs, Inc. All rights reserved.
+// Copyright (C) 2025, Dione Protocol, Inc. All rights reserved.
 // See the file LICENSE for licensing terms.
 package constants
 
@@ -17,9 +17,9 @@ const (
 	AWSDefaultInstanceType     = "c5.2xlarge"
 	AWSNodeIDPrefix            = "aws_node"
 
-	GCPDefaultImageProvider = "avalabs-experimental"
+	GCPDefaultImageProvider = "dioneprotocol-experimental"
 	GCPDefaultInstanceType  = "e2-standard-8"
-	GCPImageFilter          = "family=avalanchecli-ubuntu-2204 AND architecture=x86_64"
+	GCPImageFilter          = "family=odysseycli-ubuntu-2204 AND architecture=x86_64"
 	GCPEnvVar               = "GOOGLE_APPLICATION_CREDENTIALS"
 	GCPDefaultAuthKeyPath   = "~/.config/gcloud/application_default_credentials.json"
 	GCPStaticIPPrefix       = "static-ip"
@@ -27,14 +27,14 @@ const (
 	GCPNodeIDPrefix         = "gcp_node"
 
 	// ports
-	SSHTCPPort                    = 22
-	AvalanchegoAPIPort            = 9650
-	AvalanchegoP2PPort            = 9651
-	AvalanchegoGrafanaPort        = 3000
-	AvalanchegoLokiPort           = 23101
-	AvalanchegoMonitoringPort     = 9090
-	AvalanchegoMachineMetricsPort = 9100
-	AvalanchegoLoadTestPort       = 8082
+	SSHTCPPort                  = 22
+	OdysseygoAPIPort            = 9650
+	OdysseygoP2PPort            = 9651
+	OdysseygoGrafanaPort        = 3000
+	OdysseygoLokiPort           = 23101
+	OdysseygoMonitoringPort     = 9090
+	OdysseygoMachineMetricsPort = 9100
+	OdysseygoLoadTestPort       = 8082
 
 	// http
 	APIRequestTimeout      = 30 * time.Second
@@ -49,18 +49,18 @@ const (
 	RemoteHostUser              = "ubuntu"
 
 	// node
-	CloudNodeCLIConfigBasePath = "/home/ubuntu/.avalanche-cli/"
-	CloudNodeStakingPath       = "/home/ubuntu/.avalanchego/staking/"
-	CloudNodeConfigPath        = "/home/ubuntu/.avalanchego/configs/"
+	CloudNodeCLIConfigBasePath = "/home/ubuntu/.odyssey-cli/"
+	CloudNodeStakingPath       = "/home/ubuntu/.odysseygo/staking/"
+	CloudNodeConfigPath        = "/home/ubuntu/.odysseygo/configs/"
 	ServicesDir                = "services"
 	DashboardsDir              = "dashboards"
 	// services
-	ServiceAvalanchego = "avalanchego"
-	ServicePromtail    = "promtail"
-	ServiceGrafana     = "grafana"
-	ServicePrometheus  = "prometheus"
-	ServiceLoki        = "loki"
-	ServiceAWMRelayer  = "awm-relayer"
+	ServiceOdysseygo  = "odysseygo"
+	ServicePromtail   = "promtail"
+	ServiceGrafana    = "grafana"
+	ServicePrometheus = "prometheus"
+	ServiceLoki       = "loki"
+	ServiceAWMRelayer = "awm-relayer"
 
 	// misc
 	DefaultPerms755        = 0o755
@@ -69,10 +69,10 @@ const (
 	IPAddressSuffix        = "/32"
 
 	// avago
-	LocalAPIEndpoint       = "http://127.0.0.1:9650"
-	AvalancheGoDockerImage = "avaplatform/avalanchego"
-	AvalancheGoGitRepo     = "https://github.com/ava-labs/avalanchego"
-	SubnetEVMRepoName      = "subnet-evm"
+	LocalAPIEndpoint     = "http://127.0.0.1:9650"
+	OdysseyGoDockerImage = "dionetech/odysseygo"
+	OdysseyGoGitRepo     = "https://github.com/DioneProtocol/odysseygo"
+	SubnetEVMRepoName    = "subnet-evm"
 
 	AWMRelayerInstallDir     = "awm-relayer"
 	AWMRelayerConfigFilename = "awm-relayer-config.json"
@@ -82,12 +82,18 @@ const (
 	BLSKeyFileName     = "signer.key"
 
 	// github
-	AvaLabsOrg      = "ava-labs"
-	ICMRepoName     = "teleporter"
-	RelayerRepoName = "awm-relayer"
-	RelayerBinName  = "awm-relayer"
+	DioneProtocolOrg = "DioneProtocol"
+	ICMRepoName      = "teleporter"
+	RelayerRepoName  = "awm-relayer"
+	RelayerBinName   = "awm-relayer"
 
 	// Feature flags - Set to false to disable functionality
 	RelayerEnabled    = false
 	TeleporterEnabled = false
+
+	// Odyssey Chain specific feature flags
+	OdysseyCoreEnabled    = true
+	OdysseyTestnetEnabled = true
+	OdysseyMainnetEnabled = true
+	OdysseyDevnetEnabled  = false
 )

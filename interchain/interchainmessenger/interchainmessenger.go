@@ -28,30 +28,30 @@ var (
 )
 
 func GetLatestVersion() (string, error) {
-	return utils.GetLatestGithubReleaseVersion(constants.AvaLabsOrg, constants.ICMRepoName, "")
+	return utils.GetLatestGithubReleaseVersion(constants.DioneProtocolOrg, constants.ICMRepoName, "")
 }
 
 func getURLs(version string) (string, string, string, string) {
 	messengerContractAddressURL := utils.GetGithubReleaseAssetURL(
-		constants.AvaLabsOrg,
+		constants.DioneProtocolOrg,
 		constants.ICMRepoName,
 		version,
 		fmt.Sprintf(messengerContractAddressURLFmt, version),
 	)
 	messengerDeployerAddressURL := utils.GetGithubReleaseAssetURL(
-		constants.AvaLabsOrg,
+		constants.DioneProtocolOrg,
 		constants.ICMRepoName,
 		version,
 		fmt.Sprintf(messengerDeployerAddressURLFmt, version),
 	)
 	messengerDeployerTxURL := utils.GetGithubReleaseAssetURL(
-		constants.AvaLabsOrg,
+		constants.DioneProtocolOrg,
 		constants.ICMRepoName,
 		version,
 		fmt.Sprintf(messengerDeployerTxURLFmt, version),
 	)
 	registryBytecodeURL := utils.GetGithubReleaseAssetURL(
-		constants.AvaLabsOrg,
+		constants.DioneProtocolOrg,
 		constants.ICMRepoName,
 		version,
 		fmt.Sprintf(registryBytecodeURLFmt, version),

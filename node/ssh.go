@@ -1,4 +1,4 @@
-// Copyright (C) 2024, Ava Labs, Inc. All rights reserved.
+// Copyright (C) 2025, Dione Protocol, Inc. All rights reserved.
 // See the file LICENSE for licensing terms.
 
 package node
@@ -111,7 +111,7 @@ func (h *Node) RunSSHSetupDockerService() error {
 // RunSSHRestartAvalanchego runs script to restart avalanchego
 func (h *Node) RunSSHRestartAvalanchego() error {
 	remoteComposeFile := utils.GetRemoteComposeFile()
-	return h.RestartDockerComposeService(remoteComposeFile, constants.ServiceAvalanchego, constants.SSHLongRunningScriptTimeout)
+	return h.RestartDockerComposeService(remoteComposeFile, constants.ServiceOdysseygo, constants.SSHLongRunningScriptTimeout)
 }
 
 // RunSSHStartAWMRelayerService runs script to start an AWM Relayer Service
@@ -149,12 +149,12 @@ func (h *Node) RunSSHUpgradeAvalanchego(avalancheGoVersion string) error {
 
 // RunSSHStartAvalanchego runs script to start avalanchego
 func (h *Node) RunSSHStartAvalanchego() error {
-	return h.StartDockerComposeService(utils.GetRemoteComposeFile(), constants.ServiceAvalanchego, constants.SSHLongRunningScriptTimeout)
+	return h.StartDockerComposeService(utils.GetRemoteComposeFile(), constants.ServiceOdysseygo, constants.SSHLongRunningScriptTimeout)
 }
 
 // RunSSHStopAvalanchego runs script to stop avalanchego
 func (h *Node) RunSSHStopAvalanchego() error {
-	return h.StopDockerComposeService(utils.GetRemoteComposeFile(), constants.ServiceAvalanchego, constants.SSHLongRunningScriptTimeout)
+	return h.StopDockerComposeService(utils.GetRemoteComposeFile(), constants.ServiceOdysseygo, constants.SSHLongRunningScriptTimeout)
 }
 
 // RunSSHUpgradeSubnetEVM runs script to upgrade subnet evm
@@ -331,7 +331,7 @@ func (h *Node) MonitorNodes(ctx context.Context, targets []Node, chainID string)
 		wg.Add(1)
 		go func(nodeResults *NodeResults, target Node) {
 			defer wg.Done()
-			if err := target.RunSSHSetupPromtailConfig(h.IP, constants.AvalanchegoLokiPort, h.NodeID, h.NodeID, chainID); err != nil {
+			if err := target.RunSSHSetupPromtailConfig(h.IP, constants.OdysseygoLokiPort, h.NodeID, h.NodeID, chainID); err != nil {
 				nodeResults.AddResult(target.NodeID, nil, err)
 				return
 			}
@@ -363,7 +363,7 @@ func (h *Node) MonitorNodes(ctx context.Context, targets []Node, chainID string)
 	avalancheGoPorts, machinePorts, ltPorts := getPrometheusTargets(targets)
 	h.Logger.Infof("avalancheGoPorts: %v, machinePorts: %v, ltPorts: %v", avalancheGoPorts, machinePorts, ltPorts)
 	// reconfigure monitoring instance
-	if err := h.RunSSHSetupLokiConfig(constants.AvalanchegoLokiPort); err != nil {
+	if err := h.RunSSHSetupLokiConfig(constants.OdysseygoLokiPort); err != nil {
 		return err
 	}
 	if err := h.RestartDockerComposeService(remoteComposeFile, constants.ServiceLoki, constants.SSHScriptTimeout); err != nil {
@@ -392,7 +392,7 @@ func (h *Node) SyncSubnets(subnetsToTrack []string) error {
 	if err := h.WaitForSSHShell(constants.SSHScriptTimeout); err != nil {
 		return err
 	}
-	avagoVersion, err := h.GetDockerImageVersion(constants.AvalancheGoDockerImage, constants.SSHScriptTimeout)
+	avagoVersion, err := h.GetDockerImageVersion(constants.OdysseyGoDockerImage, constants.SSHScriptTimeout)
 	if err != nil {
 		return err
 	}
