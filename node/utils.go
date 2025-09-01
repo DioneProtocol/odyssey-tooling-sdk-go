@@ -19,7 +19,7 @@ import (
 )
 
 const (
-	maxResponseSize      = 102400          // 100KB should be enough to read the avalanchego response
+	maxResponseSize      = 102400          // 100KB should be enough to read the odysseygo response
 	sshConnectionTimeout = 3 * time.Second // usually takes less than 2
 	sshConnectionRetries = 5
 )
@@ -70,11 +70,11 @@ func isMonitoringNode(node Node) bool {
 	return slices.Contains(node.Roles, Monitor)
 }
 
-// isAvalancheGoNode checks if the node has the API or Validator role.
+// isOdysseyGoNode checks if the node has the API or Validator role.
 //
 // - node *Node: The node to check.
 // bool
-func isAvalancheGoNode(node Node) bool {
+func isOdysseyGoNode(node Node) bool {
 	return slices.Contains(node.Roles, API) || slices.Contains(node.Roles, Validator)
 }
 
@@ -92,23 +92,23 @@ func isLoadTestNode(node Node) bool {
 // - nodes: a slice of Node representing the nodes to get the Prometheus targets for.
 //
 // Returns:
-// - avalancheGoPorts: a slice of strings representing the Prometheus targets for the nodes with the AvalancheGo role.
-// - machinePorts: a slice of strings representing the Prometheus targets for the nodes with the AvalancheGo role.
+// - odysseyGoPorts: a slice of strings representing the Prometheus targets for the nodes with the OdysseyGo role.
+// - machinePorts: a slice of strings representing the Prometheus targets for the nodes with the OdysseyGo role.
 // - ltPorts: a slice of strings representing the Prometheus targets for the nodes with the LoadTest role.
 func getPrometheusTargets(nodes []Node) ([]string, []string, []string) {
-	avalancheGoPorts := []string{}
+	odysseyGoPorts := []string{}
 	machinePorts := []string{}
 	ltPorts := []string{}
 	for _, host := range nodes {
-		if isAvalancheGoNode(host) {
-			avalancheGoPorts = append(avalancheGoPorts, fmt.Sprintf("'%s:%s'", host.IP, strconv.Itoa(constants.OdysseygoAPIPort)))
+		if isOdysseyGoNode(host) {
+			odysseyGoPorts = append(odysseyGoPorts, fmt.Sprintf("'%s:%s'", host.IP, strconv.Itoa(constants.OdysseygoAPIPort)))
 			machinePorts = append(machinePorts, fmt.Sprintf("'%s:%s'", host.IP, strconv.Itoa(constants.OdysseygoMachineMetricsPort)))
 		}
 		if isLoadTestNode(host) {
 			ltPorts = append(ltPorts, fmt.Sprintf("'%s:%s'", host.IP, strconv.Itoa(constants.OdysseygoLoadTestPort)))
 		}
 	}
-	return avalancheGoPorts, machinePorts, ltPorts
+	return odysseyGoPorts, machinePorts, ltPorts
 }
 
 func composeFileExists(node Node) bool {
@@ -117,11 +117,11 @@ func composeFileExists(node Node) bool {
 }
 
 func genesisFileExists(node Node) bool {
-	genesisFileExists, _ := node.FileExists(remoteconfig.GetRemoteAvalancheGenesis())
+	genesisFileExists, _ := node.FileExists(remoteconfig.GetRemoteOdysseyGenesis())
 	return genesisFileExists
 }
 
 func nodeConfigFileExists(node Node) bool {
-	nodeConfigFileExists, _ := node.FileExists(remoteconfig.GetRemoteAvalancheNodeConfig())
+	nodeConfigFileExists, _ := node.FileExists(remoteconfig.GetRemoteOdysseyNodeConfig())
 	return nodeConfigFileExists
 }

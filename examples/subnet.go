@@ -12,8 +12,8 @@ import (
 	"github.com/DioneProtocol/odysseygo/utils/formatting/address"
 	"github.com/DioneProtocol/odysseygo/utils/set"
 
-	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/keychain"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/odyssey"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/subnet"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/vm"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/wallet"
@@ -46,7 +46,7 @@ func DeploySubnet() {
 	// Create new Subnet EVM genesis
 	newSubnet, _ := subnet.New(&subnetParams)
 
-	network := avalanche.TestnetNetwork()
+	network := odyssey.TestnetNetwork()
 
 	// Key that will be used for paying the transaction fees of CreateSubnetTx and CreateChainTx
 	// NewKeychain will generate a new key pair in the provided path if no .pk file currently
@@ -104,13 +104,13 @@ func DeploySubnet() {
 func DeploySubnetWithLedger() {
 	subnetParams := getDefaultSubnetEVMGenesis()
 	newSubnet, _ := subnet.New(&subnetParams)
-	network := avalanche.TestnetNetwork()
+	network := odyssey.TestnetNetwork()
 
 	// Create keychain with a specific Ledger address. More than 1 address can be used.
 	//
 	// Alternatively, keychain can also be created from Ledger without specifying any Ledger address
-	// by stating the amount of AVAX required to pay for transaction fees. Keychain SDK will
-	// then look through all indexes of all addresses in the Ledger until sufficient AVAX balance
+	// by stating the amount of DIONE required to pay for transaction fees. Keychain SDK will
+	// then look through all indexes of all addresses in the Ledger until sufficient DIONE balance
 	// is reached. For example:
 	//
 	// fee := network.GenesisParams().CreateBlockchainTxFee + network.GenesisParams().CreateSubnetTxFee
@@ -118,8 +118,8 @@ func DeploySubnetWithLedger() {
 	//	 RequiredFunds: fee,
 	// }
 	//
-	// To view Ledger addresses and their balances, you can use Avalanche CLI and use the command
-	// avalanche key list --ledger [0,1,2,3,4]
+	// To view Ledger addresses and their balances, you can use Odyssey CLI and use the command
+	// odyssey key list --ledger [0,1,2,3,4]
 	// The example command above will list the first five addresses in your Ledger
 	//
 	// To transfer funds between addresses in Ledger, refer to https://docs.dione.network/tooling/cli-transfer-funds/how-to-transfer-funds

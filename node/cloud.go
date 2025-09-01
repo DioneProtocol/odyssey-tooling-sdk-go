@@ -28,14 +28,14 @@ type CloudParams struct {
 	// - AWS: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html
 	// - GCP: https://cloud.google.com/compute/docs/images#os-compute-support
 	//
-	// Avalanche Tooling publishes our own Ubuntu 20.04 Machine Image called Avalanche-CLI
+	// Odyssey Tooling publishes our own Ubuntu 20.04 Machine Image called Odyssey-CLI
 	// Ubuntu 20.04 Docker on AWS & GCP for both arm64 and amd64 architecture.
-	// A benefit to using Avalanche-CLI Ubuntu 20.04 Docker is that it has all the dependencies
-	// that an Avalanche Node requires (AvalancheGo, gcc, go, etc), thereby decreasing in massive
+	// A benefit to using Odyssey-CLI Ubuntu 20.04 Docker is that it has all the dependencies
+	// that an Odyssey Node requires (OdysseyGo, gcc, go, etc), thereby decreasing in massive
 	// reduction in the time required to provision a node.
 	//
-	// To get the AMI ID of the Avalanche Tooling Ubuntu 20.04 Machine Image, call
-	// GetAvalancheUbuntuAMIID function.
+	// To get the AMI ID of the Odyssey Tooling Ubuntu 20.04 Machine Image, call
+	// GetOdysseyUbuntuAMIID function.
 	ImageID string
 
 	// Instance type of the node
@@ -109,7 +109,7 @@ type GCPConfig struct {
 // - AWSVolumeThroughput: 500,
 // - AWSVolumeIOPS:       1000,
 // - InstanceType: 		  "c5.2xlarge" (AWS), "e2-standard-8" (GCP)
-// - AMI:				  Avalanche-CLI Ubuntu 20.04
+// - AMI:				  Odyssey-CLI Ubuntu 20.04
 func GetDefaultCloudParams(ctx context.Context, cloud SupportedCloud) (*CloudParams, error) {
 	// make sure that CloudParams is initialized with default values
 	switch cloud {
@@ -133,7 +133,7 @@ func GetDefaultCloudParams(ctx context.Context, cloud SupportedCloud) (*CloudPar
 		if err != nil {
 			return nil, err
 		}
-		imageID, err := awsSvc.GetAvalancheUbuntuAMIID(arch, constants.UbuntuVersionLTS)
+		imageID, err := awsSvc.GetOdysseyUbuntuAMIID(arch, constants.UbuntuVersionLTS)
 		if err != nil {
 			return nil, err
 		}
@@ -153,7 +153,7 @@ func GetDefaultCloudParams(ctx context.Context, cloud SupportedCloud) (*CloudPar
 				GCPProject:     projectName,
 				GCPCredentials: utils.ExpandHome(constants.GCPDefaultAuthKeyPath),
 				GCPVolumeSize:  constants.CloudServerStorageSize,
-				GCPNetwork:     "avalanche-tooling-sdk-go-us-east1",
+				GCPNetwork:     "odyssey-tooling-sdk-go-us-east1",
 				GCPSSHKey:      sshKey,
 				GCPZone:        "us-east1-b",
 			},
@@ -164,7 +164,7 @@ func GetDefaultCloudParams(ctx context.Context, cloud SupportedCloud) (*CloudPar
 		if err != nil {
 			return nil, err
 		}
-		imageID, err := gcpSvc.GetAvalancheUbuntuAMIID()
+		imageID, err := gcpSvc.GetOdysseyUbuntuAMIID()
 		if err != nil {
 			return nil, err
 		}

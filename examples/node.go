@@ -8,9 +8,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
 	awsAPI "github.com/DioneProtocol/odyssey-tooling-sdk-go/cloud/aws"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/node"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/odyssey"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
 )
 
@@ -30,7 +30,7 @@ func CreateNodes() {
 	if err != nil {
 		panic(err)
 	}
-	// Set the security group we are using when creating our Avalanche Nodes
+	// Set the security group we are using when creating our Odyssey Nodes
 	cp.AWSConfig.AWSSecurityGroupID = sgID
 
 	keyPairName := "KEY_PAIR_NAME"
@@ -42,32 +42,32 @@ func CreateNodes() {
 	if err := awsAPI.CreateSSHKeyPair(ctx, cp.AWSConfig.AWSProfile, cp.Region, keyPairName, sshPrivateKeyPath); err != nil {
 		panic(err)
 	}
-	// Set the key pair we are using when creating our Avalanche Nodes
+	// Set the key pair we are using when creating our Odyssey Nodes
 	cp.AWSConfig.AWSKeyPair = keyPairName
 
-	// Avalanche-CLI is installed in nodes to enable them to join subnets as validators
-	// Avalanche-CLI dependency by Avalanche nodes will be deprecated in the next release
-	// of Avalanche Tooling SDK
+	// Odyssey-CLI is installed in nodes to enable them to join subnets as validators
+	// Odyssey-CLI dependency by Odyssey nodes will be deprecated in the next release
+	// of Odyssey Tooling SDK
 	const (
-		avalancheGoVersion = "v1.11.8"
+		odysseyGoVersion = "v1.11.8"
 	)
 
-	// Create two new Avalanche Validator nodes on Fuji Network on AWS without Elastic IPs
+	// Create two new Odyssey Validator nodes on Fuji Network on AWS without Elastic IPs
 	// attached. Once CreateNodes is completed, the validators will begin bootstrapping process
 	// to Primary Network in Fuji Network. Nodes need to finish bootstrapping process
-	// before they can validate Avalanche Primary Network / Subnet.
+	// before they can validate Odyssey Primary Network / Subnet.
 	//
 	// SDK function for nodes to start validating Primary Network / Subnet will be available
-	// in the next Avalanche Tooling SDK release.
+	// in the next Odyssey Tooling SDK release.
 	hosts, err := node.CreateNodes(ctx,
 		&node.NodeParams{
-			CloudParams:        cp,
-			Count:              2,
-			Roles:              []node.SupportedRole{node.Validator},
-			Network:            avalanche.TestnetNetwork(),
-			AvalancheGoVersion: avalancheGoVersion,
-			UseStaticIP:        false,
-			SSHPrivateKeyPath:  sshPrivateKeyPath,
+			CloudParams:       cp,
+			Count:             2,
+			Roles:             []node.SupportedRole{node.Validator},
+			Network:           odyssey.TestnetNetwork(),
+			OdysseyGoVersion:  odysseyGoVersion,
+			UseStaticIP:       false,
+			SSHPrivateKeyPath: sshPrivateKeyPath,
 		})
 	if err != nil {
 		panic(err)
@@ -92,9 +92,9 @@ func CreateNodes() {
 		} else {
 			fmt.Println(string(output))
 		}
-		// sleep for 10 seconds allowing AvalancheGo container to start
+		// sleep for 10 seconds allowing OdysseyGo container to start
 		time.Sleep(10 * time.Second)
-		// check if avalanchego is running
+		// check if odysseygo is running
 		if output, err := h.Commandf(nil, sshCommandTimeout, "docker ps"); err != nil {
 			panic(err)
 		} else {

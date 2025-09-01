@@ -1,7 +1,7 @@
 // Copyright (C) 2025, Dione Protocol, Inc. All rights reserved.
 // See the file LICENSE for licensing terms.
 
-package avalanche
+package odyssey
 
 import (
 	"fmt"

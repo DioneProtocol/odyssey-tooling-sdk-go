@@ -145,7 +145,7 @@
   "refresh": "5s",
   "schemaVersion": 39,
   "tags": [
-    "Avalanche",
+    "Odyssey",
     "Logs"
   ],
   "templating": {
@@ -291,8 +291,8 @@
     ]
   },
   "timezone": "",
-  "title": "Avalanche Logs",
-  "uid": "avalanche-loki-logs",
+  "title": "Odyssey Logs",
+  "uid": "odyssey-loki-logs",
   "version": 1,
   "weekStart": ""
 }

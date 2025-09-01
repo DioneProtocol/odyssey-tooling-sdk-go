@@ -14,29 +14,29 @@ import (
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
 )
 
-// AvalanchegoTCPClient returns the connection to the node.
-func (h *Node) AvalanchegoTCPClient() (*net.Conn, error) {
+// OdysseygoTCPClient returns the connection to the node.
+func (h *Node) OdysseygoTCPClient() (*net.Conn, error) {
 	if !h.Connected() {
 		if err := h.Connect(0); err != nil {
 			return nil, err
 		}
 	}
-	avalancheGoEndpoint := strings.TrimPrefix(constants.LocalAPIEndpoint, "http://")
-	avalancheGoAddr, err := net.ResolveTCPAddr("tcp", avalancheGoEndpoint)
+	odysseyGoEndpoint := strings.TrimPrefix(constants.LocalAPIEndpoint, "http://")
+	odysseyGoAddr, err := net.ResolveTCPAddr("tcp", odysseyGoEndpoint)
 	if err != nil {
 		return nil, err
 	}
 	var proxy net.Conn
-	proxy, err = h.connection.DialTCP("tcp", nil, avalancheGoAddr)
+	proxy, err = h.connection.DialTCP("tcp", nil, odysseyGoAddr)
 	if err != nil {
 		return nil, fmt.Errorf("unable to port forward to %s via %s", h.connection.RemoteAddr(), "ssh")
 	}
 	return &proxy, nil
 }
 
-// AvalanchegoRPCClient returns the RPC client to the node.
-func (h *Node) AvalanchegoRPCClient() (*rpc.Client, error) {
-	proxy, err := h.AvalanchegoTCPClient()
+// OdysseygoRPCClient returns the RPC client to the node.
+func (h *Node) OdysseygoRPCClient() (*rpc.Client, error) {
+	proxy, err := h.OdysseygoTCPClient()
 	if err != nil {
 		return nil, err
 	}

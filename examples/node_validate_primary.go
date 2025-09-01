@@ -10,6 +10,7 @@ import (
 
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/keychain"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/odyssey"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/validator"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/wallet"
 	"github.com/DioneProtocol/odysseygo/ids"
@@ -17,14 +18,13 @@ import (
 	"github.com/DioneProtocol/odysseygo/vms/secp256k1fx"
 	"github.com/DioneProtocol/odysseygo/wallet/subnet/primary"
 
-	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/node"
 )
 
 func ValidatePrimaryNetwork() {
 	// We are using existing host
 	node := node.Node{
-		// NodeID is Avalanche Node ID of the node
+		// NodeID is Odyssey Node ID of the node
 		NodeID: "NODE_ID",
 		// IP address of the node
 		IP: "NODE_IP_ADDRESS",
@@ -46,12 +46,12 @@ func ValidatePrimaryNetwork() {
 		NodeID: nodeID,
 		// Validate Primary Network for 48 hours
 		Duration: 48 * time.Hour,
-		// Stake 2 AVAX
+		// Stake 2 DIONE
 		StakeAmount: 2 * units.Dione,
 	}
 
 	// Key that will be used for paying the transaction fee of AddValidator Tx
-	network := avalanche.TestnetNetwork()
+	network := odyssey.TestnetNetwork()
 	keychain, err := keychain.NewKeychain(network, "PRIVATE_KEY_FILEPATH", nil)
 	if err != nil {
 		panic(err)
@@ -70,7 +70,7 @@ func ValidatePrimaryNetwork() {
 		panic(err)
 	}
 
-	txID, err := node.ValidatePrimaryNetwork(avalanche.TestnetNetwork(), validatorParams, wallet)
+	txID, err := node.ValidatePrimaryNetwork(odyssey.TestnetNetwork(), validatorParams, wallet)
 	if err != nil {
 		panic(err)
 	}

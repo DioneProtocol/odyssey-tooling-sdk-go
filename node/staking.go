@@ -15,10 +15,10 @@ import (
 
 // ProvideStakingFiles generates the files needed to validate the primary network:
 //   - staker.crt, staker.key, more information can be found at https://docs.dione.network/nodes/validate/how-to-stake#secret-management
-//   - The file containing the node's BLS information: signer.key (more information can be found at https://docs.dione.network/cross-chain/avalanche-warp-messaging/deep-dive#bls-multi-signatures-with-public-key-aggregation)
+//   - The file containing the node's BLS information: signer.key (more information can be found at https://docs.dione.network/cross-chain/odyssey-warp-messaging/deep-dive#bls-multi-signatures-with-public-key-aggregation)
 //
 // and stores them in the provided directory in argument in local machine
-// and subsequently uploads these files into the remote host in /home/ubuntu/.avalanchego/staking/
+// and subsequently uploads these files into the remote host in /home/ubuntu/.odysseygo/staking/
 // directory
 func (h *Node) ProvideStakingFiles(keyPath string) error {
 	if nodeID, err := GenerateStakingFiles(keyPath); err != nil {

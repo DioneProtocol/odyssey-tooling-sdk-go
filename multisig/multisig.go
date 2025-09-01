@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/odyssey"
 	"github.com/DioneProtocol/odysseygo/ids"
 	"github.com/DioneProtocol/odysseygo/utils/crypto/secp256k1"
 	"github.com/DioneProtocol/odysseygo/utils/formatting"
@@ -283,17 +283,17 @@ func (ms *Multisig) GetNetworkID() (uint32, error) {
 }
 
 // get network model associated to tx
-func (ms *Multisig) GetNetwork() (avalanche.Network, error) {
+func (ms *Multisig) GetNetwork() (odyssey.Network, error) {
 	if ms.Undefined() {
-		return avalanche.UndefinedNetwork, ErrUndefinedTx
+		return odyssey.UndefinedNetwork, ErrUndefinedTx
 	}
 	networkID, err := ms.GetNetworkID()
 	if err != nil {
-		return avalanche.UndefinedNetwork, err
+		return odyssey.UndefinedNetwork, err
 	}
-	network := avalanche.NetworkFromNetworkID(networkID)
-	if network.Kind == avalanche.Undefined {
-		return avalanche.UndefinedNetwork, fmt.Errorf("undefined network model for tx")
+	network := odyssey.NetworkFromNetworkID(networkID)
+	if network.Kind == odyssey.Undefined {
+		return odyssey.UndefinedNetwork, fmt.Errorf("undefined network model for tx")
 	}
 	return network, nil
 }
@@ -373,7 +373,7 @@ func (ms *Multisig) GetSubnetOwners() ([]ids.ShortID, uint32, error) {
 	return ms.controlKeys, ms.threshold, nil
 }
 
-func GetOwners(network avalanche.Network, subnetID ids.ID) ([]ids.ShortID, uint32, error) {
+func GetOwners(network odyssey.Network, subnetID ids.ID) ([]ids.ShortID, uint32, error) {
 	pClient := omegavm.NewClient(network.Endpoint)
 	ctx := context.Background()
 	subnets, err := pClient.GetSubnets(ctx, []ids.ID{subnetID})

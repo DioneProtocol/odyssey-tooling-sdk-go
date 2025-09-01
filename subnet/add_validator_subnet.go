@@ -26,7 +26,7 @@ var (
 )
 
 // AddValidator adds validator to subnet
-// Before an Avalanche Node can be added as a validator to a Subnet, the node must already be
+// Before an Odyssey Node can be added as a validator to a Subnet, the node must already be
 // tracking the subnet, which can be done by calling SyncSubnets in node package
 func (c *Subnet) AddValidator(wallet wallet.Wallet, validatorInput validator.SubnetValidatorParams) (*multisig.Multisig, error) {
 	if validatorInput.NodeID == ids.EmptyNodeID {

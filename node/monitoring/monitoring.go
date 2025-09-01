@@ -17,14 +17,14 @@ import (
 )
 
 type configInputs struct {
-	AvalancheGoPorts string
-	MachinePorts     string
-	LoadTestPorts    string
-	IP               string
-	Port             string
-	Host             string
-	NodeID           string
-	ChainID          string
+	OdysseyGoPorts string
+	MachinePorts   string
+	LoadTestPorts  string
+	IP             string
+	Port           string
+	Host           string
+	NodeID         string
+	ChainID        string
 }
 
 //go:embed dashboards/*
@@ -80,11 +80,11 @@ func GenerateConfig(configPath string, configDesc string, templateVars configInp
 	return config.String(), nil
 }
 
-func WritePrometheusConfig(filePath string, avalancheGoPorts []string, machinePorts []string, loadTestPorts []string) error {
+func WritePrometheusConfig(filePath string, odysseyGoPorts []string, machinePorts []string, loadTestPorts []string) error {
 	config, err := GenerateConfig("configs/prometheus.yml", "Prometheus Config", configInputs{
-		AvalancheGoPorts: strings.Join(utils.AddSingleQuotes(avalancheGoPorts), ","),
-		MachinePorts:     strings.Join(utils.AddSingleQuotes(machinePorts), ","),
-		LoadTestPorts:    strings.Join(utils.AddSingleQuotes(loadTestPorts), ","),
+		OdysseyGoPorts: strings.Join(utils.AddSingleQuotes(odysseyGoPorts), ","),
+		MachinePorts:   strings.Join(utils.AddSingleQuotes(machinePorts), ","),
+		LoadTestPorts:  strings.Join(utils.AddSingleQuotes(loadTestPorts), ","),
 	})
 	if err != nil {
 		return err

@@ -11,8 +11,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/keychain"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/odyssey"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/validator"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/wallet"
 	"github.com/DioneProtocol/odysseygo/ids"
@@ -37,7 +37,7 @@ func TestValidateSubnet(t *testing.T) {
 
 	newSubnet.SetSubnetID(subnetID)
 
-	network := avalanche.TestnetNetwork()
+	network := odyssey.TestnetNetwork()
 	keychain, err := keychain.NewKeychain(network, "PRIVATE_KEY_FILEPATH", nil)
 	require.NoError(err)
 

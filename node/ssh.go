@@ -25,7 +25,7 @@ import (
 )
 
 type scriptInputs struct {
-	AvalancheGoVersion   string
+	OdysseyGoVersion     string
 	SubnetExportFileName string
 	SubnetName           string
 	ClusterName          string
@@ -108,8 +108,8 @@ func (h *Node) RunSSHSetupDockerService() error {
 	}
 }
 
-// RunSSHRestartAvalanchego runs script to restart avalanchego
-func (h *Node) RunSSHRestartAvalanchego() error {
+// RunSSHRestartOdysseygo runs script to restart odysseygo
+func (h *Node) RunSSHRestartOdysseygo() error {
 	remoteComposeFile := utils.GetRemoteComposeFile()
 	return h.RestartDockerComposeService(remoteComposeFile, constants.ServiceOdysseygo, constants.SSHLongRunningScriptTimeout)
 }
@@ -124,8 +124,8 @@ func (h *Node) RunSSHStopAWMRelayerService() error {
 	return h.StopDockerComposeService(utils.GetRemoteComposeFile(), constants.ServiceAWMRelayer, constants.SSHLongRunningScriptTimeout)
 }
 
-// RunSSHUpgradeAvalanchego runs script to upgrade avalanchego
-func (h *Node) RunSSHUpgradeAvalanchego(avalancheGoVersion string) error {
+// RunSSHUpgradeOdysseygo runs script to upgrade odysseygo
+func (h *Node) RunSSHUpgradeOdysseygo(odysseyGoVersion string) error {
 	withMonitoring, err := h.WasNodeSetupWithMonitoring()
 	if err != nil {
 		return err
@@ -133,27 +133,27 @@ func (h *Node) RunSSHUpgradeAvalanchego(avalancheGoVersion string) error {
 
 	if err := h.ComposeOverSSH("Compose Node",
 		constants.SSHScriptTimeout,
-		"templates/avalanchego.docker-compose.yml",
+		"templates/odysseygo.docker-compose.yml",
 		dockerComposeInputs{
-			AvalanchegoVersion: avalancheGoVersion,
-			WithMonitoring:     withMonitoring,
-			WithAvalanchego:    true,
-			E2E:                utils.IsE2E(),
-			E2EIP:              utils.E2EConvertIP(h.IP),
-			E2ESuffix:          utils.E2ESuffix(h.IP),
+			OdysseygoVersion: odysseyGoVersion,
+			WithMonitoring:   withMonitoring,
+			WithOdysseygo:    true,
+			E2E:              utils.IsE2E(),
+			E2EIP:            utils.E2EConvertIP(h.IP),
+			E2ESuffix:        utils.E2ESuffix(h.IP),
 		}); err != nil {
 		return err
 	}
 	return h.RestartDockerCompose(constants.SSHLongRunningScriptTimeout)
 }
 
-// RunSSHStartAvalanchego runs script to start avalanchego
-func (h *Node) RunSSHStartAvalanchego() error {
+// RunSSHStartOdysseygo runs script to start odysseygo
+func (h *Node) RunSSHStartOdysseygo() error {
 	return h.StartDockerComposeService(utils.GetRemoteComposeFile(), constants.ServiceOdysseygo, constants.SSHLongRunningScriptTimeout)
 }
 
-// RunSSHStopAvalanchego runs script to stop avalanchego
-func (h *Node) RunSSHStopAvalanchego() error {
+// RunSSHStopOdysseygo runs script to stop odysseygo
+func (h *Node) RunSSHStopOdysseygo() error {
 	return h.StopDockerComposeService(utils.GetRemoteComposeFile(), constants.ServiceOdysseygo, constants.SSHLongRunningScriptTimeout)
 }
 
@@ -165,7 +165,7 @@ func (h *Node) RunSSHUpgradeSubnetEVM(subnetEVMBinaryPath string) error {
 	return nil
 }
 
-func (h *Node) RunSSHSetupPrometheusConfig(avalancheGoPorts, machinePorts, loadTestPorts []string) error {
+func (h *Node) RunSSHSetupPrometheusConfig(odysseyGoPorts, machinePorts, loadTestPorts []string) error {
 	for _, folder := range remoteconfig.PrometheusFoldersToCreate() {
 		if err := h.MkdirAll(folder, constants.SSHFileOpsTimeout); err != nil {
 			return err
@@ -177,7 +177,7 @@ func (h *Node) RunSSHSetupPrometheusConfig(avalancheGoPorts, machinePorts, loadT
 		return err
 	}
 	defer os.Remove(promConfig.Name())
-	if err := monitoring.WritePrometheusConfig(promConfig.Name(), avalancheGoPorts, machinePorts, loadTestPorts); err != nil {
+	if err := monitoring.WritePrometheusConfig(promConfig.Name(), odysseyGoPorts, machinePorts, loadTestPorts); err != nil {
 		return err
 	}
 
@@ -360,8 +360,8 @@ func (h *Node) MonitorNodes(ctx context.Context, targets []Node, chainID string)
 	if err := h.RunSSHCopyMonitoringDashboards(tmpdir); err != nil {
 		return err
 	}
-	avalancheGoPorts, machinePorts, ltPorts := getPrometheusTargets(targets)
-	h.Logger.Infof("avalancheGoPorts: %v, machinePorts: %v, ltPorts: %v", avalancheGoPorts, machinePorts, ltPorts)
+	odysseyGoPorts, machinePorts, ltPorts := getPrometheusTargets(targets)
+	h.Logger.Infof("odysseyGoPorts: %v, machinePorts: %v, ltPorts: %v", odysseyGoPorts, machinePorts, ltPorts)
 	// reconfigure monitoring instance
 	if err := h.RunSSHSetupLokiConfig(constants.OdysseygoLokiPort); err != nil {
 		return err
@@ -369,7 +369,7 @@ func (h *Node) MonitorNodes(ctx context.Context, targets []Node, chainID string)
 	if err := h.RestartDockerComposeService(remoteComposeFile, constants.ServiceLoki, constants.SSHScriptTimeout); err != nil {
 		return err
 	}
-	if err := h.RunSSHSetupPrometheusConfig(avalancheGoPorts, machinePorts, ltPorts); err != nil {
+	if err := h.RunSSHSetupPrometheusConfig(odysseyGoPorts, machinePorts, ltPorts); err != nil {
 		return err
 	}
 	if err := h.RestartDockerComposeService(remoteComposeFile, constants.ServicePrometheus, constants.SSHScriptTimeout); err != nil {
@@ -379,11 +379,11 @@ func (h *Node) MonitorNodes(ctx context.Context, targets []Node, chainID string)
 	return nil
 }
 
-// SyncSubnets reconfigures avalanchego to sync subnets
+// SyncSubnets reconfigures odysseygo to sync subnets
 func (h *Node) SyncSubnets(subnetsToTrack []string) error {
 	// necessary checks
-	if !isAvalancheGoNode(*h) {
-		return fmt.Errorf("%s is not a avalanchego node", h.NodeID)
+	if !isOdysseyGoNode(*h) {
+		return fmt.Errorf("%s is not a odysseygo node", h.NodeID)
 	}
 	withMonitoring, err := h.WasNodeSetupWithMonitoring()
 	if err != nil {
@@ -396,7 +396,7 @@ func (h *Node) SyncSubnets(subnetsToTrack []string) error {
 	if err != nil {
 		return err
 	}
-	networkName, err := h.GetAvalancheGoNetworkName()
+	networkName, err := h.GetOdysseyGoNetworkName()
 	if err != nil {
 		return err
 	}

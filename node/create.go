@@ -8,10 +8,10 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
 	awsAPI "github.com/DioneProtocol/odyssey-tooling-sdk-go/cloud/aws"
 	gcpAPI "github.com/DioneProtocol/odyssey-tooling-sdk-go/cloud/gcp"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/odyssey"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
 	"github.com/aws/aws-sdk-go-v2/service/ec2/types"
 )
@@ -21,16 +21,16 @@ type NodeParams struct {
 	// CloudParams contains the specs of the node being created on the Cloud Service (AWS / GCP)
 	CloudParams *CloudParams
 
-	// Count is how many Avalanche Nodes to be created during CreateNodes
+	// Count is how many Odyssey Nodes to be created during CreateNodes
 	Count int
 
 	// Roles pertain to whether the created node is going to be a Validator / API / Monitoring
 	// node. See CheckRoles to see which combination of roles for a node is supported.
 	Roles []SupportedRole
 
-	// Network is whether the Validator / API node is meant to track AvalancheGo Primary Network
+	// Network is whether the Validator / API node is meant to track OdysseyGo Primary Network
 	// in Fuji / Mainnet / Devnet
-	Network avalanche.Network
+	Network odyssey.Network
 
 	// SubnetIDs is the list of subnet IDs that the created nodes will be tracking
 	// For primary network, it should be empty
@@ -40,8 +40,8 @@ type NodeParams struct {
 	// to gain access to the created nodes
 	SSHPrivateKeyPath string
 
-	// AvalancheGoVersion is the version of Avalanche Go to install in the created node
-	AvalancheGoVersion string
+	// OdysseyGoVersion is the version of Odyssey Go to install in the created node
+	OdysseyGoVersion string
 
 	// UseStaticIP is whether the created node should have static IP attached to it. Note that
 	// assigning Static IP to a node may incur additional charges on AWS / GCP. There could also be
@@ -50,7 +50,7 @@ type NodeParams struct {
 }
 
 // CreateNodes launches the specified number of nodes on the selected cloud platform.
-// The role of the node (Avalanche Validator / API / monitoring node) is
+// The role of the node (Odyssey Validator / API / monitoring node) is
 // specified through CloudParams in the input NodeParams
 //
 // Prior to calling CreateNodes, the credentials for AWS / GCP will first need to be set up:
@@ -59,9 +59,9 @@ type NodeParams struct {
 //
 // - To set up GCP credentials, more info can be found at https://docs.dione.network/tooling/cli-create-nodes/create-a-validator-gcp#prerequisites
 //
-// When CreateNodes is used to create Avalanche Validator / API Nodes, it will:
+// When CreateNodes is used to create Odyssey Validator / API Nodes, it will:
 //   - Launch the specified number of validator nodes on AWS / GCP
-//   - Install Docker and have required dependencies (Avalanche Go, gcc, go) installed as Docker
+//   - Install Docker and have required dependencies (Odyssey Go, gcc, go) installed as Docker
 //     images.
 //   - Begin bootstrapping process on the nodes
 //
@@ -297,7 +297,7 @@ func provisionAvagoHost(node Node, nodeParams *NodeParams) error {
 	if err := node.RunSSHSetupPromtailConfig("127.0.0.1", constants.OdysseygoLokiPort, node.NodeID, "", ""); err != nil {
 		return err
 	}
-	if err := node.ComposeSSHSetupNode(nodeParams.Network.HRP(), nodeParams.SubnetIDs, nodeParams.AvalancheGoVersion, withMonitoring); err != nil {
+	if err := node.ComposeSSHSetupNode(nodeParams.Network.HRP(), nodeParams.SubnetIDs, nodeParams.OdysseyGoVersion, withMonitoring); err != nil {
 		return err
 	}
 	if err := node.StartDockerCompose(constants.SSHScriptTimeout); err != nil {

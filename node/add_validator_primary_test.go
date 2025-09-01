@@ -13,9 +13,9 @@ import (
 
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/validator"
 
-	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/keychain"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/odyssey"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/wallet"
 	"github.com/DioneProtocol/odysseygo/ids"
 	"github.com/DioneProtocol/odysseygo/utils/units"
@@ -27,7 +27,7 @@ func TestNodesValidatePrimaryNetwork(t *testing.T) {
 	require := require.New(t)
 	// We are using an existing host
 	node := Node{
-		// NodeID is Avalanche Node ID of the node
+		// NodeID is Odyssey Node ID of the node
 		NodeID: "NODE_ID",
 		// IP address of the node
 		IP: "NODE_IP_ADDRESS",
@@ -47,11 +47,11 @@ func TestNodesValidatePrimaryNetwork(t *testing.T) {
 		NodeID: nodeID,
 		// Validate Primary Network for 48 hours
 		Duration: 48 * time.Hour,
-		// Stake 2 AVAX
+		// Stake 2 DIONE
 		StakeAmount: 2 * units.Dione,
 	}
 
-	network := avalanche.TestnetNetwork()
+	network := odyssey.TestnetNetwork()
 	keychain, err := keychain.NewKeychain(network, "PRIVATE_KEY_FILEPATH", nil)
 	require.NoError(err)
 
@@ -66,7 +66,7 @@ func TestNodesValidatePrimaryNetwork(t *testing.T) {
 	)
 	require.NoError(err)
 
-	txID, err := node.ValidatePrimaryNetwork(avalanche.TestnetNetwork(), validatorParams, wallet)
+	txID, err := node.ValidatePrimaryNetwork(odyssey.TestnetNetwork(), validatorParams, wallet)
 	require.NoError(err)
 
 	fmt.Printf("obtained tx id %s", txID.String())

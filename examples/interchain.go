@@ -9,12 +9,13 @@ import (
 	"os"
 	// "path/filepath"
 
+	// "github.com/DioneProtocol/odyssey-tooling-sdk-go/odyssey"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
 
-	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/evm"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/interchain/interchainmessenger"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/odyssey"
 
 	// "github.com/DioneProtocol/odyssey-tooling-sdk-go/interchain/relayer"
 	// "github.com/DioneProtocol/odyssey-tooling-sdk-go/interchain/relayer/localrelayer"
@@ -30,7 +31,7 @@ import (
 // Deploys a relayes to interconnect them
 // Send an example msg
 func InterchainExample(
-	network avalanche.Network,
+	network odyssey.Network,
 	chain1RPC string,
 	chain1PK string,
 	chain1SubnetID ids.ID,
@@ -210,7 +211,7 @@ func SetupICM(
 
 // func SetupRelayerConf(
 // 	storageDir string,
-// 	network avalanche.Network,
+// 	network odyssey.Network,
 // 	chain1RPC string,
 // 	chain1SubnetID ids.ID,
 // 	chain1BlockchainID ids.ID,
@@ -395,7 +396,7 @@ func Interchain() error {
 		return fmt.Errorf("relayer directory %q must exist", relayerDir)
 	}
 	return InterchainExample(
-		avalanche.TestnetNetwork(),
+		odyssey.TestnetNetwork(),
 		chain1RPC,
 		chain1PK,
 		chain1SubnetID,

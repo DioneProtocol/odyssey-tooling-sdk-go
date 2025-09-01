@@ -226,11 +226,11 @@ func (c *AwsCloud) CreateEC2Instances(count int, amiID, instanceType, keyName, s
 				Tags: []types.Tag{
 					{
 						Key:   aws.String("Name"),
-						Value: aws.String("avalanche-tooling-sdk-node"),
+						Value: aws.String("odyssey-tooling-sdk-node"),
 					},
 					{
 						Key:   aws.String("Managed-By"),
-						Value: aws.String("avalanche-cli"),
+						Value: aws.String("odyssey-cli"),
 					},
 				},
 			},
@@ -401,7 +401,7 @@ func (c *AwsCloud) CreateEIP(prefix string) (string, string, error) {
 					},
 					{
 						Key:   aws.String("Managed-By"),
-						Value: aws.String("avalanche-cli"),
+						Value: aws.String("odyssey-cli"),
 					},
 				},
 			},
@@ -465,7 +465,7 @@ func (c *AwsCloud) UploadSSHIdentityKeyPair(keyName string, identity string) err
 
 // SetupSecurityGroup sets up a security group for the AwsCloud instance.
 func (c *AwsCloud) SetupSecurityGroup(ipAddress, securityGroupName string) (string, error) {
-	sgID, err := c.CreateSecurityGroup(securityGroupName, "Allow SSH, AVAX HTTP outbound traffic")
+	sgID, err := c.CreateSecurityGroup(securityGroupName, "Allow SSH, DIONE HTTP outbound traffic")
 	if err != nil {
 		return "", err
 	}
@@ -536,19 +536,19 @@ func (c *AwsCloud) CheckKeyPairExists(kpName string) (bool, error) {
 	return true, nil
 }
 
-// GetAvalancheUbuntuAMIID returns the ID of the latest Ubuntu Amazon Machine Image (AMI) published
-// by Avalanche Tooling on AWS.
+// GetOdysseyUbuntuAMIID returns the ID of the latest Ubuntu Amazon Machine Image (AMI) published
+// by Odyssey Tooling on AWS.
 //
-// Avalanche Tooling publishes our own Ubuntu 20.04 Machine Image called Avalanche-CLI
+// Odyssey Tooling publishes our own Ubuntu 20.04 Machine Image called Odyssey-CLI
 // Ubuntu 20.04 Docker for both arm64 and amd64 architecture.
-// A benefit to using Avalanche-CLI Ubuntu 20.04 Docker is that it has all the dependencies
-// that an Avalanche Node requires (AvalancheGo, gcc, go, etc), thereby decreasing in massive
+// A benefit to using Odyssey-CLI Ubuntu 20.04 Docker is that it has all the dependencies
+// that an Odyssey Node requires (OdysseyGo, gcc, go, etc), thereby decreasing in massive
 // reduction in the time required to provision a node.
-func (c *AwsCloud) GetAvalancheUbuntuAMIID(arch string, ubuntuVerLTS string) (string, error) {
+func (c *AwsCloud) GetOdysseyUbuntuAMIID(arch string, ubuntuVerLTS string) (string, error) {
 	if !utils.ArchSupported(arch) {
 		return "", fmt.Errorf("unsupported architecture: %s", arch)
 	}
-	descriptionFilterValue := fmt.Sprintf("Avalanche-CLI Ubuntu %s Docker", ubuntuVerLTS)
+	descriptionFilterValue := fmt.Sprintf("Odyssey-CLI Ubuntu %s Docker", ubuntuVerLTS)
 	imageInput := &ec2.DescribeImagesInput{
 		Filters: []types.Filter{
 			{Name: aws.String("root-device-type"), Values: []string{"ebs"}},

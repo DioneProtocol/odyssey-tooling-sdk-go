@@ -11,6 +11,6 @@ import (
 func PromtailFoldersToCreate() []string {
 	return []string{
 		utils.GetRemoteComposeServicePath(constants.ServicePromtail),
-		"/home/ubuntu/.avalanchego/logs",
+		"/home/ubuntu/.odysseygo/logs",
 	}
 }

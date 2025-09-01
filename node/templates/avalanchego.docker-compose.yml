@@ -1,29 +1,29 @@
-name: avalanche-cli
+name: odyssey-cli
 services:
-{{if .WithAvalanchego}}
-  avalanchego:
-    image: avaplatform/avalanchego:{{ .AvalanchegoVersion }}
+{{if .WithOdysseygo}}
+  odysseygo:
+    image: dionetech/odysseygo:{{ .OdysseygoVersion }}
 {{if .E2E }}
-    container_name: avalanchego{{.E2ESuffix}}
+    container_name: odysseygo{{.E2ESuffix}}
 {{ else }}
-    container_name: avalanchego
+    container_name: odysseygo
 {{ end }}
     restart: unless-stopped
     user: "1000:1000"  # ubuntu user
     command: >
-        ./avalanchego
-        --config-file=/.avalanchego/configs/node.json
+        ./odysseygo
+        --config-file=/.odysseygo/configs/node.json
 {{if .E2E }}
     volumes:
-      - avalanchego_data_{{.E2ESuffix}}:/.avalanchego:rw
+      - odysseygo_data_{{.E2ESuffix}}:/.odysseygo:rw
     ports:
       - "{{ .E2EIP }}:9650:9650"
       - "{{ .E2EIP }}:9651:9651"
     networks:
-      - avalanchego_net_{{.E2ESuffix}}
+      - odysseygo_net_{{.E2ESuffix}}
 {{ else }}
     volumes:
-      - /home/ubuntu/.avalanchego:/.avalanchego:rw
+      - /home/ubuntu/.odysseygo:/.odysseygo:rw
     ports:
       - "9650:9650"
       - "9651:9651"
@@ -40,14 +40,14 @@ services:
     command: -config.file=/etc/promtail/promtail.yml
 {{if .E2E }}
     volumes:
-      - avalanchego_logs_{{.E2ESuffix}}:/.avalanchego/logs:rw
-      - /home/ubuntu/.avalanche-cli/services/promtail:/etc/promtail:ro
+      - odysseygo_logs_{{.E2ESuffix}}:/.odysseygo/logs:rw
+      - /home/ubuntu/.odyssey-cli/services/promtail:/etc/promtail:ro
     networks:
-      - avalanchego_net_{{.E2ESuffix}}
+      - odysseygo_net_{{.E2ESuffix}}
 {{ else }}
     volumes:
-      - /home/ubuntu/.avalanchego/logs:/logs:ro
-      - /home/ubuntu/.avalanche-cli/services/promtail:/etc/promtail:ro
+      - /home/ubuntu/.odysseygo/logs:/logs:ro
+      - /home/ubuntu/.odyssey-cli/services/promtail:/etc/promtail:ro
 {{ end }}
   node-exporter:
     image: prom/node-exporter:v1.7.0
@@ -59,21 +59,21 @@ services:
       - /:/rootfs:ro
     ports:
       - "9100:9100"
-{{if .WithAvalanchego}}
+{{if .WithOdysseygo}}
     links:
-      - avalanchego
+      - odysseygo
 {{end}}
 {{if .E2E }}
     networks:
-      - avalanchego_net_{{.E2ESuffix}}
+      - odysseygo_net_{{.E2ESuffix}}
 {{ end }}
 {{end}}
 
 {{if .E2E }}
 volumes:
-  avalanchego_data_{{.E2ESuffix}}:
-  avalanchego_logs_{{.E2ESuffix}}:
+  odysseygo_data_{{.E2ESuffix}}:
+  odysseygo_logs_{{.E2ESuffix}}:
 networks:
-  avalanchego_net_{{.E2ESuffix}}:
+  odysseygo_net_{{.E2ESuffix}}:
 {{ end }}
     

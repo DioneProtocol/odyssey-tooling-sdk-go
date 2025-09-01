@@ -11,13 +11,13 @@ import (
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
 )
 
-// PrepareAvalanchegoConfig creates the config files for the AvalancheGo
+// PrepareOdysseygoConfig creates the config files for the OdysseyGo
 // networkID is the ID of the network to be used
 // trackSubnets is the list of subnets to track
-func (h *Node) RunSSHRenderAvalancheNodeConfig(networkID string, trackSubnets []string) error {
-	avagoConf := remoteconfig.PrepareAvalancheConfig(h.IP, networkID, trackSubnets)
+func (h *Node) RunSSHRenderOdysseyNodeConfig(networkID string, trackSubnets []string) error {
+	avagoConf := remoteconfig.PrepareOdysseyConfig(h.IP, networkID, trackSubnets)
 
-	nodeConf, err := remoteconfig.RenderAvalancheNodeConfig(avagoConf)
+	nodeConf, err := remoteconfig.RenderOdysseyNodeConfig(avagoConf)
 	if err != nil {
 		return err
 	}
@@ -25,9 +25,9 @@ func (h *Node) RunSSHRenderAvalancheNodeConfig(networkID string, trackSubnets []
 	if nodeConfigFileExists(*h) {
 		// make sure that bootsrap configuration is preserved
 		if genesisFileExists(*h) {
-			avagoConf.GenesisPath = remoteconfig.GetRemoteAvalancheGenesis()
+			avagoConf.GenesisPath = remoteconfig.GetRemoteOdysseyGenesis()
 		}
-		remoteAvagoConf, err := h.GetAvalancheGoConfigData()
+		remoteAvagoConf, err := h.GetOdysseyGoConfigData()
 		if err != nil {
 			return err
 		}
@@ -39,14 +39,14 @@ func (h *Node) RunSSHRenderAvalancheNodeConfig(networkID string, trackSubnets []
 		avagoConf.BootstrapIPs = bootstrapIPs
 	}
 	// configuration is ready to be uploaded
-	if err := h.UploadBytes(nodeConf, remoteconfig.GetRemoteAvalancheNodeConfig(), constants.SSHFileOpsTimeout); err != nil {
+	if err := h.UploadBytes(nodeConf, remoteconfig.GetRemoteOdysseyNodeConfig(), constants.SSHFileOpsTimeout); err != nil {
 		return err
 	}
-	cChainConf, err := remoteconfig.RenderAvalancheCChainConfig(avagoConf)
+	cChainConf, err := remoteconfig.RenderOdysseyCChainConfig(avagoConf)
 	if err != nil {
 		return err
 	}
-	if err := h.UploadBytes(cChainConf, remoteconfig.GetRemoteAvalancheCChainConfig(), constants.SSHFileOpsTimeout); err != nil {
+	if err := h.UploadBytes(cChainConf, remoteconfig.GetRemoteOdysseyCChainConfig(), constants.SSHFileOpsTimeout); err != nil {
 		return err
 	}
 	return nil
@@ -57,7 +57,7 @@ func prepareGrafanaConfig() (string, string, string, string, error) {
 	if err != nil {
 		return "", "", "", "", err
 	}
-	grafanaDataSourceFile, err := os.CreateTemp("", "avalanchecli-grafana-datasource-*.yml")
+	grafanaDataSourceFile, err := os.CreateTemp("", "odysseycli-grafana-datasource-*.yml")
 	if err != nil {
 		return "", "", "", "", err
 	}
@@ -69,7 +69,7 @@ func prepareGrafanaConfig() (string, string, string, string, error) {
 	if err != nil {
 		return "", "", "", "", err
 	}
-	grafanaPromDataSourceFile, err := os.CreateTemp("", "avalanchecli-grafana-prom-datasource-*.yml")
+	grafanaPromDataSourceFile, err := os.CreateTemp("", "odysseycli-grafana-prom-datasource-*.yml")
 	if err != nil {
 		return "", "", "", "", err
 	}
@@ -81,7 +81,7 @@ func prepareGrafanaConfig() (string, string, string, string, error) {
 	if err != nil {
 		return "", "", "", "", err
 	}
-	grafanaDashboardsFile, err := os.CreateTemp("", "avalanchecli-grafana-dashboards-*.yml")
+	grafanaDashboardsFile, err := os.CreateTemp("", "odysseycli-grafana-dashboards-*.yml")
 	if err != nil {
 		return "", "", "", "", err
 	}
@@ -93,7 +93,7 @@ func prepareGrafanaConfig() (string, string, string, string, error) {
 	if err != nil {
 		return "", "", "", "", err
 	}
-	grafanaConfigFile, err := os.CreateTemp("", "avalanchecli-grafana-config-*.ini")
+	grafanaConfigFile, err := os.CreateTemp("", "odysseycli-grafana-config-*.ini")
 	if err != nil {
 		return "", "", "", "", err
 	}

@@ -14,7 +14,7 @@ import (
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/subnet"
 
-	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/odyssey"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
 	"github.com/DioneProtocol/odysseygo/utils/crypto/bls"
 	"github.com/DioneProtocol/odysseygo/vms/omegavm/signer"
@@ -31,7 +31,7 @@ import (
 // It adds the node in the specified network (Fuji / Mainnet / Devnet)
 // and uses the wallet provided in the argument to pay for the transaction fee
 func (h *Node) ValidatePrimaryNetwork(
-	network avalanche.Network,
+	network odyssey.Network,
 	validatorParams validator.PrimaryNetworkValidatorParams,
 	wallet wallet.Wallet,
 ) (ids.ID, error) {

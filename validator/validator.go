@@ -18,7 +18,7 @@ type PrimaryNetworkValidatorParams struct {
 	// (Fuji / Mainnet)
 	Duration time.Duration
 
-	// StakeAmount is the amount of Avalanche tokens (AVAX) to stake in this validator, which is
+	// StakeAmount is the amount of Odyssey tokens (DIONE) to stake in this validator, which is
 	// denominated in nAVAX. StakeAmount has to be greater than or equal to minimum stake required
 	// for the specified network
 	StakeAmount uint64

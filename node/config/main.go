@@ -22,10 +22,10 @@ func RemoteFoldersToCreateMonitoring() []string {
 	)
 }
 
-// RemoteFoldersToCreateAvalanchego returns a list of folders that need to be created on the remote Avalanchego server
-func RemoteFoldersToCreateAvalanchego() []string {
+// RemoteFoldersToCreateOdysseygo returns a list of folders that need to be created on the remote Odysseygo server
+func RemoteFoldersToCreateOdysseygo() []string {
 	return utils.AppendSlices[string](
-		AvalancheFolderToCreate(),
+		OdysseyFolderToCreate(),
 		PromtailFoldersToCreate(),
 	)
 }

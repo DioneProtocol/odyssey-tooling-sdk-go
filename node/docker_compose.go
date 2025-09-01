@@ -19,12 +19,12 @@ import (
 )
 
 type dockerComposeInputs struct {
-	WithMonitoring     bool
-	WithAvalanchego    bool
-	AvalanchegoVersion string
-	E2E                bool
-	E2EIP              string
-	E2ESuffix          string
+	WithMonitoring   bool
+	WithOdysseygo    bool
+	OdysseygoVersion string
+	E2E              bool
+	E2EIP            string
+	E2ESuffix        string
 }
 
 //go:embed templates/*.docker-compose.yml
@@ -125,7 +125,7 @@ func (h *Node) MergeComposeFiles(currentComposeFile string, newComposeFile strin
 func (h *Node) StartDockerCompose(timeout time.Duration) error {
 	// we provide systemd service unit for docker compose if the node has systemd
 	if h.HasSystemDAvailable() {
-		if output, err := h.Command(nil, timeout, "sudo systemctl start avalanche-cli-docker"); err != nil {
+		if output, err := h.Command(nil, timeout, "sudo systemctl start odyssey-cli-docker"); err != nil {
 			return fmt.Errorf("%w: %s", err, string(output))
 		}
 	} else {
@@ -140,7 +140,7 @@ func (h *Node) StartDockerCompose(timeout time.Duration) error {
 
 func (h *Node) StopDockerCompose(timeout time.Duration) error {
 	if h.HasSystemDAvailable() {
-		if output, err := h.Command(nil, timeout, "sudo systemctl stop avalanche-cli-docker"); err != nil {
+		if output, err := h.Command(nil, timeout, "sudo systemctl stop odyssey-cli-docker"); err != nil {
 			return fmt.Errorf("%w: %s", err, string(output))
 		}
 	} else {
@@ -155,7 +155,7 @@ func (h *Node) StopDockerCompose(timeout time.Duration) error {
 
 func (h *Node) RestartDockerCompose(timeout time.Duration) error {
 	if h.HasSystemDAvailable() {
-		if output, err := h.Command(nil, timeout, "sudo systemctl restart avalanche-cli-docker"); err != nil {
+		if output, err := h.Command(nil, timeout, "sudo systemctl restart odyssey-cli-docker"); err != nil {
 			return fmt.Errorf("%w: %s", err, string(output))
 		}
 	} else {
@@ -208,7 +208,7 @@ func (h *Node) ComposeOverSSH(
 ) error {
 	remoteComposeFile := utils.GetRemoteComposeFile()
 	startTime := time.Now()
-	tmpFile, err := os.CreateTemp("", "avalanchecli-docker-compose-*.yml")
+	tmpFile, err := os.CreateTemp("", "odysseycli-docker-compose-*.yml")
 	if err != nil {
 		return err
 	}

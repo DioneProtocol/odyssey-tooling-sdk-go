@@ -14,21 +14,21 @@ import (
 	"github.com/DioneProtocol/odysseygo/api/info"
 )
 
-func (h *Node) GetAvalancheGoVersion() (string, error) {
+func (h *Node) GetOdysseyGoVersion() (string, error) {
 	// Craft and send the HTTP POST request
 	requestBody := "{\"jsonrpc\":\"2.0\", \"id\":1,\"method\" :\"info.getNodeVersion\"}"
 	resp, err := h.Post("", requestBody)
 	if err != nil {
 		return "", err
 	}
-	if avalancheGoVersion, _, err := parseAvalancheGoOutput(resp); err != nil {
+	if odysseyGoVersion, _, err := parseOdysseyGoOutput(resp); err != nil {
 		return "", err
 	} else {
-		return avalancheGoVersion, nil
+		return odysseyGoVersion, nil
 	}
 }
 
-func (h *Node) GetAvalancheGoHealth() (bool, error) {
+func (h *Node) GetOdysseyGoHealth() (bool, error) {
 	// Craft and send the HTTP POST request
 	requestBody := "{\"jsonrpc\":\"2.0\", \"id\":1,\"method\":\"health.health\",\"params\": {\"tags\": [\"P\"]}}"
 	resp, err := h.Post("/ext/health", requestBody)
@@ -38,7 +38,7 @@ func (h *Node) GetAvalancheGoHealth() (bool, error) {
 	return parseHealthyOutput(resp)
 }
 
-func parseAvalancheGoOutput(byteValue []byte) (string, uint32, error) {
+func parseOdysseyGoOutput(byteValue []byte) (string, uint32, error) {
 	reply := map[string]interface{}{}
 	if err := json.Unmarshal(byteValue, &reply); err != nil {
 		return "", 0, err
@@ -71,9 +71,9 @@ func parseHealthyOutput(byteValue []byte) (bool, error) {
 	return false, fmt.Errorf("unable to parse node healthy status")
 }
 
-func (h *Node) GetAvalancheGoNetworkName() (string, error) {
+func (h *Node) GetOdysseyGoNetworkName() (string, error) {
 	if nodeConfigFileExists(*h) {
-		avagoConfig, err := h.GetAvalancheGoConfigData()
+		avagoConfig, err := h.GetOdysseyGoConfigData()
 		if err != nil {
 			return "", err
 		}
@@ -83,9 +83,9 @@ func (h *Node) GetAvalancheGoNetworkName() (string, error) {
 	}
 }
 
-func (h *Node) GetAvalancheGoConfigData() (map[string]interface{}, error) {
+func (h *Node) GetOdysseyGoConfigData() (map[string]interface{}, error) {
 	// get remote node.json file
-	nodeJSON, err := h.ReadFileBytes(remoteconfig.GetRemoteAvalancheNodeConfig(), constants.SSHFileOpsTimeout)
+	nodeJSON, err := h.ReadFileBytes(remoteconfig.GetRemoteOdysseyNodeConfig(), constants.SSHFileOpsTimeout)
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +97,7 @@ func (h *Node) GetAvalancheGoConfigData() (map[string]interface{}, error) {
 }
 
 // WaitForSSHShell waits for the SSH shell to be available on the node within the specified timeout.
-func (h *Node) WaitForAvalancheGoHealth(timeout time.Duration) error {
+func (h *Node) WaitForOdysseyGoHealth(timeout time.Duration) error {
 	if h.IP == "" {
 		return fmt.Errorf("node IP is empty")
 	}
@@ -109,9 +109,9 @@ func (h *Node) WaitForAvalancheGoHealth(timeout time.Duration) error {
 	deadline := start.Add(timeout)
 	for {
 		if time.Now().After(deadline) {
-			return fmt.Errorf("timeout: AvalancheGo health on node %s is not available after %ds", h.IP, int(timeout.Seconds()))
+			return fmt.Errorf("timeout: OdysseyGo health on node %s is not available after %ds", h.IP, int(timeout.Seconds()))
 		}
-		if isHealthy, err := h.GetAvalancheGoHealth(); err != nil || !isHealthy {
+		if isHealthy, err := h.GetOdysseyGoHealth(); err != nil || !isHealthy {
 			time.Sleep(constants.SSHSleepBetweenChecks)
 			continue
 		} else {

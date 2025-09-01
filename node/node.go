@@ -22,8 +22,8 @@ import (
 	"github.com/melbahja/goph"
 	"golang.org/x/crypto/ssh"
 
-	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/odyssey"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
 )
 
@@ -44,7 +44,7 @@ type SSHConfig struct {
 
 // Node is an output of CreateNodes
 type Node struct {
-	// NodeID is Avalanche Node ID of the node
+	// NodeID is Odyssey Node ID of the node
 	NodeID string
 
 	// IP address of the node
@@ -76,10 +76,10 @@ type Node struct {
 	Roles []SupportedRole
 
 	// Logger for node
-	Logger avalanche.LeveledLogger
+	Logger odyssey.LeveledLogger
 
 	// BLS provides a way to aggregate signatures off chain into a single signature that can be efficiently verified on chain.
-	// For more information about how BLS is used on the P-Chain, please head to https://docs.dione.network/cross-chain/avalanche-warp-messaging/deep-dive#bls-multi-signatures-with-public-key-aggregation
+	// For more information about how BLS is used on the P-Chain, please head to https://docs.dione.network/cross-chain/odyssey-warp-messaging/deep-dive#bls-multi-signatures-with-public-key-aggregation
 	BlsSecretKey *bls.SecretKey
 }
 
@@ -353,20 +353,20 @@ func (h *Node) UntimedForward(httpRequest string) ([]byte, error) {
 			return nil, err
 		}
 	}
-	avalancheGoEndpoint := strings.TrimPrefix(constants.LocalAPIEndpoint, "http://")
-	avalancheGoAddr, err := net.ResolveTCPAddr("tcp", avalancheGoEndpoint)
+	odysseyGoEndpoint := strings.TrimPrefix(constants.LocalAPIEndpoint, "http://")
+	odysseyGoAddr, err := net.ResolveTCPAddr("tcp", odysseyGoEndpoint)
 	if err != nil {
 		return nil, err
 	}
 	var proxy net.Conn
 	if utils.IsE2E() {
-		avalancheGoEndpoint = fmt.Sprintf("%s:%d", utils.E2EConvertIP(h.IP), constants.OdysseygoAPIPort)
-		proxy, err = net.Dial("tcp", avalancheGoEndpoint)
+		odysseyGoEndpoint = fmt.Sprintf("%s:%d", utils.E2EConvertIP(h.IP), constants.OdysseygoAPIPort)
+		proxy, err = net.Dial("tcp", odysseyGoEndpoint)
 		if err != nil {
-			return nil, fmt.Errorf("unable to port forward E2E to %s", avalancheGoEndpoint)
+			return nil, fmt.Errorf("unable to port forward E2E to %s", odysseyGoEndpoint)
 		}
 	} else {
-		proxy, err = h.connection.DialTCP("tcp", nil, avalancheGoAddr)
+		proxy, err = h.connection.DialTCP("tcp", nil, odysseyGoAddr)
 		if err != nil {
 			return nil, fmt.Errorf("unable to port forward to %s via %s", h.connection.RemoteAddr(), "ssh")
 		}
@@ -584,7 +584,7 @@ func (h *Node) HasSystemDAvailable() bool {
 	if _, err := h.FileExists("/run/systemd/system"); err != nil {
 		return false
 	}
-	tmpFile, err := os.CreateTemp("", "avalanchecli-proc-systemd-*.txt")
+	tmpFile, err := os.CreateTemp("", "odysseycli-proc-systemd-*.txt")
 	if err != nil {
 		return false
 	}

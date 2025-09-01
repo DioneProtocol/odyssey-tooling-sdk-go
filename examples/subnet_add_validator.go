@@ -8,10 +8,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/keychain"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/node"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/odyssey"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/subnet"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/validator"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/wallet"
@@ -43,7 +43,7 @@ func AddSubnetValidator() {
 
 	// We are using existing host
 	node := node.Node{
-		// NodeID is Avalanche Node ID of the node
+		// NodeID is Odyssey Node ID of the node
 		NodeID: "NODE_ID",
 		// IP address of the node
 		IP: "NODE_IP_ADDRESS",
@@ -72,7 +72,7 @@ func AddSubnetValidator() {
 	//
 	// In our example, this Key is also the control Key to the Subnet, so we are going to use
 	// this key to also sign the Subnet AddValidator tx
-	network := avalanche.TestnetNetwork()
+	network := odyssey.TestnetNetwork()
 	keychain, err := keychain.NewKeychain(network, "PRIVATE_KEY_FILEPATH", nil)
 	if err != nil {
 		panic(err)

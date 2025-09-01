@@ -17,8 +17,8 @@ func TestExtractPlaceholderValue(t *testing.T) {
 	}{
 		{
 			name:     "Extract Version",
-			pattern:  `avaplatform/avalanchego:(\S+)`,
-			text:     "avaplatform/avalanchego:v1.14.4",
+			pattern:  `dionetech/odysseygo:(\S+)`,
+			text:     "dionetech/odysseygo:v1.14.4",
 			expected: "v1.14.4",
 			wantErr:  false,
 		},
@@ -32,7 +32,7 @@ func TestExtractPlaceholderValue(t *testing.T) {
 		{
 			name:     "No Match",
 			pattern:  `nonexistent=(\S+)`,
-			text:     "image: avaplatform/avalanchego:v1.14.4",
+			text:     "image: dionetech/odysseygo:v1.14.4",
 			expected: "",
 			wantErr:  true,
 		},

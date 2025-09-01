@@ -13,9 +13,9 @@ if ! docker compose version &>/dev/null; then
 fi
 
 # Provide docker-compose systemctl unit file
-cat <<EOF | sudo tee /etc/systemd/system/avalanche-cli-docker.service
+cat <<EOF | sudo tee /etc/systemd/system/odyssey-cli-docker.service
 [Unit]
-Description=Avalanche CLI Docker Compose Service
+Description=Odyssey CLI Docker Compose Service
 Requires=docker.service
 After=docker.service
 
@@ -23,8 +23,8 @@ After=docker.service
 User=ubuntu
 Group=ubuntu
 Restart=on-failure
-ExecStart=/usr/bin/docker compose -f /home/ubuntu/.avalanche-cli/services/docker-compose.yml up 
-ExecStop=/usr/bin/docker compose -f /home/ubuntu/.avalanche-cli/services/docker-compose.yml down
+ExecStart=/usr/bin/docker compose -f /home/ubuntu/.odyssey-cli/services/docker-compose.yml up 
+ExecStop=/usr/bin/docker compose -f /home/ubuntu/.odyssey-cli/services/docker-compose.yml down
 
 [Install]
 WantedBy=multi-user.target
@@ -34,6 +34,6 @@ EOF
 sudo systemctl daemon-reload
 
 # Enable the new service
-sudo systemctl enable avalanche-cli-docker.service
+sudo systemctl enable odyssey-cli-docker.service
 
 echo "Service created and enabled successfully."

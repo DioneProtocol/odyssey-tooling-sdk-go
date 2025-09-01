@@ -1,4 +1,4 @@
-name: avalanche-cli
+name: odyssey-cli
 services:
   prometheus:
     image: prom/prometheus:v2.51.2
@@ -8,8 +8,8 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - /home/ubuntu/.avalanche-cli/services/prometheus:/etc/prometheus:ro
-      - /home/ubuntu/.avalanche-cli/services/prometheus/data:/var/lib/prometheus:rw
+      - /home/ubuntu/.odyssey-cli/services/prometheus:/etc/prometheus:ro
+      - /home/ubuntu/.odyssey-cli/services/prometheus/data:/var/lib/prometheus:rw
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/var/lib/prometheus'
@@ -24,8 +24,8 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - /home/ubuntu/.avalanche-cli/services/grafana:/etc/grafana:ro
-      - /home/ubuntu/.avalanche-cli/services/grafana/data:/var/lib/grafana:rw
+      - /home/ubuntu/.odyssey-cli/services/grafana:/etc/grafana:ro
+      - /home/ubuntu/.odyssey-cli/services/grafana/data:/var/lib/grafana:rw
     links:
       - prometheus
       - loki
@@ -39,8 +39,8 @@ services:
     ports:
       - "23101:23101"
     volumes:
-      - /home/ubuntu/.avalanche-cli/services/loki:/etc/loki:ro
-      - /home/ubuntu/.avalanche-cli/services/loki/data:/var/lib/loki:rw
+      - /home/ubuntu/.odyssey-cli/services/loki:/etc/loki:ro
+      - /home/ubuntu/.odyssey-cli/services/loki/data:/var/lib/loki:rw
   
   node-exporter:
     image: prom/node-exporter:v1.7.0

@@ -341,7 +341,7 @@ const (
     CloudNodeCLIConfigBasePath = "/home/ubuntu/.avalanche-cli/"
     CloudNodeStakingPath       = "/home/ubuntu/.avalanchego/staking/"
     CloudNodeConfigPath        = "/home/ubuntu/.avalanchego/configs/"
-    AvalancheGoDockerImage = "avaplatform/avalanchego"
+    AvalancheGoDockerImage = "dionetech/avalanchego"
     AvalancheGoGitRepo     = "https://github.com/ava-labs/avalanchego"
     AvaLabsOrg      = "ava-labs"
 )
@@ -391,7 +391,7 @@ const (
 # Change from:
 services:
   avalanchego:
-    image: avaplatform/avalanchego:{{ .AvalancheGoVersion }}
+    image: dionetech/avalanchego:{{ .AvalancheGoVersion }}
     container_name: avalanchego
     command: >
         ./avalanchego

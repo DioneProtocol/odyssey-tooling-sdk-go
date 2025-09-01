@@ -12,7 +12,7 @@ import (
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
 )
 
-type AvalancheConfigInputs struct {
+type OdysseyConfigInputs struct {
 	HTTPHost         string
 	APIAdminEnabled  bool
 	IndexEnabled     bool
@@ -28,12 +28,12 @@ type AvalancheConfigInputs struct {
 	GenesisPath      string
 }
 
-func PrepareAvalancheConfig(publicIP string, networkID string, subnetsToTrack []string) AvalancheConfigInputs {
-	return AvalancheConfigInputs{
+func PrepareOdysseyConfig(publicIP string, networkID string, subnetsToTrack []string) OdysseyConfigInputs {
+	return OdysseyConfigInputs{
 		HTTPHost:         "0.0.0.0",
 		NetworkID:        networkID,
-		DBDir:            "/.avalanchego/db/",
-		LogDir:           "/.avalanchego/logs/",
+		DBDir:            "/.odysseygo/db/",
+		LogDir:           "/.odysseygo/logs/",
 		PublicIP:         publicIP,
 		StateSyncEnabled: true,
 		PruningEnabled:   false,
@@ -41,7 +41,7 @@ func PrepareAvalancheConfig(publicIP string, networkID string, subnetsToTrack []
 	}
 }
 
-func RenderAvalancheTemplate(templateName string, config AvalancheConfigInputs) ([]byte, error) {
+func RenderOdysseyTemplate(templateName string, config OdysseyConfigInputs) ([]byte, error) {
 	templateBytes, err := templates.ReadFile(templateName)
 	if err != nil {
 		return nil, err
@@ -59,16 +59,16 @@ func RenderAvalancheTemplate(templateName string, config AvalancheConfigInputs) 
 	return buf.Bytes(), nil
 }
 
-func RenderAvalancheNodeConfig(config AvalancheConfigInputs) ([]byte, error) {
-	if output, err := RenderAvalancheTemplate("templates/avalanche-node.tmpl", config); err != nil {
+func RenderOdysseyNodeConfig(config OdysseyConfigInputs) ([]byte, error) {
+	if output, err := RenderOdysseyTemplate("templates/odyssey-node.tmpl", config); err != nil {
 		return nil, err
 	} else {
 		return output, nil
 	}
 }
 
-func RenderAvalancheCChainConfig(config AvalancheConfigInputs) ([]byte, error) {
-	if output, err := RenderAvalancheTemplate("templates/avalanche-cchain.tmpl", config); err != nil {
+func RenderOdysseyCChainConfig(config OdysseyConfigInputs) ([]byte, error) {
+	if output, err := RenderOdysseyTemplate("templates/odyssey-cchain.tmpl", config); err != nil {
 		return nil, err
 	} else {
 		return output, nil
@@ -79,27 +79,27 @@ func GetRemoteBLSKeyFile() string {
 	return filepath.Join(constants.CloudNodeStakingPath, constants.BLSKeyFileName)
 }
 
-func GetRemoteAvalancheNodeConfig() string {
+func GetRemoteOdysseyNodeConfig() string {
 	return filepath.Join(constants.CloudNodeConfigPath, "node.json")
 }
 
-func GetRemoteAvalancheCChainConfig() string {
+func GetRemoteOdysseyCChainConfig() string {
 	return filepath.Join(constants.CloudNodeConfigPath, "chains", "C", "config.json")
 }
 
-func GetRemoteAvalancheGenesis() string {
+func GetRemoteOdysseyGenesis() string {
 	return filepath.Join(constants.CloudNodeConfigPath, "genesis.json")
 }
 
-func AvalancheFolderToCreate() []string {
+func OdysseyFolderToCreate() []string {
 	return []string{
-		"/home/ubuntu/.avalanchego/db",
-		"/home/ubuntu/.avalanchego/logs",
-		"/home/ubuntu/.avalanchego/configs",
-		"/home/ubuntu/.avalanchego/configs/subnets/",
-		"/home/ubuntu/.avalanchego/configs/chains/C",
-		"/home/ubuntu/.avalanchego/staking",
-		"/home/ubuntu/.avalanchego/plugins",
-		"/home/ubuntu/.avalanche-cli/services/awm-relayer",
+		"/home/ubuntu/.odysseygo/db",
+		"/home/ubuntu/.odysseygo/logs",
+		"/home/ubuntu/.odysseygo/configs",
+		"/home/ubuntu/.odysseygo/configs/subnets/",
+		"/home/ubuntu/.odysseygo/configs/chains/C",
+		"/home/ubuntu/.odysseygo/staking",
+		"/home/ubuntu/.odysseygo/plugins",
+		"/home/ubuntu/.odyssey-cli/services/awm-relayer",
 	}
 }

@@ -16,8 +16,8 @@ import (
 	"github.com/DioneProtocol/odysseygo/utils/formatting/address"
 	"github.com/DioneProtocol/odysseygo/utils/set"
 
-	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/keychain"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/odyssey"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/vm"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/wallet"
 	"github.com/DioneProtocol/odysseygo/vms/secp256k1fx"
@@ -49,7 +49,7 @@ func TestSubnetDeploy(t *testing.T) {
 	subnetParams := getDefaultSubnetEVMGenesis()
 	newSubnet, err := New(&subnetParams)
 	require.NoError(err)
-	network := avalanche.TestnetNetwork()
+	network := odyssey.TestnetNetwork()
 
 	keychain, err := keychain.NewKeychain(network, "KEY_PATH", nil)
 	require.NoError(err)
@@ -86,7 +86,7 @@ func TestSubnetDeployMultiSig(t *testing.T) {
 	require := require.New(t)
 	subnetParams := getDefaultSubnetEVMGenesis()
 	newSubnet, _ := New(&subnetParams)
-	network := avalanche.TestnetNetwork()
+	network := odyssey.TestnetNetwork()
 
 	keychainA, err := keychain.NewKeychain(network, "KEY_PATH_A", nil)
 	require.NoError(err)
@@ -159,7 +159,7 @@ func TestSubnetDeployLedger(t *testing.T) {
 	subnetParams := getDefaultSubnetEVMGenesis()
 	newSubnet, err := New(&subnetParams)
 	require.NoError(err)
-	network := avalanche.TestnetNetwork()
+	network := odyssey.TestnetNetwork()
 
 	ledgerInfo := keychain.LedgerParams{
 		LedgerAddresses: []string{"P-fujixxxxxxxxx"},

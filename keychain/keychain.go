@@ -5,9 +5,9 @@ package keychain
 import (
 	"fmt"
 
-	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/key"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/ledger"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/odyssey"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
 	"github.com/DioneProtocol/odysseygo/utils/crypto/keychain"
 	"golang.org/x/exp/maps"
@@ -15,14 +15,14 @@ import (
 
 type Keychain struct {
 	keychain.Keychain
-	network avalanche.Network
+	network odyssey.Network
 	Ledger  *Ledger
 }
 
 // LedgerParams is an input to NewKeyChain if a new keychain is to be created using Ledger
 //
-// To view Ledger addresses and their balances, you can use Avalanche CLI and use the command
-// avalanche key list --ledger [0,1,2,3,4]
+// To view Ledger addresses and their balances, you can use Odyssey CLI and use the command
+// odyssey key list --ledger [0,1,2,3,4]
 // The example command above will list the first five addresses in your Ledger
 //
 // To transfer funds between addresses in Ledger, refer to https://docs.dione.network/tooling/cli-transfer-funds/how-to-transfer-funds
@@ -32,11 +32,11 @@ type LedgerParams struct {
 	// into LedgerIndices in Ledger
 	LedgerAddresses []string
 
-	// RequiredFunds is the minimum total AVAX that the selected addresses from Ledger should contain.
+	// RequiredFunds is the minimum total DIONE that the selected addresses from Ledger should contain.
 	// NewKeychain will then look through all indexes of all addresses in the Ledger until
-	// sufficient AVAX balance is reached.
-	// For example if Ledger's index 0 and index 1 each contains 0.1 AVAX and RequiredFunds is
-	// 0.2 AVAX, LedgerIndices will have value of [0,1]
+	// sufficient DIONE balance is reached.
+	// For example if Ledger's index 0 and index 1 each contains 0.1 DIONE and RequiredFunds is
+	// 0.2 DIONE, LedgerIndices will have value of [0,1]
 	RequiredFunds uint64
 }
 
@@ -53,7 +53,7 @@ type Ledger struct {
 // For stored keys, NewKeychain will generate a new key pair in the provided keyPath if no .pk
 // file currently exists in the provided path.
 func NewKeychain(
-	network avalanche.Network,
+	network odyssey.Network,
 	keyPath string,
 	ledgerInfo *LedgerParams,
 ) (*Keychain, error) {

@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/keychain"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/odyssey"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/subnet"
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/wallet"
 	"github.com/DioneProtocol/odysseygo/ids"
@@ -23,7 +23,7 @@ func DeploySubnetMultiSig() {
 	// Create new Subnet EVM genesis
 	newSubnet, _ := subnet.New(&subnetParams)
 
-	network := avalanche.TestnetNetwork()
+	network := odyssey.TestnetNetwork()
 
 	// Create three keys that will be used as control keys of the subnet
 	// NewKeychain will generate a new key pair in the provided path if no .pk file currently
