@@ -8,17 +8,17 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/avalanche"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/constants"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/keychain"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/node"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/subnet"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/validator"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/wallet"
-	"github.com/ava-labs/avalanchego/ids"
-	"github.com/ava-labs/avalanchego/utils/set"
-	"github.com/ava-labs/avalanchego/vms/secp256k1fx"
-	"github.com/ava-labs/avalanchego/wallet/subnet/primary"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/keychain"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/node"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/subnet"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/validator"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/wallet"
+	"github.com/DioneProtocol/odysseygo/ids"
+	"github.com/DioneProtocol/odysseygo/utils/set"
+	"github.com/DioneProtocol/odysseygo/vms/secp256k1fx"
+	"github.com/DioneProtocol/odysseygo/wallet/subnet/primary"
 )
 
 func AddSubnetValidator() {
@@ -72,7 +72,7 @@ func AddSubnetValidator() {
 	//
 	// In our example, this Key is also the control Key to the Subnet, so we are going to use
 	// this key to also sign the Subnet AddValidator tx
-	network := avalanche.FujiNetwork()
+	network := avalanche.TestnetNetwork()
 	keychain, err := keychain.NewKeychain(network, "PRIVATE_KEY_FILEPATH", nil)
 	if err != nil {
 		panic(err)
@@ -82,9 +82,9 @@ func AddSubnetValidator() {
 		context.Background(),
 		&primary.WalletConfig{
 			URI:              network.Endpoint,
-			AVAXKeychain:     keychain.Keychain,
+			DIONEKeychain:    keychain.Keychain,
 			EthKeychain:      secp256k1fx.NewKeychain(),
-			PChainTxsToFetch: set.Of(subnetID),
+			OChainTxsToFetch: set.Of(subnetID),
 		},
 	)
 	if err != nil {

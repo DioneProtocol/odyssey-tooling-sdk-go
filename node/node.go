@@ -17,14 +17,14 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ava-labs/avalanchego/utils/crypto/bls"
+	"github.com/DioneProtocol/odysseygo/utils/crypto/bls"
 
 	"github.com/melbahja/goph"
 	"golang.org/x/crypto/ssh"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/avalanche"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/constants"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/utils"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
 )
 
 // SSHConfig contains the configuration for connecting to a node over SSH
@@ -79,7 +79,7 @@ type Node struct {
 	Logger avalanche.LeveledLogger
 
 	// BLS provides a way to aggregate signatures off chain into a single signature that can be efficiently verified on chain.
-	// For more information about how BLS is used on the P-Chain, please head to https://docs.avax.network/cross-chain/avalanche-warp-messaging/deep-dive#bls-multi-signatures-with-public-key-aggregation
+	// For more information about how BLS is used on the P-Chain, please head to https://docs.dione.network/cross-chain/avalanche-warp-messaging/deep-dive#bls-multi-signatures-with-public-key-aggregation
 	BlsSecretKey *bls.SecretKey
 }
 

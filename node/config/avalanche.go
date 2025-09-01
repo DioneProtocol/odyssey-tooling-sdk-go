@@ -9,7 +9,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/constants"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
 )
 
 type AvalancheConfigInputs struct {

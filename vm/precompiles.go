@@ -4,25 +4,35 @@
 package vm
 
 import (
-	"github.com/ava-labs/avalanche-tooling-sdk-go/utils"
-	"github.com/ava-labs/subnet-evm/params"
-	"github.com/ava-labs/subnet-evm/precompile/allowlist"
-	"github.com/ava-labs/subnet-evm/precompile/contracts/deployerallowlist"
-	"github.com/ava-labs/subnet-evm/precompile/contracts/txallowlist"
-	"github.com/ava-labs/subnet-evm/precompile/contracts/warp"
-	"github.com/ava-labs/subnet-evm/precompile/precompileconfig"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
+	"github.com/DioneProtocol/subnet-evm/params"
+	"github.com/DioneProtocol/subnet-evm/precompile/allowlist"
+	"github.com/DioneProtocol/subnet-evm/precompile/contracts/deployerallowlist"
+	"github.com/DioneProtocol/subnet-evm/precompile/contracts/txallowlist"
+
+	// "github.com/ava-labs/subnet-evm/precompile/contracts/warp"
 	"github.com/ethereum/go-ethereum/common"
 )
 
-func ConfigureWarp(timestamp *uint64) warp.Config {
-	config := warp.Config{
-		QuorumNumerator: warp.WarpDefaultQuorumNumerator,
-	}
-	config.Upgrade = precompileconfig.Upgrade{
-		BlockTimestamp: timestamp,
-	}
-	return config
-}
+// func ConfigureWarp(timestamp *uint64) warp.Config {
+// 	return ConfigureWarpWithConfig(timestamp, DefaultVMConfig())
+// }
+
+// func ConfigureWarpWithConfig(timestamp *uint64, config *VMConfig) warp.Config {
+// 	if !config.EnableWarp {
+// 		// Return empty config when warp is disabled
+// 		return warp.Config{}
+// 	}
+
+// 	// Original warp configuration when enabled
+// 	warpConfig := warp.Config{
+// 		QuorumNumerator: warp.WarpDefaultQuorumNumerator,
+// 	}
+// 	// Note: Type mismatch between DioneProtocol and ava-labs packages
+// 	// This will need to be resolved when warp is actually enabled
+// 	// For now, return empty config to avoid compilation errors
+// 	return warpConfig
+// }
 
 // AddTeleporterAddressesToAllowLists adds teleporter-related addresses (main funded key, messenger
 // deploy key, relayer key) to the allow list of relevant enabled precompiles

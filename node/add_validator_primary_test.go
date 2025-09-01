@@ -11,16 +11,16 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/validator"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/validator"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/avalanche"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/constants"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/keychain"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/wallet"
-	"github.com/ava-labs/avalanchego/ids"
-	"github.com/ava-labs/avalanchego/utils/units"
-	"github.com/ava-labs/avalanchego/vms/secp256k1fx"
-	"github.com/ava-labs/avalanchego/wallet/subnet/primary"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/keychain"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/wallet"
+	"github.com/DioneProtocol/odysseygo/ids"
+	"github.com/DioneProtocol/odysseygo/utils/units"
+	"github.com/DioneProtocol/odysseygo/vms/secp256k1fx"
+	"github.com/DioneProtocol/odysseygo/wallet/subnet/primary"
 )
 
 func TestNodesValidatePrimaryNetwork(t *testing.T) {
@@ -48,10 +48,10 @@ func TestNodesValidatePrimaryNetwork(t *testing.T) {
 		// Validate Primary Network for 48 hours
 		Duration: 48 * time.Hour,
 		// Stake 2 AVAX
-		StakeAmount: 2 * units.Avax,
+		StakeAmount: 2 * units.Dione,
 	}
 
-	network := avalanche.FujiNetwork()
+	network := avalanche.TestnetNetwork()
 	keychain, err := keychain.NewKeychain(network, "PRIVATE_KEY_FILEPATH", nil)
 	require.NoError(err)
 
@@ -59,14 +59,14 @@ func TestNodesValidatePrimaryNetwork(t *testing.T) {
 		context.Background(),
 		&primary.WalletConfig{
 			URI:              network.Endpoint,
-			AVAXKeychain:     keychain.Keychain,
+			DIONEKeychain:    keychain.Keychain,
 			EthKeychain:      secp256k1fx.NewKeychain(),
-			PChainTxsToFetch: nil,
+			OChainTxsToFetch: nil,
 		},
 	)
 	require.NoError(err)
 
-	txID, err := node.ValidatePrimaryNetwork(avalanche.FujiNetwork(), validatorParams, wallet)
+	txID, err := node.ValidatePrimaryNetwork(avalanche.TestnetNetwork(), validatorParams, wallet)
 	require.NoError(err)
 
 	fmt.Printf("obtained tx id %s", txID.String())

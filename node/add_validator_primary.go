@@ -7,23 +7,23 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/validator"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/validator"
 
-	remoteconfig "github.com/ava-labs/avalanche-tooling-sdk-go/node/config"
+	remoteconfig "github.com/DioneProtocol/odyssey-tooling-sdk-go/node/config"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/constants"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/subnet"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/subnet"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/avalanche"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/utils"
-	"github.com/ava-labs/avalanchego/utils/crypto/bls"
-	"github.com/ava-labs/avalanchego/vms/platformvm/signer"
-	"github.com/ava-labs/avalanchego/vms/secp256k1fx"
-	"github.com/ava-labs/avalanchego/wallet/subnet/primary/common"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
+	"github.com/DioneProtocol/odysseygo/utils/crypto/bls"
+	"github.com/DioneProtocol/odysseygo/vms/omegavm/signer"
+	"github.com/DioneProtocol/odysseygo/vms/secp256k1fx"
+	"github.com/DioneProtocol/odysseygo/wallet/subnet/primary/common"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/wallet"
-	"github.com/ava-labs/avalanchego/ids"
-	"github.com/ava-labs/avalanchego/vms/platformvm/txs"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/wallet"
+	"github.com/DioneProtocol/odysseygo/ids"
+	"github.com/DioneProtocol/odysseygo/vms/omegavm/txs"
 	"golang.org/x/net/context"
 )
 
@@ -75,7 +75,7 @@ func (h *Node) ValidatePrimaryNetwork(
 		return ids.Empty, err
 	}
 
-	unsignedTx, err := wallet.P().Builder().NewAddPermissionlessValidatorTx(
+	unsignedTx, err := wallet.O().Builder().NewAddPermissionlessValidatorTx(
 		&txs.SubnetValidator{
 			Validator: txs.Validator{
 				NodeID: nodeID,
@@ -85,7 +85,7 @@ func (h *Node) ValidatePrimaryNetwork(
 			Subnet: ids.Empty,
 		},
 		proofOfPossession,
-		wallet.P().Builder().Context().AVAXAssetID,
+		wallet.O().DIONEAssetID(),
 		owner,
 		owner,
 		validatorParams.DelegationFee,
@@ -95,13 +95,13 @@ func (h *Node) ValidatePrimaryNetwork(
 	}
 
 	tx := txs.Tx{Unsigned: unsignedTx}
-	if err := wallet.P().Signer().Sign(context.Background(), &tx); err != nil {
+	if err := wallet.O().Signer().Sign(context.Background(), &tx); err != nil {
 		return ids.Empty, fmt.Errorf("error signing tx: %w", err)
 	}
 
 	ctx, cancel := utils.GetAPIContext()
 	defer cancel()
-	err = wallet.P().IssueTx(
+	err = wallet.O().IssueTx(
 		&tx,
 		common.WithContext(ctx),
 	)

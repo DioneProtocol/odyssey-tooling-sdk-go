@@ -6,12 +6,12 @@ import (
 	"context"
 	"errors"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/keychain"
-	"github.com/ava-labs/avalanchego/ids"
-	"github.com/ava-labs/avalanchego/utils/set"
-	"github.com/ava-labs/avalanchego/vms/secp256k1fx"
-	"github.com/ava-labs/avalanchego/wallet/subnet/primary"
-	"github.com/ava-labs/avalanchego/wallet/subnet/primary/common"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/keychain"
+	"github.com/DioneProtocol/odysseygo/ids"
+	"github.com/DioneProtocol/odysseygo/utils/set"
+	"github.com/DioneProtocol/odysseygo/vms/secp256k1fx"
+	"github.com/DioneProtocol/odysseygo/wallet/subnet/primary"
+	"github.com/DioneProtocol/odysseygo/wallet/subnet/primary/common"
 )
 
 var ErrNotReadyToCommit = errors.New("tx is not fully signed so can't be committed")
@@ -31,7 +31,7 @@ func New(ctx context.Context, config *primary.WalletConfig) (Wallet, error) {
 	return Wallet{
 		Wallet: wallet,
 		Keychain: keychain.Keychain{
-			Keychain: config.AVAXKeychain,
+			Keychain: config.DIONEKeychain,
 		},
 		config: config,
 	}, err

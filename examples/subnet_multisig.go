@@ -8,14 +8,14 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/avalanche"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/keychain"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/subnet"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/wallet"
-	"github.com/ava-labs/avalanchego/ids"
-	"github.com/ava-labs/avalanchego/utils/set"
-	"github.com/ava-labs/avalanchego/vms/secp256k1fx"
-	"github.com/ava-labs/avalanchego/wallet/subnet/primary"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/keychain"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/subnet"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/wallet"
+	"github.com/DioneProtocol/odysseygo/ids"
+	"github.com/DioneProtocol/odysseygo/utils/set"
+	"github.com/DioneProtocol/odysseygo/vms/secp256k1fx"
+	"github.com/DioneProtocol/odysseygo/wallet/subnet/primary"
 )
 
 func DeploySubnetMultiSig() {
@@ -23,7 +23,7 @@ func DeploySubnetMultiSig() {
 	// Create new Subnet EVM genesis
 	newSubnet, _ := subnet.New(&subnetParams)
 
-	network := avalanche.FujiNetwork()
+	network := avalanche.TestnetNetwork()
 
 	// Create three keys that will be used as control keys of the subnet
 	// NewKeychain will generate a new key pair in the provided path if no .pk file currently
@@ -62,9 +62,9 @@ func DeploySubnetMultiSig() {
 		context.Background(),
 		&primary.WalletConfig{
 			URI:              network.Endpoint,
-			AVAXKeychain:     keychainA.Keychain,
+			DIONEKeychain:    keychainA.Keychain,
 			EthKeychain:      secp256k1fx.NewKeychain(),
-			PChainTxsToFetch: nil,
+			OChainTxsToFetch: nil,
 		},
 	)
 
@@ -81,21 +81,21 @@ func DeploySubnetMultiSig() {
 		fmt.Errorf("error signing tx walletA: %w", err)
 	}
 
-	// we need to include subnetID in PChainTxsToFetch when creating second wallet
+	// we need to include subnetID in OChainTxsToFetch when creating second wallet
 	// so that the wallet can fetch the CreateSubnet P-chain transaction to be able to
 	// generate transactions.
 	walletB, _ := wallet.New(
 		context.Background(),
 		&primary.WalletConfig{
 			URI:              network.Endpoint,
-			AVAXKeychain:     keychainB.Keychain,
+			DIONEKeychain:    keychainB.Keychain,
 			EthKeychain:      secp256k1fx.NewKeychain(),
-			PChainTxsToFetch: set.Of(subnetID),
+			OChainTxsToFetch: set.Of(subnetID),
 		},
 	)
 
 	// sign with second wallet so that we have 2/2 threshold reached
-	if err := walletB.P().Signer().Sign(context.Background(), deployChainTx.PChainTx); err != nil {
+	if err := walletB.O().Signer().Sign(context.Background(), deployChainTx.PChainTx); err != nil {
 		fmt.Errorf("error signing tx walletB: %w", err)
 	}
 

@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/constants"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
 )
 
 // AvalanchegoTCPClient returns the connection to the node.

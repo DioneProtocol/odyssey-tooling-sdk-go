@@ -7,16 +7,14 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ava-labs/avalanchego/vms/platformvm"
-
-	"github.com/ava-labs/avalanche-tooling-sdk-go/avalanche"
-	"github.com/ava-labs/avalanchego/utils/crypto/secp256k1"
-	"github.com/ava-labs/avalanchego/utils/formatting"
-	"github.com/ava-labs/avalanchego/vms/components/verify"
-	"github.com/ava-labs/avalanchego/vms/secp256k1fx"
-
-	"github.com/ava-labs/avalanchego/ids"
-	"github.com/ava-labs/avalanchego/vms/platformvm/txs"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
+	"github.com/DioneProtocol/odysseygo/ids"
+	"github.com/DioneProtocol/odysseygo/utils/crypto/secp256k1"
+	"github.com/DioneProtocol/odysseygo/utils/formatting"
+	"github.com/DioneProtocol/odysseygo/vms/components/verify"
+	"github.com/DioneProtocol/odysseygo/vms/omegavm"
+	"github.com/DioneProtocol/odysseygo/vms/omegavm/txs"
+	"github.com/DioneProtocol/odysseygo/vms/secp256k1fx"
 )
 
 type TxKind int64
@@ -61,7 +59,7 @@ func (ms *Multisig) ToBytes() ([]byte, error) {
 	if ms.Undefined() {
 		return nil, ErrUndefinedTx
 	}
-	txBytes, err := txs.Codec.Marshal(txs.CodecVersion, ms.PChainTx)
+	txBytes, err := txs.Codec.Marshal(txs.Version, ms.PChainTx)
 	if err != nil {
 		return nil, fmt.Errorf("couldn't marshal signed tx: %w", err)
 	}
@@ -212,8 +210,8 @@ func (ms *Multisig) GetAuthSigners() ([]ids.ShortID, error) {
 		subnetAuth = unsignedTx.SubnetAuth
 	case *txs.TransformSubnetTx:
 		subnetAuth = unsignedTx.SubnetAuth
-	case *txs.TransferSubnetOwnershipTx:
-		subnetAuth = unsignedTx.SubnetAuth
+	// case *txs.TransferSubnetOwnershipTx:
+	// 	subnetAuth = unsignedTx.SubnetAuth
 	default:
 		return nil, fmt.Errorf("unexpected unsigned tx type %T", unsignedTx)
 	}
@@ -251,8 +249,8 @@ func (ms *Multisig) GetTxKind() (TxKind, error) {
 		return PChainTransformSubnetTx, nil
 	case *txs.AddPermissionlessValidatorTx:
 		return PChainAddPermissionlessValidatorTx, nil
-	case *txs.TransferSubnetOwnershipTx:
-		return PChainTransferSubnetOwnershipTx, nil
+	// case *txs.TransferSubnetOwnershipTx:
+	// 	return PChainTransferSubnetOwnershipTx, nil
 	default:
 		return Undefined, fmt.Errorf("unexpected unsigned tx type %T", unsignedTx)
 	}
@@ -276,8 +274,8 @@ func (ms *Multisig) GetNetworkID() (uint32, error) {
 		networkID = unsignedTx.NetworkID
 	case *txs.AddPermissionlessValidatorTx:
 		networkID = unsignedTx.NetworkID
-	case *txs.TransferSubnetOwnershipTx:
-		networkID = unsignedTx.NetworkID
+	// case *txs.TransferSubnetOwnershipTx:
+	// 	networkID = unsignedTx.NetworkID
 	default:
 		return 0, fmt.Errorf("unexpected unsigned tx type %T", unsignedTx)
 	}
@@ -317,8 +315,8 @@ func (ms *Multisig) GetBlockchainID() (ids.ID, error) {
 		blockchainID = unsignedTx.BlockchainID
 	case *txs.AddPermissionlessValidatorTx:
 		blockchainID = unsignedTx.BlockchainID
-	case *txs.TransferSubnetOwnershipTx:
-		blockchainID = unsignedTx.BlockchainID
+	// case *txs.TransferSubnetOwnershipTx:
+	// 	blockchainID = unsignedTx.BlockchainID
 	default:
 		return ids.Empty, fmt.Errorf("unexpected unsigned tx type %T", unsignedTx)
 	}
@@ -343,8 +341,8 @@ func (ms *Multisig) GetSubnetID() (ids.ID, error) {
 		subnetID = unsignedTx.Subnet
 	case *txs.AddPermissionlessValidatorTx:
 		subnetID = unsignedTx.Subnet
-	case *txs.TransferSubnetOwnershipTx:
-		subnetID = unsignedTx.Subnet
+	// case *txs.TransferSubnetOwnershipTx:
+	// 	subnetID = unsignedTx.Subnet
 	default:
 		return ids.Empty, fmt.Errorf("unexpected unsigned tx type %T", unsignedTx)
 	}
@@ -376,12 +374,16 @@ func (ms *Multisig) GetSubnetOwners() ([]ids.ShortID, uint32, error) {
 }
 
 func GetOwners(network avalanche.Network, subnetID ids.ID) ([]ids.ShortID, uint32, error) {
-	pClient := platformvm.NewClient(network.Endpoint)
+	pClient := omegavm.NewClient(network.Endpoint)
 	ctx := context.Background()
-	subnetResponse, err := pClient.GetSubnet(ctx, subnetID)
+	subnets, err := pClient.GetSubnets(ctx, []ids.ID{subnetID})
 	if err != nil {
 		return nil, 0, fmt.Errorf("subnet tx %s query error: %w", subnetID, err)
 	}
+	if len(subnets) == 0 {
+		return nil, 0, fmt.Errorf("subnet %s not found", subnetID)
+	}
+	subnetResponse := subnets[0]
 	controlKeys := subnetResponse.ControlKeys
 	threshold := subnetResponse.Threshold
 	return controlKeys, threshold, nil

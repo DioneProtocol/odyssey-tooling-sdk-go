@@ -1,4 +1,4 @@
-// Copyright (C) 2022, Ava Labs, Inc. All rights reserved.
+// Copyright (C) 2025, Dione Protocol, Inc. All rights reserved.
 // See the file LICENSE for licensing terms.
 package evm
 
@@ -7,12 +7,12 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/constants"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/utils"
-	"github.com/ava-labs/subnet-evm/accounts/abi/bind"
-	"github.com/ava-labs/subnet-evm/core/types"
-	"github.com/ava-labs/subnet-evm/ethclient"
-	"github.com/ava-labs/subnet-evm/rpc"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
+	"github.com/DioneProtocol/subnet-evm/accounts/abi/bind"
+	"github.com/DioneProtocol/subnet-evm/core/types"
+	"github.com/DioneProtocol/subnet-evm/ethclient"
+	"github.com/DioneProtocol/subnet-evm/rpc"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 )

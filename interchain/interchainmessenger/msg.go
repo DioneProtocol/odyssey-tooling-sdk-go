@@ -1,4 +1,4 @@
-// Copyright (C) 2022, Ava Labs, Inc. All rights reserved.
+// Copyright (C) 2025, Dione Protocol, Inc. All rights reserved.
 // See the file LICENSE for licensing terms.
 package interchainmessenger
 
@@ -7,9 +7,9 @@ import (
 	"math/big"
 	"time"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/evm"
-	"github.com/ava-labs/avalanchego/ids"
-	"github.com/ava-labs/subnet-evm/core/types"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/evm"
+	"github.com/DioneProtocol/odysseygo/ids"
+	"github.com/DioneProtocol/subnet-evm/core/types"
 	"github.com/ethereum/go-ethereum/common"
 )
 

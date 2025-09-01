@@ -9,9 +9,9 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/constants"
-	remoteconfig "github.com/ava-labs/avalanche-tooling-sdk-go/node/config"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/utils"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
+	remoteconfig "github.com/DioneProtocol/odyssey-tooling-sdk-go/node/config"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
 )
 
 // ValidateComposeFile validates a docker-compose file on a remote node.

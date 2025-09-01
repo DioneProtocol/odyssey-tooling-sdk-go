@@ -5,8 +5,8 @@ package installer
 import (
 	"strings"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/constants"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/node"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/node"
 )
 
 type NodeInstaller struct {

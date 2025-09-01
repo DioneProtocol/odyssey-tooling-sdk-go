@@ -7,8 +7,8 @@ import (
 	"context"
 	"fmt"
 
-	awsAPI "github.com/ava-labs/avalanche-tooling-sdk-go/cloud/aws"
-	gcpAPI "github.com/ava-labs/avalanche-tooling-sdk-go/cloud/gcp"
+	awsAPI "github.com/DioneProtocol/odyssey-tooling-sdk-go/cloud/aws"
+	gcpAPI "github.com/DioneProtocol/odyssey-tooling-sdk-go/cloud/gcp"
 )
 
 // Destroy destroys a node.

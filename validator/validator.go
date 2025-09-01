@@ -6,7 +6,7 @@ package validator
 import (
 	"time"
 
-	"github.com/ava-labs/avalanchego/ids"
+	"github.com/DioneProtocol/odysseygo/ids"
 )
 
 type PrimaryNetworkValidatorParams struct {
@@ -25,7 +25,7 @@ type PrimaryNetworkValidatorParams struct {
 
 	// DelegationFee is the percent fee this validator will charge when others delegate stake to it
 	// When DelegationFee is not set, the minimum delegation fee for the specified network will be set
-	// For more information on delegation fee, please head to https://docs.avax.network/nodes/validate/node-validator#delegation-fee-rate
+	// For more information on delegation fee, please head to https://docs.dione.network/nodes/validate/node-validator#delegation-fee-rate
 	DelegationFee uint32
 }
 

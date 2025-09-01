@@ -11,7 +11,7 @@ import (
 
 	"golang.org/x/exp/slices"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/constants"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
 	"golang.org/x/crypto/ssh/agent"
 )
 

@@ -8,14 +8,14 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/validator"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/validator"
 
 	"golang.org/x/net/context"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/multisig"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/wallet"
-	"github.com/ava-labs/avalanchego/ids"
-	"github.com/ava-labs/avalanchego/vms/platformvm/txs"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/multisig"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/wallet"
+	"github.com/DioneProtocol/odysseygo/ids"
+	"github.com/DioneProtocol/odysseygo/vms/omegavm/txs"
 )
 
 var (
@@ -56,12 +56,12 @@ func (c *Subnet) AddValidator(wallet wallet.Wallet, validatorInput validator.Sub
 		Subnet: c.SubnetID,
 	}
 
-	unsignedTx, err := wallet.P().Builder().NewAddSubnetValidatorTx(validator)
+	unsignedTx, err := wallet.O().Builder().NewAddSubnetValidatorTx(validator)
 	if err != nil {
 		return nil, fmt.Errorf("error building tx: %w", err)
 	}
 	tx := txs.Tx{Unsigned: unsignedTx}
-	if err := wallet.P().Signer().Sign(context.Background(), &tx); err != nil {
+	if err := wallet.O().Signer().Sign(context.Background(), &tx); err != nil {
 		return nil, fmt.Errorf("error signing tx: %w", err)
 	}
 	return multisig.New(&tx), nil

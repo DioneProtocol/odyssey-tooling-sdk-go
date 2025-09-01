@@ -6,7 +6,7 @@ package services
 import (
 	"embed"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/utils"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
 )
 
 //go:embed templates/*

@@ -8,11 +8,11 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/avalanche"
-	awsAPI "github.com/ava-labs/avalanche-tooling-sdk-go/cloud/aws"
-	gcpAPI "github.com/ava-labs/avalanche-tooling-sdk-go/cloud/gcp"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/constants"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/utils"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
+	awsAPI "github.com/DioneProtocol/odyssey-tooling-sdk-go/cloud/aws"
+	gcpAPI "github.com/DioneProtocol/odyssey-tooling-sdk-go/cloud/gcp"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
 	"github.com/aws/aws-sdk-go-v2/service/ec2/types"
 )
 
@@ -57,7 +57,7 @@ type NodeParams struct {
 // - To set up AWS credentials, more info can be found at https://docs.aws.amazon.com/sdkref/latest/guide/file-format.html#file-format-creds
 // Location on where to store AWS credentials file can be found at https://docs.aws.amazon.com/sdkref/latest/guide/file-location.html
 //
-// - To set up GCP credentials, more info can be found at https://docs.avax.network/tooling/cli-create-nodes/create-a-validator-gcp#prerequisites
+// - To set up GCP credentials, more info can be found at https://docs.dione.network/tooling/cli-create-nodes/create-a-validator-gcp#prerequisites
 //
 // When CreateNodes is used to create Avalanche Validator / API Nodes, it will:
 //   - Launch the specified number of validator nodes on AWS / GCP
@@ -76,7 +76,7 @@ type NodeParams struct {
 // metrics relevant to any Validator & API nodes that the monitoring node is linked to as well
 // as a centralized logs for the X/P/C Chain and Subnet logs for the Validator & API nodes.
 //
-// An example on how the dashboard and logs look like can be found at https://docs.avax.network/tooling/cli-create-nodes/create-a-validator-aws
+// An example on how the dashboard and logs look like can be found at https://docs.dione.network/tooling/cli-create-nodes/create-a-validator-aws
 //
 // To enable centralized Grafana Dashboard and Logs, monitoring nodes will have to be linked to the
 // Validator / API nodes by calling MonitorNodes function.

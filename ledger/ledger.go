@@ -5,13 +5,13 @@ package ledger
 import (
 	"fmt"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/avalanche"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/utils"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
+	"github.com/DioneProtocol/odysseygo/vms/omegavm"
 
-	"github.com/ava-labs/avalanchego/utils/crypto/keychain"
-	"github.com/ava-labs/avalanchego/utils/crypto/ledger"
-	"github.com/ava-labs/avalanchego/utils/formatting/address"
-	"github.com/ava-labs/avalanchego/vms/platformvm"
+	"github.com/DioneProtocol/odysseygo/utils/crypto/keychain"
+	"github.com/DioneProtocol/odysseygo/utils/crypto/ledger"
+	"github.com/DioneProtocol/odysseygo/utils/formatting/address"
 )
 
 const (
@@ -77,7 +77,7 @@ func (dev *LedgerDevice) FindFunds(
 	amount uint64,
 	maxIndex uint32,
 ) ([]uint32, error) {
-	pClient := platformvm.NewClient(network.Endpoint)
+	pClient := omegavm.NewClient(network.Endpoint)
 	totalBalance := uint64(0)
 	indices := []uint32{}
 	if maxIndex == 0 {

@@ -8,10 +8,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/constants"
-	remoteconfig "github.com/ava-labs/avalanche-tooling-sdk-go/node/config"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/utils"
-	"github.com/ava-labs/avalanchego/api/info"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
+	remoteconfig "github.com/DioneProtocol/odyssey-tooling-sdk-go/node/config"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
+	"github.com/DioneProtocol/odysseygo/api/info"
 )
 
 func (h *Node) GetAvalancheGoVersion() (string, error) {

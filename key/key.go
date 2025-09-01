@@ -9,10 +9,10 @@ import (
 	"errors"
 	"sort"
 
-	"github.com/ava-labs/avalanchego/ids"
-	"github.com/ava-labs/avalanchego/vms/components/avax"
-	"github.com/ava-labs/avalanchego/vms/platformvm/txs"
-	"github.com/ava-labs/avalanchego/vms/secp256k1fx"
+	"github.com/DioneProtocol/odysseygo/ids"
+	"github.com/DioneProtocol/odysseygo/vms/components/dione"
+	"github.com/DioneProtocol/odysseygo/vms/omegavm/txs"
+	"github.com/DioneProtocol/odysseygo/vms/secp256k1fx"
 )
 
 var (
@@ -36,9 +36,9 @@ type Key interface {
 	// If target amount is specified, it only uses the
 	// outputs until the total spending is below the target
 	// amount.
-	Spends(outputs []*avax.UTXO, opts ...OpOption) (
+	Spends(outputs []*dione.UTXO, opts ...OpOption) (
 		totalBalanceToSpend uint64,
-		inputs []*avax.TransferableInput,
+		inputs []*dione.TransferableInput,
 		signers [][]ids.ShortID,
 	)
 	// Sign generates [numSigs] signatures and attaches them to [pTx].
@@ -80,7 +80,7 @@ func WithFeeDeduct(fee uint64) OpOption {
 }
 
 type innerSortTransferableInputsWithSigners struct {
-	ins     []*avax.TransferableInput
+	ins     []*dione.TransferableInput
 	signers [][]ids.ShortID
 }
 
@@ -110,7 +110,7 @@ func (ins *innerSortTransferableInputsWithSigners) Swap(i, j int) {
 // SortTransferableInputsWithSigners sorts the inputs and signers based on the
 // input's utxo ID.
 //
-// This is based off of (generics?): https://github.com/ava-labs/avalanchego/blob/224c9fd23d41839201dd0275ac864a845de6e93e/vms/components/avax/transferables.go#L202
-func SortTransferableInputsWithSigners(ins []*avax.TransferableInput, signers [][]ids.ShortID) {
+// This is based off of (generics?): https://github.com/DioneProtocol/odysseygo/blob/224c9fd23d41839201dd0275ac864a845de6e93e/vms/components/dione/transferables.go#L202
+func SortTransferableInputsWithSigners(ins []*dione.TransferableInput, signers [][]ids.ShortID) {
 	sort.Sort(&innerSortTransferableInputsWithSigners{ins: ins, signers: signers})
 }

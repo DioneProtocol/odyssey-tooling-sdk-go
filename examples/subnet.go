@@ -9,18 +9,18 @@ import (
 	"math/big"
 	"time"
 
-	"github.com/ava-labs/avalanchego/utils/formatting/address"
-	"github.com/ava-labs/avalanchego/utils/set"
+	"github.com/DioneProtocol/odysseygo/utils/formatting/address"
+	"github.com/DioneProtocol/odysseygo/utils/set"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/avalanche"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/keychain"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/subnet"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/vm"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/wallet"
-	"github.com/ava-labs/avalanchego/vms/secp256k1fx"
-	"github.com/ava-labs/avalanchego/wallet/subnet/primary"
-	"github.com/ava-labs/subnet-evm/core"
-	"github.com/ava-labs/subnet-evm/params"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/keychain"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/subnet"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/vm"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/wallet"
+	"github.com/DioneProtocol/odysseygo/vms/secp256k1fx"
+	"github.com/DioneProtocol/odysseygo/wallet/subnet/primary"
+	"github.com/DioneProtocol/subnet-evm/core"
+	"github.com/DioneProtocol/subnet-evm/params"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -46,7 +46,7 @@ func DeploySubnet() {
 	// Create new Subnet EVM genesis
 	newSubnet, _ := subnet.New(&subnetParams)
 
-	network := avalanche.FujiNetwork()
+	network := avalanche.TestnetNetwork()
 
 	// Key that will be used for paying the transaction fees of CreateSubnetTx and CreateChainTx
 	// NewKeychain will generate a new key pair in the provided path if no .pk file currently
@@ -76,9 +76,9 @@ func DeploySubnet() {
 		context.Background(),
 		&primary.WalletConfig{
 			URI:              network.Endpoint,
-			AVAXKeychain:     keychain.Keychain,
+			DIONEKeychain:    keychain.Keychain,
 			EthKeychain:      secp256k1fx.NewKeychain(),
-			PChainTxsToFetch: nil,
+			OChainTxsToFetch: nil,
 		},
 	)
 
@@ -104,7 +104,7 @@ func DeploySubnet() {
 func DeploySubnetWithLedger() {
 	subnetParams := getDefaultSubnetEVMGenesis()
 	newSubnet, _ := subnet.New(&subnetParams)
-	network := avalanche.FujiNetwork()
+	network := avalanche.TestnetNetwork()
 
 	// Create keychain with a specific Ledger address. More than 1 address can be used.
 	//
@@ -122,7 +122,7 @@ func DeploySubnetWithLedger() {
 	// avalanche key list --ledger [0,1,2,3,4]
 	// The example command above will list the first five addresses in your Ledger
 	//
-	// To transfer funds between addresses in Ledger, refer to https://docs.avax.network/tooling/cli-transfer-funds/how-to-transfer-funds
+	// To transfer funds between addresses in Ledger, refer to https://docs.dione.network/tooling/cli-transfer-funds/how-to-transfer-funds
 	ledgerInfo := keychain.LedgerParams{
 		LedgerAddresses: []string{"P-fujixxxxxxxxx"},
 	}
@@ -134,9 +134,9 @@ func DeploySubnetWithLedger() {
 		context.Background(),
 		&primary.WalletConfig{
 			URI:              network.Endpoint,
-			AVAXKeychain:     keychainA.Keychain,
+			DIONEKeychain:    keychainA.Keychain,
 			EthKeychain:      secp256k1fx.NewKeychain(),
-			PChainTxsToFetch: nil,
+			OChainTxsToFetch: nil,
 		},
 	)
 
@@ -172,19 +172,19 @@ func DeploySubnetWithLedger() {
 	}
 	keychainB, _ := keychain.NewKeychain(network, "", &ledgerInfoB)
 
-	// include subnetID in PChainTxsToFetch when creating second wallet
+	// include subnetID in OChainTxsToFetch when creating second wallet
 	walletB, _ := wallet.New(
 		context.Background(),
 		&primary.WalletConfig{
 			URI:              network.Endpoint,
-			AVAXKeychain:     keychainB.Keychain,
+			DIONEKeychain:    keychainB.Keychain,
 			EthKeychain:      secp256k1fx.NewKeychain(),
-			PChainTxsToFetch: set.Of(subnetID),
+			OChainTxsToFetch: set.Of(subnetID),
 		},
 	)
 
 	// Sign with our Subnet auth key
-	_ = walletB.P().Signer().Sign(context.Background(), deployChainTx.PChainTx)
+	_ = walletB.O().Signer().Sign(context.Background(), deployChainTx.PChainTx)
 
 	// Now that the number of signatures have been met, we can commit our transaction
 	// on chain

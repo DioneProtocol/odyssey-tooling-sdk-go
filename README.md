@@ -57,10 +57,10 @@ import (
 	"github.com/ava-labs/avalanche-tooling-sdk-go/teleporter"
 	"github.com/ava-labs/avalanche-tooling-sdk-go/vm"
 	"github.com/ava-labs/avalanche-tooling-sdk-go/wallet"
-	"github.com/ava-labs/avalanchego/vms/secp256k1fx"
-	"github.com/ava-labs/avalanchego/wallet/subnet/primary"
-	"github.com/ava-labs/subnet-evm/core"
-	"github.com/ava-labs/subnet-evm/params"
+	"github.com/DioneProtocol/odysseygo/vms/secp256k1fx"
+	"github.com/DioneProtocol/odysseygo/wallet/subnet/primary"
+	"github.com/DioneProtocol/subnet-evm/core"
+	"github.com/DioneProtocol/subnet-evm/params"
 	"github.com/ethereum/go-ethereum/common"
 	"math/big"
 	"time"
@@ -73,7 +73,7 @@ func DeploySubnet() {
 	// Create new Subnet EVM genesis
 	newSubnet, _ := subnet.New(&subnetParams)
 
-	network := avalanche.FujiNetwork()
+	network := avalanche.TestnetNetwork()
 
 	// Key that will be used for paying the transaction fees of CreateSubnetTx and CreateChainTx
 	// NewKeychain will generate a new key pair in the provided path if no .pk file currently
@@ -103,9 +103,9 @@ func DeploySubnet() {
 		context.Background(),
 		&primary.WalletConfig{
 			URI:              network.Endpoint,
-			AVAXKeychain:     keychain.Keychain,
+			DIONEKeychain:     keychain.Keychain,
 			EthKeychain:      secp256k1fx.NewKeychain(),
-			PChainTxsToFetch: nil,
+			OChainTxsToFetch: nil,
 		},
 	)
 
@@ -180,7 +180,7 @@ func AddSubnetValidator() {
 	//
 	// In our example, this Key is also the control Key to the Subnet, so we are going to use
 	// this key to also sign the Subnet AddValidator tx
-	network := avalanche.FujiNetwork()
+	network := avalanche.TestnetNetwork()
 	keychain, err := keychain.NewKeychain(network, "PRIVATE_KEY_FILEPATH", nil)
 	if err != nil {
 		panic(err)
@@ -190,9 +190,9 @@ func AddSubnetValidator() {
 		context.Background(),
 		&primary.WalletConfig{
 			URI:              network.Endpoint,
-			AVAXKeychain:     keychain.Keychain,
+			DIONEKeychain:     keychain.Keychain,
 			EthKeychain:      secp256k1fx.NewKeychain(),
-			PChainTxsToFetch: set.Of(subnetID),
+			OChainTxsToFetch: set.Of(subnetID),
 		},
 	)
 	if err != nil {
@@ -259,7 +259,7 @@ validating Primary Network / Subnet will be available in the next Avalanche Tool
 This examples also shows how to create an Avalanche Monitoring Node, which enables you to have a 
 centralized Grafana Dashboard where you can view metrics relevant to any Validator & API nodes that
 the monitoring node is linked to as well as a centralized logs for the X/P/C Chain and Subnet logs 
-for the Validator & API nodes. An example on how the dashboard and logs look like can be found at https://docs.avax.network/tooling/cli-create-nodes/create-a-validator-aws
+for the Validator & API nodes. An example on how the dashboard and logs look like can be found at https://docs.dione.network/tooling/cli-create-nodes/create-a-validator-aws
 
 More examples can be found at examples directory.
 
@@ -327,7 +327,7 @@ func CreateNodes() {
 			CloudParams:         cp,
 			Count:               2,
 			Roles:               []node.SupportedRole{node.Validator},
-			Network:             avalanche.FujiNetwork(),
+			Network:             avalanche.TestnetNetwork(),
 			AvalancheGoVersion:  avalancheGoVersion,
 			UseStaticIP:         false,
 			SSHPrivateKeyPath:   sshPrivateKeyPath,
@@ -369,7 +369,7 @@ func CreateNodes() {
 	// Monitoring node enables you to have a centralized Grafana Dashboard where you can view
 	// metrics relevant to any Validator & API nodes that the monitoring node is linked to as well
 	// as a centralized logs for the X/P/C Chain and Subnet logs for the Validator & API nodes.
-	// An example on how the dashboard and logs look like can be found at https://docs.avax.network/tooling/cli-create-nodes/create-a-validator-aws
+	// An example on how the dashboard and logs look like can be found at https://docs.dione.network/tooling/cli-create-nodes/create-a-validator-aws
 	monitoringHosts, err := node.CreateNodes(ctx,
 		&node.NodeParams{
 			CloudParams:       cp,
@@ -415,11 +415,11 @@ func ValidatePrimaryNetwork() {
 		// Validate Primary Network for 48 hours
 		Duration: 48 * time.Hour,
 		// Stake 2 AVAX
-		StakeAmount: 2 * units.Avax,
+		StakeAmount: 2 * units.Dione,
 	}
 
 	// Key that will be used for paying the transaction fee of AddValidator Tx
-	network := avalanche.FujiNetwork()
+	network := avalanche.TestnetNetwork()
 	keychain, err := keychain.NewKeychain(network, "PRIVATE_KEY_FILEPATH", nil)
 	if err != nil {
 		panic(err)
@@ -429,16 +429,16 @@ func ValidatePrimaryNetwork() {
 		context.Background(),
 		&primary.WalletConfig{
 			URI:              network.Endpoint,
-			AVAXKeychain:     keychain.Keychain,
+			DIONEKeychain:     keychain.Keychain,
 			EthKeychain:      secp256k1fx.NewKeychain(),
-			PChainTxsToFetch: nil,
+			OChainTxsToFetch: nil,
 		},
 	)
 	if err != nil {
 		panic(err)
 	}
 
-	txID, err := node.ValidatePrimaryNetwork(avalanche.FujiNetwork(), validatorParams, wallet)
+	txID, err := node.ValidatePrimaryNetwork(avalanche.TestnetNetwork(), validatorParams, wallet)
 	if err != nil {
 		panic(err)
 	}

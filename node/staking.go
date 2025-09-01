@@ -7,15 +7,15 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/constants"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/utils"
-	"github.com/ava-labs/avalanchego/ids"
-	"github.com/ava-labs/avalanchego/staking"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
+	"github.com/DioneProtocol/odysseygo/ids"
+	"github.com/DioneProtocol/odysseygo/staking"
 )
 
 // ProvideStakingFiles generates the files needed to validate the primary network:
-//   - staker.crt, staker.key, more information can be found at https://docs.avax.network/nodes/validate/how-to-stake#secret-management
-//   - The file containing the node's BLS information: signer.key (more information can be found at https://docs.avax.network/cross-chain/avalanche-warp-messaging/deep-dive#bls-multi-signatures-with-public-key-aggregation)
+//   - staker.crt, staker.key, more information can be found at https://docs.dione.network/nodes/validate/how-to-stake#secret-management
+//   - The file containing the node's BLS information: signer.key (more information can be found at https://docs.dione.network/cross-chain/avalanche-warp-messaging/deep-dive#bls-multi-signatures-with-public-key-aggregation)
 //
 // and stores them in the provided directory in argument in local machine
 // and subsequently uploads these files into the remote host in /home/ubuntu/.avalanchego/staking/

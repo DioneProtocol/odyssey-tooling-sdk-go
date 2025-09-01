@@ -6,9 +6,9 @@ import (
 	"encoding/pem"
 	"fmt"
 
-	"github.com/ava-labs/avalanchego/ids"
-	"github.com/ava-labs/avalanchego/staking"
-	"github.com/ava-labs/avalanchego/utils/crypto/bls"
+	"github.com/DioneProtocol/odysseygo/ids"
+	"github.com/DioneProtocol/odysseygo/staking"
+	"github.com/DioneProtocol/odysseygo/utils/crypto/bls"
 )
 
 func NewBlsSecretKeyBytes() ([]byte, error) {

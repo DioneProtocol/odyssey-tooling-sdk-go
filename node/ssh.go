@@ -16,12 +16,12 @@ import (
 	"text/template"
 	"time"
 
-	awsAPI "github.com/ava-labs/avalanche-tooling-sdk-go/cloud/aws"
+	awsAPI "github.com/DioneProtocol/odyssey-tooling-sdk-go/cloud/aws"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/constants"
-	remoteconfig "github.com/ava-labs/avalanche-tooling-sdk-go/node/config"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/node/monitoring"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/utils"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
+	remoteconfig "github.com/DioneProtocol/odyssey-tooling-sdk-go/node/config"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/node/monitoring"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
 )
 
 type scriptInputs struct {

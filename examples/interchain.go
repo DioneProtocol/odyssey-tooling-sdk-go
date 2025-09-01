@@ -5,22 +5,24 @@ package examples
 
 import (
 	"fmt"
-	"math/big"
+	// "math/big"
 	"os"
-	"path/filepath"
+	// "path/filepath"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/utils"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/avalanche"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/constants"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/evm"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/interchain/interchainmessenger"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/interchain/relayer"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/interchain/relayer/localrelayer"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/key"
-	"github.com/ava-labs/avalanchego/ids"
-	"github.com/ava-labs/avalanchego/utils/logging"
-	"github.com/ava-labs/awm-relayer/config"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/evm"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/interchain/interchainmessenger"
+
+	// "github.com/DioneProtocol/odyssey-tooling-sdk-go/interchain/relayer"
+	// "github.com/DioneProtocol/odyssey-tooling-sdk-go/interchain/relayer/localrelayer"
+	// "github.com/DioneProtocol/odyssey-tooling-sdk-go/key"
+	"github.com/DioneProtocol/odysseygo/ids"
+
+	// "github.com/DioneProtocol/odysseygo/utils/logging"
+	// "github.com/ava-labs/awm-relayer/config"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -43,126 +45,126 @@ func InterchainExample(
 		return fmt.Errorf("teleporter functionality is disabled. Set constants.TeleporterEnabled = true to enable")
 	}
 
-	// Deploy Interchain Messenger (ICM)
-	// More information: https://github.com/ava-labs/teleporter
-	fmt.Println("Deploying Interchain Messenger")
-	chain1RegistryAddress, chain1MessengerAddress, chain2RegistryAddress, chain2MessengerAddress, err := SetupICM(
-		chain1RPC,
-		chain1PK,
-		chain2RPC,
-		chain2PK,
-	)
-	if err != nil {
-		return err
-	}
+	// // Deploy Interchain Messenger (ICM)
+	// // More information: https://github.com/ava-labs/teleporter
+	// fmt.Println("Deploying Interchain Messenger")
+	// chain1RegistryAddress, chain1MessengerAddress, chain2RegistryAddress, chain2MessengerAddress, err := SetupICM(
+	// 	chain1RPC,
+	// 	chain1PK,
+	// 	chain2RPC,
+	// 	chain2PK,
+	// )
+	// if err != nil {
+	// 	return err
+	// }
 
-	// Create keys for relayer operations: pay fees and receive rewards
-	// At destination blockchain, the relayer needs to pay fees for smart contract
-	// calls used to deliver messages. For that, it needs information on properly
-	// funded private keys at destination.
-	// Besides this, some source blockchain may provide incentives to relayers
-	// that send their messages. For that, the relayer needs to be configured with
-	// the address that will receive such payments at source.
-	// More information: https: //github.com/ava-labs/awm-relayer/blob/main/relayer/README.md
-	chain1RelayerKey, err := key.NewSoft()
-	if err != nil {
-		return err
-	}
-	chain2RelayerKey, err := key.NewSoft()
-	if err != nil {
-		return err
-	}
+	// // Create keys for relayer operations: pay fees and receive rewards
+	// // At destination blockchain, the relayer needs to pay fees for smart contract
+	// // calls used to deliver messages. For that, it needs information on properly
+	// // funded private keys at destination.
+	// // Besides this, some source blockchain may provide incentives to relayers
+	// // that send their messages. For that, the relayer needs to be configured with
+	// // the address that will receive such payments at source.
+	// // More information: https: //github.com/ava-labs/awm-relayer/blob/main/relayer/README.md
+	// chain1RelayerKey, err := key.NewSoft()
+	// if err != nil {
+	// 	return err
+	// }
+	// chain2RelayerKey, err := key.NewSoft()
+	// if err != nil {
+	// 	return err
+	// }
 
-	// Creates relayer config for the two chains
-	// The relayer can be configured to listed for new ICM messages
-	// from a set of source blockchains, and then deliver those
-	// to a set of destination blockchains.
-	// Here we are configuring chain1 and chain2 both as source
-	// and as destination, so we can send messages in any direction.
-	relayerConfigPath := filepath.Join(relayerDir, "config.json")
-	relayerStorageDir := filepath.Join(relayerDir, "storage")
-	relayerConfig, relayerBytes, err := SetupRelayerConf(
-		relayerStorageDir,
-		network,
-		chain1RPC,
-		chain1SubnetID,
-		chain1BlockchainID,
-		chain1RegistryAddress,
-		chain1MessengerAddress,
-		chain1RelayerKey,
-		chain2RPC,
-		chain2SubnetID,
-		chain2BlockchainID,
-		chain2RegistryAddress,
-		chain2MessengerAddress,
-		chain2RelayerKey,
-	)
-	if err != nil {
-		return err
-	}
-	if err := os.WriteFile(relayerConfigPath, relayerBytes, constants.WriteReadReadPerms); err != nil {
-		return err
-	}
-	fmt.Printf("Generated relayer conf on %s\n", relayerConfigPath)
+	// // Creates relayer config for the two chains
+	// // The relayer can be configured to listed for new ICM messages
+	// // from a set of source blockchains, and then deliver those
+	// // to a set of destination blockchains.
+	// // Here we are configuring chain1 and chain2 both as source
+	// // and as destination, so we can send messages in any direction.
+	// relayerConfigPath := filepath.Join(relayerDir, "config.json")
+	// relayerStorageDir := filepath.Join(relayerDir, "storage")
+	// relayerConfig, relayerBytes, err := SetupRelayerConf(
+	// 	relayerStorageDir,
+	// 	network,
+	// 	chain1RPC,
+	// 	chain1SubnetID,
+	// 	chain1BlockchainID,
+	// 	chain1RegistryAddress,
+	// 	chain1MessengerAddress,
+	// 	chain1RelayerKey,
+	// 	chain2RPC,
+	// 	chain2SubnetID,
+	// 	chain2BlockchainID,
+	// 	chain2RegistryAddress,
+	// 	chain2MessengerAddress,
+	// 	chain2RelayerKey,
+	// )
+	// if err != nil {
+	// 	return err
+	// }
+	// if err := os.WriteFile(relayerConfigPath, relayerBytes, constants.WriteReadReadPerms); err != nil {
+	// 	return err
+	// }
+	// fmt.Printf("Generated relayer conf on %s\n", relayerConfigPath)
 
-	// Fund each relayer key with 10 TOKENs
-	// Where TOKEN is the native gas token of each blockchain
-	// Assumes that the TOKEN decimals are 18, so, this equals
-	// to 1e18 of the smallest gas amount in each chain
-	fmt.Printf("Funding relayer keys %s, %s\n", chain1RelayerKey.C(), chain2RelayerKey.C())
-	desiredRelayerBalance := big.NewInt(0).Mul(big.NewInt(1e18), big.NewInt(10))
-	// chain1PK will have a balance 10 native gas tokens on chain.
-	if err := relayer.FundRelayer(
-		relayerConfig,
-		chain1BlockchainID,
-		chain1PK,
-		nil,
-		desiredRelayerBalance,
-	); err != nil {
-		return err
-	}
-	// chain2PK will have a balance 10 native gas tokens on chain2
-	if err := relayer.FundRelayer(
-		relayerConfig,
-		chain2BlockchainID,
-		chain2PK,
-		nil,
-		desiredRelayerBalance,
-	); err != nil {
-		return err
-	}
+	// // Fund each relayer key with 10 TOKENs
+	// // Where TOKEN is the native gas token of each blockchain
+	// // Assumes that the TOKEN decimals are 18, so, this equals
+	// // to 1e18 of the smallest gas amount in each chain
+	// fmt.Printf("Funding relayer keys %s, %s\n", chain1RelayerKey.C(), chain2RelayerKey.C())
+	// desiredRelayerBalance := big.NewInt(0).Mul(big.NewInt(1e18), big.NewInt(10))
+	// // chain1PK will have a balance 10 native gas tokens on chain.
+	// if err := relayer.FundRelayer(
+	// 	relayerConfig,
+	// 	chain1BlockchainID,
+	// 	chain1PK,
+	// 	nil,
+	// 	desiredRelayerBalance,
+	// ); err != nil {
+	// 	return err
+	// }
+	// // chain2PK will have a balance 10 native gas tokens on chain2
+	// if err := relayer.FundRelayer(
+	// 	relayerConfig,
+	// 	chain2BlockchainID,
+	// 	chain2PK,
+	// 	nil,
+	// 	desiredRelayerBalance,
+	// ); err != nil {
+	// 	return err
+	// }
 
-	// install and execute a relayer on localhost
-	// also wait for proper initialization
-	relayerLogPath := filepath.Join(relayerDir, "logs.txt")
-	fmt.Printf("Executing local relayer with logs %s\n", relayerLogPath)
-	pid, _, err := StartLocalRelayer(
-		relayerConfigPath,
-		relayerLogPath,
-		relayerDir,
-	)
-	if err != nil {
-		return err
-	}
+	// // install and execute a relayer on localhost
+	// // also wait for proper initialization
+	// relayerLogPath := filepath.Join(relayerDir, "logs.txt")
+	// fmt.Printf("Executing local relayer with logs %s\n", relayerLogPath)
+	// pid, _, err := StartLocalRelayer(
+	// 	relayerConfigPath,
+	// 	relayerLogPath,
+	// 	relayerDir,
+	// )
+	// if err != nil {
+	// 	return err
+	// }
 
-	// defer stopping relayer and cleaning up
-	defer func() { _ = localrelayer.Cleanup(pid, "", relayerStorageDir) }()
+	// // defer stopping relayer and cleaning up
+	// defer func() { _ = localrelayer.Cleanup(pid, "", relayerStorageDir) }()
 
-	// send a message from chain1 to chain2
-	fmt.Println("Verifying message delivery")
-	if err := TestMessageDelivery(
-		chain1RPC,
-		chain1PK,
-		chain1MessengerAddress,
-		chain2BlockchainID,
-		chain2RPC,
-		chain2MessengerAddress,
-		[]byte("hello world"),
-	); err != nil {
-		return err
-	}
+	// // send a message from chain1 to chain2
+	// fmt.Println("Verifying message delivery")
+	// if err := TestMessageDelivery(
+	// 	chain1RPC,
+	// 	chain1PK,
+	// 	chain1MessengerAddress,
+	// 	chain2BlockchainID,
+	// 	chain2RPC,
+	// 	chain2MessengerAddress,
+	// 	[]byte("hello world"),
+	// ); err != nil {
+	// 	return err
+	// }
 
-	fmt.Println("Message successfully delivered")
+	// fmt.Println("Message successfully delivered")
 
 	return nil
 }
@@ -206,84 +208,84 @@ func SetupICM(
 	return chain1RegistryAddress, chain1MessengerAddress, chain2RegistryAddress, chain2MessengerAddress, nil
 }
 
-func SetupRelayerConf(
-	storageDir string,
-	network avalanche.Network,
-	chain1RPC string,
-	chain1SubnetID ids.ID,
-	chain1BlockchainID ids.ID,
-	chain1RegistryAddress string,
-	chain1MessengerAddress string,
-	chain1RelayerKey *key.SoftKey,
-	chain2RPC string,
-	chain2SubnetID ids.ID,
-	chain2BlockchainID ids.ID,
-	chain2RegistryAddress string,
-	chain2MessengerAddress string,
-	chain2RelayerKey *key.SoftKey,
-) (*config.Config, []byte, error) {
-	// Create a base relayer config
-	config := relayer.CreateBaseRelayerConfig(
-		logging.Info.LowerString(),
-		storageDir,
-		0,
-		network,
-	)
-	// Add blockchain chain1 to the relayer config,
-	// setting it both as source and as destination.
-	// So the relayer will both listed for new messages in it,
-	// and send to it new messages from other blockchains.
-	relayer.AddBlockchainToRelayerConfig(
-		config,
-		chain1RPC,
-		"",
-		chain1SubnetID,
-		chain1BlockchainID,
-		chain1RegistryAddress,
-		chain1MessengerAddress,
-		chain1RelayerKey.C(),
-		chain1RelayerKey.PrivKeyHex(),
-	)
-	// Add blockchain chain2 to the relayer config,
-	// setting it both as source and as destination.
-	// So the relayer will both listed for new messages in it,
-	// and send to it new messages from other blockchains.
-	relayer.AddBlockchainToRelayerConfig(
-		config,
-		chain2RPC,
-		"",
-		chain2SubnetID,
-		chain2BlockchainID,
-		chain2RegistryAddress,
-		chain2MessengerAddress,
-		chain2RelayerKey.C(),
-		chain2RelayerKey.PrivKeyHex(),
-	)
-	bs, err := relayer.SerializeRelayerConfig(config)
-	return config, bs, err
-}
+// func SetupRelayerConf(
+// 	storageDir string,
+// 	network avalanche.Network,
+// 	chain1RPC string,
+// 	chain1SubnetID ids.ID,
+// 	chain1BlockchainID ids.ID,
+// 	chain1RegistryAddress string,
+// 	chain1MessengerAddress string,
+// 	chain1RelayerKey *key.SoftKey,
+// 	chain2RPC string,
+// 	chain2SubnetID ids.ID,
+// 	chain2BlockchainID ids.ID,
+// 	chain2RegistryAddress string,
+// 	chain2MessengerAddress string,
+// 	chain2RelayerKey *key.SoftKey,
+// ) (*config.Config, []byte, error) {
+// 	// Create a base relayer config
+// 	config := relayer.CreateBaseRelayerConfig(
+// 		logging.Info.LowerString(),
+// 		storageDir,
+// 		0,
+// 		network,
+// 	)
+// 	// Add blockchain chain1 to the relayer config,
+// 	// setting it both as source and as destination.
+// 	// So the relayer will both listed for new messages in it,
+// 	// and send to it new messages from other blockchains.
+// 	relayer.AddBlockchainToRelayerConfig(
+// 		config,
+// 		chain1RPC,
+// 		"",
+// 		chain1SubnetID,
+// 		chain1BlockchainID,
+// 		chain1RegistryAddress,
+// 		chain1MessengerAddress,
+// 		chain1RelayerKey.C(),
+// 		chain1RelayerKey.PrivKeyHex(),
+// 	)
+// 	// Add blockchain chain2 to the relayer config,
+// 	// setting it both as source and as destination.
+// 	// So the relayer will both listed for new messages in it,
+// 	// and send to it new messages from other blockchains.
+// 	relayer.AddBlockchainToRelayerConfig(
+// 		config,
+// 		chain2RPC,
+// 		"",
+// 		chain2SubnetID,
+// 		chain2BlockchainID,
+// 		chain2RegistryAddress,
+// 		chain2MessengerAddress,
+// 		chain2RelayerKey.C(),
+// 		chain2RelayerKey.PrivKeyHex(),
+// 	)
+// 	bs, err := relayer.SerializeRelayerConfig(config)
+// 	return config, bs, err
+// }
 
-func StartLocalRelayer(
-	configPath string,
-	logPath string,
-	installDir string,
-) (int, string, error) {
-	binPath, err := localrelayer.InstallLatest(installDir, "")
-	if err != nil {
-		return 0, "", err
-	}
-	pid, err := localrelayer.Execute(binPath, configPath, logPath, "")
-	if err != nil {
-		if bs, err := os.ReadFile(logPath); err == nil {
-			fmt.Println(string(bs))
-		}
-		return pid, binPath, err
-	}
-	if err := localrelayer.WaitForInitialization(configPath, logPath, 0, 0); err != nil {
-		return pid, binPath, err
-	}
-	return pid, binPath, nil
-}
+// func StartLocalRelayer(
+// 	configPath string,
+// 	logPath string,
+// 	installDir string,
+// ) (int, string, error) {
+// 	binPath, err := localrelayer.InstallLatest(installDir, "")
+// 	if err != nil {
+// 		return 0, "", err
+// 	}
+// 	pid, err := localrelayer.Execute(binPath, configPath, logPath, "")
+// 	if err != nil {
+// 		if bs, err := os.ReadFile(logPath); err == nil {
+// 			fmt.Println(string(bs))
+// 		}
+// 		return pid, binPath, err
+// 	}
+// 	if err := localrelayer.WaitForInitialization(configPath, logPath, 0, 0); err != nil {
+// 		return pid, binPath, err
+// 	}
+// 	return pid, binPath, nil
+// }
 
 func TestMessageDelivery(
 	chain1RPC string,
@@ -393,7 +395,7 @@ func Interchain() error {
 		return fmt.Errorf("relayer directory %q must exist", relayerDir)
 	}
 	return InterchainExample(
-		avalanche.FujiNetwork(),
+		avalanche.TestnetNetwork(),
 		chain1RPC,
 		chain1PK,
 		chain1SubnetID,

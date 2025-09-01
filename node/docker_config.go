@@ -6,9 +6,9 @@ package node
 import (
 	"os"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/constants"
-	remoteconfig "github.com/ava-labs/avalanche-tooling-sdk-go/node/config"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/utils"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
+	remoteconfig "github.com/DioneProtocol/odyssey-tooling-sdk-go/node/config"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
 )
 
 // PrepareAvalanchegoConfig creates the config files for the AvalancheGo

@@ -5,7 +5,8 @@ package node
 
 import (
 	"fmt"
-	"slices"
+
+	"golang.org/x/exp/slices"
 )
 
 type SupportedCloud int

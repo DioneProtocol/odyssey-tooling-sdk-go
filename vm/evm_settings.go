@@ -6,7 +6,7 @@ package vm
 import (
 	"math/big"
 
-	"github.com/ava-labs/subnet-evm/commontype"
+	"github.com/DioneProtocol/subnet-evm/commontype"
 )
 
 const (

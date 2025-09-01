@@ -12,18 +12,18 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/ava-labs/avalanchego/ids"
-	"github.com/ava-labs/avalanchego/utils/formatting/address"
-	"github.com/ava-labs/avalanchego/utils/set"
+	"github.com/DioneProtocol/odysseygo/ids"
+	"github.com/DioneProtocol/odysseygo/utils/formatting/address"
+	"github.com/DioneProtocol/odysseygo/utils/set"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/avalanche"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/keychain"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/vm"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/wallet"
-	"github.com/ava-labs/avalanchego/vms/secp256k1fx"
-	"github.com/ava-labs/avalanchego/wallet/subnet/primary"
-	"github.com/ava-labs/subnet-evm/core"
-	"github.com/ava-labs/subnet-evm/params"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/keychain"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/vm"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/wallet"
+	"github.com/DioneProtocol/odysseygo/vms/secp256k1fx"
+	"github.com/DioneProtocol/odysseygo/wallet/subnet/primary"
+	"github.com/DioneProtocol/subnet-evm/core"
+	"github.com/DioneProtocol/subnet-evm/params"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -49,7 +49,7 @@ func TestSubnetDeploy(t *testing.T) {
 	subnetParams := getDefaultSubnetEVMGenesis()
 	newSubnet, err := New(&subnetParams)
 	require.NoError(err)
-	network := avalanche.FujiNetwork()
+	network := avalanche.TestnetNetwork()
 
 	keychain, err := keychain.NewKeychain(network, "KEY_PATH", nil)
 	require.NoError(err)
@@ -62,9 +62,9 @@ func TestSubnetDeploy(t *testing.T) {
 		context.Background(),
 		&primary.WalletConfig{
 			URI:              network.Endpoint,
-			AVAXKeychain:     keychain.Keychain,
+			DIONEKeychain:    keychain.Keychain,
 			EthKeychain:      secp256k1fx.NewKeychain(),
-			PChainTxsToFetch: nil,
+			OChainTxsToFetch: nil,
 		},
 	)
 	require.NoError(err)
@@ -86,7 +86,7 @@ func TestSubnetDeployMultiSig(t *testing.T) {
 	require := require.New(t)
 	subnetParams := getDefaultSubnetEVMGenesis()
 	newSubnet, _ := New(&subnetParams)
-	network := avalanche.FujiNetwork()
+	network := avalanche.TestnetNetwork()
 
 	keychainA, err := keychain.NewKeychain(network, "KEY_PATH_A", nil)
 	require.NoError(err)
@@ -110,9 +110,9 @@ func TestSubnetDeployMultiSig(t *testing.T) {
 		context.Background(),
 		&primary.WalletConfig{
 			URI:              network.Endpoint,
-			AVAXKeychain:     keychainA.Keychain,
+			DIONEKeychain:    keychainA.Keychain,
 			EthKeychain:      secp256k1fx.NewKeychain(),
-			PChainTxsToFetch: nil,
+			OChainTxsToFetch: nil,
 		},
 	)
 	require.NoError(err)
@@ -131,20 +131,20 @@ func TestSubnetDeployMultiSig(t *testing.T) {
 	deployChainTx, err := newSubnet.CreateBlockchainTx(walletA)
 	require.NoError(err)
 
-	// include subnetID in PChainTxsToFetch when creating second wallet
+	// include subnetID in OChainTxsToFetch when creating second wallet
 	walletB, err := wallet.New(
 		context.Background(),
 		&primary.WalletConfig{
 			URI:              network.Endpoint,
-			AVAXKeychain:     keychainB.Keychain,
+			DIONEKeychain:    keychainB.Keychain,
 			EthKeychain:      secp256k1fx.NewKeychain(),
-			PChainTxsToFetch: set.Of(subnetID),
+			OChainTxsToFetch: set.Of(subnetID),
 		},
 	)
 	require.NoError(err)
 
 	// second signature using keychain B
-	err = walletB.P().Signer().Sign(context.Background(), deployChainTx.PChainTx)
+	err = walletB.O().Signer().Sign(context.Background(), deployChainTx.PChainTx)
 	require.NoError(err)
 
 	// since we are using the fee paying key as control key too, we can commit the transaction
@@ -159,7 +159,7 @@ func TestSubnetDeployLedger(t *testing.T) {
 	subnetParams := getDefaultSubnetEVMGenesis()
 	newSubnet, err := New(&subnetParams)
 	require.NoError(err)
-	network := avalanche.FujiNetwork()
+	network := avalanche.TestnetNetwork()
 
 	ledgerInfo := keychain.LedgerParams{
 		LedgerAddresses: []string{"P-fujixxxxxxxxx"},
@@ -179,9 +179,9 @@ func TestSubnetDeployLedger(t *testing.T) {
 		context.Background(),
 		&primary.WalletConfig{
 			URI:              network.Endpoint,
-			AVAXKeychain:     keychainA.Keychain,
+			DIONEKeychain:    keychainA.Keychain,
 			EthKeychain:      secp256k1fx.NewKeychain(),
-			PChainTxsToFetch: nil,
+			OChainTxsToFetch: nil,
 		},
 	)
 
@@ -211,15 +211,15 @@ func TestSubnetDeployLedger(t *testing.T) {
 		context.Background(),
 		&primary.WalletConfig{
 			URI:              network.Endpoint,
-			AVAXKeychain:     keychainB.Keychain,
+			DIONEKeychain:    keychainB.Keychain,
 			EthKeychain:      secp256k1fx.NewKeychain(),
-			PChainTxsToFetch: set.Of(subnetID),
+			OChainTxsToFetch: set.Of(subnetID),
 		},
 	)
 	require.NoError(err)
 
 	// second signature
-	err = walletB.P().Signer().Sign(context.Background(), deployChainTx.PChainTx)
+	err = walletB.O().Signer().Sign(context.Background(), deployChainTx.PChainTx)
 	require.NoError(err)
 
 	blockchainID, err := newSubnet.Commit(*deployChainTx, walletB, true)

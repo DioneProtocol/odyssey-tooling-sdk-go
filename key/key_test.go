@@ -9,8 +9,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/ava-labs/avalanchego/utils/cb58"
-	"github.com/ava-labs/avalanchego/utils/crypto/secp256k1"
+	"github.com/DioneProtocol/odysseygo/utils/cb58"
+	"github.com/DioneProtocol/odysseygo/utils/crypto/secp256k1"
 )
 
 const ewoqPChainAddr = "P-custom18jma8ppw3nhx5r4ap8clazz0dps7rv5u9xde7p"
@@ -55,12 +55,13 @@ func TestNewKey(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	ewoqPk, err := secp256k1.ToPrivateKey(skBytes)
+	factory := secp256k1.Factory{}
+	ewoqPk, err := factory.ToPrivateKey(skBytes)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	privKey2, err := secp256k1.NewPrivateKey()
+	privKey2, err := factory.NewPrivateKey()
 	if err != nil {
 		t.Fatal(err)
 	}

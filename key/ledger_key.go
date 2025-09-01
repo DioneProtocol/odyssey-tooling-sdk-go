@@ -6,10 +6,10 @@ package key
 import (
 	"fmt"
 
-	"github.com/ava-labs/avalanchego/ids"
-	"github.com/ava-labs/avalanchego/vms/components/avax"
-	"github.com/ava-labs/avalanchego/vms/platformvm/txs"
-	"github.com/ava-labs/avalanchego/vms/secp256k1fx"
+	"github.com/DioneProtocol/odysseygo/ids"
+	"github.com/DioneProtocol/odysseygo/vms/components/dione"
+	"github.com/DioneProtocol/odysseygo/vms/omegavm/txs"
+	"github.com/DioneProtocol/odysseygo/vms/secp256k1fx"
 )
 
 var _ Key = &LedgerKey{}
@@ -57,9 +57,9 @@ func (*LedgerKey) X(_ string) (string, error) {
 	return "", fmt.Errorf("not implemented")
 }
 
-func (*LedgerKey) Spends(_ []*avax.UTXO, _ ...OpOption) (
+func (*LedgerKey) Spends(_ []*dione.UTXO, _ ...OpOption) (
 	totalBalanceToSpend uint64,
-	inputs []*avax.TransferableInput,
+	inputs []*dione.TransferableInput,
 	signers [][]ids.ShortID,
 ) {
 	return 0, nil, nil

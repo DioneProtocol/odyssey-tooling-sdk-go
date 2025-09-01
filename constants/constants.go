@@ -68,9 +68,10 @@ const (
 	WriteReadUserOnlyPerms = 0o600
 	IPAddressSuffix        = "/32"
 
-	// avago
-	LocalAPIEndpoint     = "http://127.0.0.1:9650"
-	OdysseyGoDockerImage = "dionetech/odysseygo"
+	// odysseygo
+	LocalAPIEndpoint = "http://127.0.0.1:9650"
+	// TODO: change to the latest release version
+	OdysseyGoDockerImage = "dionetech/odysseygo:develop"
 	OdysseyGoGitRepo     = "https://github.com/DioneProtocol/odysseygo"
 	SubnetEVMRepoName    = "subnet-evm"
 

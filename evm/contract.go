@@ -1,4 +1,4 @@
-// Copyright (C) 2022, Ava Labs, Inc. All rights reserved.
+// Copyright (C) 2025, Dione Protocol, Inc. All rights reserved.
 // See the file LICENSE for licensing terms.
 package evm
 
@@ -9,9 +9,9 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/utils"
-	"github.com/ava-labs/subnet-evm/accounts/abi/bind"
-	"github.com/ava-labs/subnet-evm/core/types"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
+	"github.com/DioneProtocol/subnet-evm/accounts/abi/bind"
+	"github.com/DioneProtocol/subnet-evm/core/types"
 	"github.com/ethereum/go-ethereum/common"
 )
 

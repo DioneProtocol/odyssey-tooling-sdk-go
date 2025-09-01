@@ -12,19 +12,19 @@ import (
 	"os"
 	"time"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/multisig"
-	utilsSDK "github.com/ava-labs/avalanche-tooling-sdk-go/utils"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/wallet"
-	"github.com/ava-labs/avalanchego/vms/platformvm/txs"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/multisig"
+	utilsSDK "github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/wallet"
+	"github.com/DioneProtocol/odysseygo/vms/omegavm/txs"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/vm"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/vm"
 
-	"github.com/ava-labs/avalanchego/ids"
-	commonAvago "github.com/ava-labs/avalanchego/wallet/subnet/primary/common"
-	"github.com/ava-labs/coreth/utils"
-	"github.com/ava-labs/subnet-evm/commontype"
-	"github.com/ava-labs/subnet-evm/core"
-	"github.com/ava-labs/subnet-evm/params"
+	"github.com/DioneProtocol/coreth/utils"
+	"github.com/DioneProtocol/odysseygo/ids"
+	commonAvago "github.com/DioneProtocol/odysseygo/wallet/subnet/primary/common"
+	"github.com/DioneProtocol/subnet-evm/commontype"
+	"github.com/DioneProtocol/subnet-evm/core"
+	"github.com/DioneProtocol/subnet-evm/params"
 )
 
 type SubnetParams struct {
@@ -32,7 +32,7 @@ type SubnetParams struct {
 	// Do not set SubnetEVMParams or CustomVMParams
 	// if GenesisFilePath value is set
 	//
-	// See https://docs.avax.network/build/subnet/upgrade/customize-a-subnet#genesis for
+	// See https://docs.dione.network/build/subnet/upgrade/customize-a-subnet#genesis for
 	// information on Genesis
 	GenesisFilePath string
 
@@ -62,7 +62,7 @@ type SubnetEVMParams struct {
 	// rather than an actual contract. A precompile is associated with a fixed address defined in
 	// the EVM. There is no byte code associated with that address.
 	//
-	// For more information regarding Precompiles, head to https://docs.avax.network/build/vm/evm/intro.
+	// For more information regarding Precompiles, head to https://docs.dione.network/build/vm/evm/intro.
 	Precompiles params.Precompiles
 }
 
@@ -90,7 +90,7 @@ type Subnet struct {
 	// Genesis is the initial state of a blockchain when it is first created. Each Virtual Machine
 	// defines the format and semantics of its genesis data.
 	//
-	// For more information regarding Genesis, head to https://docs.avax.network/build/subnet/upgrade/customize-a-subnet#genesis
+	// For more information regarding Genesis, head to https://docs.dione.network/build/subnet/upgrade/customize-a-subnet#genesis
 	Genesis []byte
 
 	// SubnetID is the transaction ID from an issued CreateSubnetTX and is used to identify
@@ -198,7 +198,7 @@ func createEvmGenesis(
 	genesis.Timestamp = *utils.TimeToNewUint64(time.Now())
 
 	conf := params.SubnetEVMDefaultChainConfig
-	conf.NetworkUpgrades = params.NetworkUpgrades{}
+	conf.MandatoryNetworkUpgrades = params.MandatoryNetworkUpgrades{}
 
 	var err error
 
@@ -283,7 +283,7 @@ func (c *Subnet) Commit(ms multisig.Multisig, wallet wallet.Wallet, waitForTxAcc
 			options = append(options, commonAvago.WithAssumeDecided())
 		}
 		// TODO: split error checking and recovery between issuing and waiting for status
-		issueTxErr = wallet.P().IssueTx(tx, options...)
+		issueTxErr = wallet.O().IssueTx(tx, options...)
 		if issueTxErr == nil {
 			break
 		}

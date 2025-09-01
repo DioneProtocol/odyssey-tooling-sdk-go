@@ -9,10 +9,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/constants"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/install"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/interchain/relayer"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/process"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/install"
+
+	// "github.com/DioneProtocol/odyssey-tooling-sdk-go/interchain/relayer"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/process"
 )
 
 const (
@@ -77,55 +78,55 @@ func Execute(
 	return process.Execute(binPath, args, logWriter, logWriter, runFilePath, localRelayerSetupTime)
 }
 
-func WaitForInitialization(
-	configPath string,
-	logPath string,
-	checkInterval time.Duration,
-	checkTimeout time.Duration,
-) error {
-	configBytes, err := os.ReadFile(configPath)
-	if err != nil {
-		return err
-	}
-	config, err := relayer.UnserializeRelayerConfig(configBytes)
-	if err != nil {
-		return err
-	}
-	sourceBlockchains := []string{}
-	for _, source := range config.SourceBlockchains {
-		sourceBlockchains = append(sourceBlockchains, source.BlockchainID)
-	}
-	if checkInterval == 0 {
-		checkInterval = 100 * time.Millisecond
-	}
-	if checkTimeout == 0 {
-		checkTimeout = 10 * time.Second
-	}
-	t0 := time.Now()
-	for {
-		bs, err := os.ReadFile(logPath)
-		if err != nil {
-			return err
-		}
-		sourcesInitialized := 0
-		for _, l := range strings.Split(string(bs), "\n") {
-			for _, sourceBlockchain := range sourceBlockchains {
-				if strings.Contains(l, "Listener initialized") && strings.Contains(l, sourceBlockchain) {
-					sourcesInitialized++
-				}
-			}
-		}
-		if sourcesInitialized == len(sourceBlockchains) {
-			break
-		}
-		elapsed := time.Since(t0)
-		if elapsed > checkTimeout {
-			return fmt.Errorf("timeout waiting for relayer initialization")
-		}
-		time.Sleep(checkInterval)
-	}
-	return nil
-}
+// func WaitForInitialization(
+// 	configPath string,
+// 	logPath string,
+// 	checkInterval time.Duration,
+// 	checkTimeout time.Duration,
+// ) error {
+// 	configBytes, err := os.ReadFile(configPath)
+// 	if err != nil {
+// 		return err
+// 	}
+// 	config, err := relayer.UnserializeRelayerConfig(configBytes)
+// 	if err != nil {
+// 		return err
+// 	}
+// 	sourceBlockchains := []string{}
+// 	for _, source := range config.SourceBlockchains {
+// 		sourceBlockchains = append(sourceBlockchains, source.BlockchainID)
+// 	}
+// 	if checkInterval == 0 {
+// 		checkInterval = 100 * time.Millisecond
+// 	}
+// 	if checkTimeout == 0 {
+// 		checkTimeout = 10 * time.Second
+// 	}
+// 	t0 := time.Now()
+// 	for {
+// 		bs, err := os.ReadFile(logPath)
+// 		if err != nil {
+// 			return err
+// 		}
+// 		sourcesInitialized := 0
+// 		for _, l := range strings.Split(string(bs), "\n") {
+// 			for _, sourceBlockchain := range sourceBlockchains {
+// 				if strings.Contains(l, "Listener initialized") && strings.Contains(l, sourceBlockchain) {
+// 					sourcesInitialized++
+// 				}
+// 			}
+// 		}
+// 		if sourcesInitialized == len(sourceBlockchains) {
+// 			break
+// 		}
+// 		elapsed := time.Since(t0)
+// 		if elapsed > checkTimeout {
+// 			return fmt.Errorf("timeout waiting for relayer initialization")
+// 		}
+// 		time.Sleep(checkInterval)
+// 	}
+// 	return nil
+// }
 
 func IsRunning(pid int, runFilePath string) (bool, int, *os.Process, error) {
 	return process.IsRunning(pid, runFilePath)

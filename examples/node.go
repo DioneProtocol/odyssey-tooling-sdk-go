@@ -8,10 +8,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/avalanche"
-	awsAPI "github.com/ava-labs/avalanche-tooling-sdk-go/cloud/aws"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/node"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/utils"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
+	awsAPI "github.com/DioneProtocol/odyssey-tooling-sdk-go/cloud/aws"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/node"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
 )
 
 func CreateNodes() {
@@ -64,7 +64,7 @@ func CreateNodes() {
 			CloudParams:        cp,
 			Count:              2,
 			Roles:              []node.SupportedRole{node.Validator},
-			Network:            avalanche.FujiNetwork(),
+			Network:            avalanche.TestnetNetwork(),
 			AvalancheGoVersion: avalancheGoVersion,
 			UseStaticIP:        false,
 			SSHPrivateKeyPath:  sshPrivateKeyPath,
@@ -106,7 +106,7 @@ func CreateNodes() {
 	// Monitoring node enables you to have a centralized Grafana Dashboard where you can view
 	// metrics relevant to any Validator & API nodes that the monitoring node is linked to as well
 	// as a centralized logs for the X/P/C Chain and Subnet logs for the Validator & API nodes.
-	// An example on how the dashboard and logs look like can be found at https://docs.avax.network/tooling/cli-create-nodes/create-a-validator-aws
+	// An example on how the dashboard and logs look like can be found at https://docs.dione.network/tooling/cli-create-nodes/create-a-validator-aws
 	monitoringHosts, err := node.CreateNodes(ctx,
 		&node.NodeParams{
 			CloudParams:       cp,

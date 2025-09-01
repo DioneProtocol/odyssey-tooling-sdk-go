@@ -12,16 +12,16 @@ import (
 	"os"
 	"strings"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/constants"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/utils"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
+	"github.com/DioneProtocol/odysseygo/vms/components/dione"
 
-	"github.com/ava-labs/avalanchego/ids"
-	"github.com/ava-labs/avalanchego/utils/cb58"
-	"github.com/ava-labs/avalanchego/utils/crypto/secp256k1"
-	"github.com/ava-labs/avalanchego/utils/formatting/address"
-	"github.com/ava-labs/avalanchego/vms/components/avax"
-	"github.com/ava-labs/avalanchego/vms/platformvm/txs"
-	"github.com/ava-labs/avalanchego/vms/secp256k1fx"
+	"github.com/DioneProtocol/odysseygo/ids"
+	"github.com/DioneProtocol/odysseygo/utils/cb58"
+	"github.com/DioneProtocol/odysseygo/utils/crypto/secp256k1"
+	"github.com/DioneProtocol/odysseygo/utils/formatting/address"
+	"github.com/DioneProtocol/odysseygo/vms/omegavm/txs"
+	"github.com/DioneProtocol/odysseygo/vms/secp256k1fx"
 
 	eth_crypto "github.com/ethereum/go-ethereum/crypto"
 	"go.uber.org/zap"
@@ -102,7 +102,8 @@ func NewSoft(opts ...SOpOption) (*SoftKey, error) {
 	// generate a new one
 	if ret.privKey == nil {
 		var err error
-		ret.privKey, err = secp256k1.NewPrivateKey()
+		factory := secp256k1.Factory{}
+		ret.privKey, err = factory.NewPrivateKey()
 		if err != nil {
 			return nil, err
 		}
@@ -187,7 +188,8 @@ func LoadSoftFromBytes(kb []byte) (*SoftKey, error) {
 	if err != nil {
 		return nil, err
 	}
-	privKey, err := secp256k1.ToPrivateKey(skBytes)
+	factory := secp256k1.Factory{}
+	privKey, err := factory.ToPrivateKey(skBytes)
 	if err != nil {
 		return nil, err
 	}
@@ -244,7 +246,9 @@ func decodePrivateKey(enc string) (*secp256k1.PrivateKey, error) {
 	if err != nil {
 		return nil, err
 	}
-	privKey, err := secp256k1.ToPrivateKey(skBytes)
+
+	factory := secp256k1.Factory{}
+	privKey, err := factory.ToPrivateKey(skBytes)
 	if err != nil {
 		return nil, err
 	}
@@ -297,9 +301,9 @@ func (m *SoftKey) X(networkHRP string) (string, error) {
 	return address.Format("X", networkHRP, m.privKey.PublicKey().Address().Bytes())
 }
 
-func (m *SoftKey) Spends(outputs []*avax.UTXO, opts ...OpOption) (
+func (m *SoftKey) Spends(outputs []*dione.UTXO, opts ...OpOption) (
 	totalBalanceToSpend uint64,
-	inputs []*avax.TransferableInput,
+	inputs []*dione.TransferableInput,
 	signers [][]ids.ShortID,
 ) {
 	ret := &Op{}
@@ -312,7 +316,7 @@ func (m *SoftKey) Spends(outputs []*avax.UTXO, opts ...OpOption) (
 			continue
 		}
 		totalBalanceToSpend += input.Amount()
-		inputs = append(inputs, &avax.TransferableInput{
+		inputs = append(inputs, &dione.TransferableInput{
 			UTXOID: out.UTXOID,
 			Asset:  out.Asset,
 			In:     input,
@@ -332,8 +336,8 @@ func (m *SoftKey) Spends(outputs []*avax.UTXO, opts ...OpOption) (
 	return totalBalanceToSpend, inputs, signers
 }
 
-func (m *SoftKey) spend(output *avax.UTXO, time uint64) (
-	input avax.TransferableIn,
+func (m *SoftKey) spend(output *dione.UTXO, time uint64) (
+	input dione.TransferableIn,
 	signers []*secp256k1.PrivateKey,
 	err error,
 ) {
@@ -344,7 +348,7 @@ func (m *SoftKey) spend(output *avax.UTXO, time uint64) (
 		return nil, nil, err
 	}
 	var ok bool
-	input, ok = inputf.(avax.TransferableIn)
+	input, ok = inputf.(dione.TransferableIn)
 	if !ok {
 		return nil, nil, ErrInvalidType
 	}

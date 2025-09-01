@@ -3,7 +3,7 @@
 
 package avalanche
 
-import "github.com/ava-labs/avalanche-tooling-sdk-go/constants"
+import "github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
 
 type VMType string
 

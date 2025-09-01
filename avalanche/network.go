@@ -7,11 +7,11 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/utils"
-	"github.com/ava-labs/avalanchego/genesis"
-	"github.com/ava-labs/avalanchego/ids"
-	"github.com/ava-labs/avalanchego/utils/constants"
-	"github.com/ava-labs/avalanchego/vms/platformvm"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
+	"github.com/DioneProtocol/odysseygo/genesis"
+	"github.com/DioneProtocol/odysseygo/ids"
+	"github.com/DioneProtocol/odysseygo/utils/constants"
+	"github.com/DioneProtocol/odysseygo/vms/omegavm"
 )
 
 type NetworkKind int64
@@ -19,23 +19,23 @@ type NetworkKind int64
 const (
 	Undefined NetworkKind = iota
 	Mainnet
-	Fuji
+	Testnet
 	Devnet
 )
 
 const (
-	FujiAPIEndpoint    = "https://api.avax-test.network"
-	MainnetAPIEndpoint = "https://api.avax.network"
+	TestnetAPIEndpoint = "https://testnode.dioneprotocol.com"
+	MainnetAPIEndpoint = "https://node.dioneprotocol.com"
 )
 
 func (nk NetworkKind) String() string {
 	switch nk {
 	case Mainnet:
-		return "Mainnet"
-	case Fuji:
-		return "Fuji"
+		return "mainnet"
+	case Testnet:
+		return "testnet"
 	case Devnet:
-		return "Devnet"
+		return "local"
 	}
 	return "invalid network"
 }
@@ -50,12 +50,12 @@ var UndefinedNetwork = Network{}
 
 func (n Network) HRP() string {
 	switch n.ID {
-	case constants.FujiID:
-		return constants.FujiHRP
+	case constants.TestnetID:
+		return constants.TestnetHRP // Returns "testnet"
 	case constants.MainnetID:
-		return constants.MainnetHRP
+		return constants.MainnetHRP // Returns "dione"
 	default:
-		return constants.FallbackHRP
+		return constants.FallbackHRP // Returns "custom"
 	}
 }
 
@@ -63,8 +63,8 @@ func NetworkFromNetworkID(networkID uint32) Network {
 	switch networkID {
 	case constants.MainnetID:
 		return MainnetNetwork()
-	case constants.FujiID:
-		return FujiNetwork()
+	case constants.TestnetID:
+		return TestnetNetwork()
 	}
 	return UndefinedNetwork
 }
@@ -77,8 +77,8 @@ func NewNetwork(kind NetworkKind, id uint32, endpoint string) Network {
 	}
 }
 
-func FujiNetwork() Network {
-	return NewNetwork(Fuji, constants.FujiID, FujiAPIEndpoint)
+func TestnetNetwork() Network {
+	return NewNetwork(Testnet, constants.TestnetID, TestnetAPIEndpoint)
 }
 
 func MainnetNetwork() Network {
@@ -89,8 +89,8 @@ func (n Network) GenesisParams() *genesis.Params {
 	switch n.Kind {
 	case Devnet:
 		return &genesis.LocalParams
-	case Fuji:
-		return &genesis.FujiParams
+	case Testnet:
+		return &genesis.TestnetParams
 	case Mainnet:
 		return &genesis.MainnetParams
 	}
@@ -109,7 +109,7 @@ func (n Network) BlockchainWSEndpoint(blockchainID string) string {
 }
 
 func (n Network) GetMinStakingAmount() (uint64, error) {
-	pClient := platformvm.NewClient(n.Endpoint)
+	pClient := omegavm.NewClient(n.Endpoint)
 	ctx, cancel := utils.GetAPIContext()
 	defer cancel()
 	minValStake, _, err := pClient.GetMinStake(ctx, ids.Empty)

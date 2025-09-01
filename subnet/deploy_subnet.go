@@ -7,12 +7,12 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/multisig"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/wallet"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/multisig"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/wallet"
 
-	"github.com/ava-labs/avalanchego/ids"
-	"github.com/ava-labs/avalanchego/vms/platformvm/txs"
-	"github.com/ava-labs/avalanchego/vms/secp256k1fx"
+	"github.com/DioneProtocol/odysseygo/ids"
+	"github.com/DioneProtocol/odysseygo/vms/omegavm/txs"
+	"github.com/DioneProtocol/odysseygo/vms/secp256k1fx"
 )
 
 // CreateSubnetTx creates uncommitted CreateSubnetTx
@@ -30,14 +30,14 @@ func (c *Subnet) CreateSubnetTx(wallet wallet.Wallet) (*multisig.Multisig, error
 		Threshold: c.DeployInfo.Threshold,
 		Locktime:  0,
 	}
-	unsignedTx, err := wallet.P().Builder().NewCreateSubnetTx(
+	unsignedTx, err := wallet.O().Builder().NewCreateSubnetTx(
 		owners,
 	)
 	if err != nil {
 		return nil, fmt.Errorf("error building tx: %w", err)
 	}
 	tx := txs.Tx{Unsigned: unsignedTx}
-	if err := wallet.P().Signer().Sign(context.Background(), &tx); err != nil {
+	if err := wallet.O().Signer().Sign(context.Background(), &tx); err != nil {
 		return nil, fmt.Errorf("error signing tx: %w", err)
 	}
 	return multisig.New(&tx), nil
@@ -65,7 +65,7 @@ func (c *Subnet) CreateBlockchainTx(wallet wallet.Wallet) (*multisig.Multisig, e
 
 	// create tx
 	fxIDs := make([]ids.ID, 0)
-	unsignedTx, err := wallet.P().Builder().NewCreateChainTx(
+	unsignedTx, err := wallet.O().Builder().NewCreateChainTx(
 		c.SubnetID,
 		c.Genesis,
 		c.VMID,
@@ -76,7 +76,7 @@ func (c *Subnet) CreateBlockchainTx(wallet wallet.Wallet) (*multisig.Multisig, e
 		return nil, fmt.Errorf("error building tx: %w", err)
 	}
 	tx := txs.Tx{Unsigned: unsignedTx}
-	if err := wallet.P().Signer().Sign(context.Background(), &tx); err != nil {
+	if err := wallet.O().Signer().Sign(context.Background(), &tx); err != nil {
 		return nil, fmt.Errorf("error signing tx: %w", err)
 	}
 	return multisig.New(&tx), nil

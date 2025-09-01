@@ -292,7 +292,7 @@ After successful setup, you can:
 ## Additional Resources
 
 - [Go Documentation](https://golang.org/doc/)
-- [Avalanche Documentation](https://docs.avax.network/)
+- [Avalanche Documentation](https://docs.dione.network/)
 - [WSL Documentation](https://docs.microsoft.com/en-us/windows/wsl/)
 
 ## Support

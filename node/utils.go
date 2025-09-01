@@ -8,14 +8,14 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"slices"
 	"strconv"
 	"strings"
 	"time"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/constants"
-	remoteconfig "github.com/ava-labs/avalanche-tooling-sdk-go/node/config"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/utils"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
+	remoteconfig "github.com/DioneProtocol/odyssey-tooling-sdk-go/node/config"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
+	"golang.org/x/exp/slices"
 )
 
 const (

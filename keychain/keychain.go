@@ -5,11 +5,11 @@ package keychain
 import (
 	"fmt"
 
-	"github.com/ava-labs/avalanche-tooling-sdk-go/avalanche"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/key"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/ledger"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/utils"
-	"github.com/ava-labs/avalanchego/utils/crypto/keychain"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/avalanche"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/key"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/ledger"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
+	"github.com/DioneProtocol/odysseygo/utils/crypto/keychain"
 	"golang.org/x/exp/maps"
 )
 
@@ -25,7 +25,7 @@ type Keychain struct {
 // avalanche key list --ledger [0,1,2,3,4]
 // The example command above will list the first five addresses in your Ledger
 //
-// To transfer funds between addresses in Ledger, refer to https://docs.avax.network/tooling/cli-transfer-funds/how-to-transfer-funds
+// To transfer funds between addresses in Ledger, refer to https://docs.dione.network/tooling/cli-transfer-funds/how-to-transfer-funds
 type LedgerParams struct {
 	// LedgerAddresses specify which addresses in Ledger should be in the Keychain
 	// NewKeyChain will then look for the indexes of the specified addresses and add the indexes

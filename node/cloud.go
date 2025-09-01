@@ -8,14 +8,14 @@ import (
 	"fmt"
 	"strings"
 
-	awsAPI "github.com/ava-labs/avalanche-tooling-sdk-go/cloud/aws"
-	gcpAPI "github.com/ava-labs/avalanche-tooling-sdk-go/cloud/gcp"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/constants"
-	"github.com/ava-labs/avalanche-tooling-sdk-go/utils"
+	awsAPI "github.com/DioneProtocol/odyssey-tooling-sdk-go/cloud/aws"
+	gcpAPI "github.com/DioneProtocol/odyssey-tooling-sdk-go/cloud/gcp"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
 )
 
 // CloudParams contains the specs of the nodes to be created in AWS / GCP.
-// For the minimum recommended hardware specification for nodes connected to Mainnet, head to https://github.com/ava-labs/avalanchego?tab=readme-ov-file#installation
+// For the minimum recommended hardware specification for nodes connected to Mainnet, head to https://github.com/DioneProtocol/odysseygo?tab=readme-ov-file#installation
 type CloudParams struct {
 	// Region to use for the node
 	Region string
