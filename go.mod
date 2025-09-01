@@ -1,8 +1,8 @@
 module github.com/DioneProtocol/odyssey-tooling-sdk-go
 
-go 1.20
+go 1.21
 
-// toolchain go1.20.0
+toolchain go1.21.0
 
 require (
 	github.com/DioneProtocol/coreth v0.0.2
