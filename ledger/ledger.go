@@ -34,12 +34,12 @@ func New() (*LedgerDevice, error) {
 	return &dev, nil
 }
 
-func (dev *LedgerDevice) P(network odyssey.Network, indices []uint32) ([]string, error) {
+func (dev *LedgerDevice) O(network odyssey.Network, indices []uint32) ([]string, error) {
 	addresses, err := dev.Addresses(indices)
 	if err != nil {
 		return nil, err
 	}
-	return utils.P(network.HRP(), addresses)
+	return utils.O(network.HRP(), addresses)
 }
 
 func (dev *LedgerDevice) FindAddresses(addresses []string, maxIndex uint32) (map[string]uint32, error) {

@@ -128,11 +128,11 @@ func (c *Subnet) SetSubnetAuthKeys(subnetAuthKeys []ids.ShortID) {
 }
 
 type DeployParams struct {
-	// ControlKeys is a list of P-Chain addresses that are authorized to create new chains and add
+	// ControlKeys is a list of O-Chain addresses that are authorized to create new chains and add
 	// new validators to the Subnet
 	ControlKeys []ids.ShortID
 
-	// SubnetAuthKeys is a list of P-Chain addresses that will be used to sign transactions that
+	// SubnetAuthKeys is a list of O-Chain addresses that will be used to sign transactions that
 	// will modify the Subnet.
 	//
 	// SubnetAuthKeys has to be a subset of ControlKeys
@@ -263,7 +263,7 @@ func (c *Subnet) Commit(ms multisig.Multisig, wallet wallet.Wallet, waitForTxAcc
 	if !isReady {
 		return ids.Empty, errors.New("tx is not fully signed so can't be committed")
 	}
-	tx, err := ms.GetWrappedPChainTx()
+	tx, err := ms.GetWrappedOChainTx()
 	if err != nil {
 		return ids.Empty, err
 	}
@@ -297,7 +297,7 @@ func (c *Subnet) Commit(ms multisig.Multisig, wallet wallet.Wallet, waitForTxAcc
 	if issueTxErr != nil {
 		return ids.Empty, fmt.Errorf("issue tx error %w", issueTxErr)
 	}
-	if _, ok := ms.PChainTx.Unsigned.(*txs.CreateSubnetTx); ok {
+	if _, ok := ms.OChainTx.Unsigned.(*txs.CreateSubnetTx); ok {
 		c.SubnetID = tx.ID()
 	}
 	return tx.ID(), issueTxErr

@@ -79,7 +79,7 @@ type Node struct {
 	Logger odyssey.LeveledLogger
 
 	// BLS provides a way to aggregate signatures off chain into a single signature that can be efficiently verified on chain.
-	// For more information about how BLS is used on the P-Chain, please head to https://docs.dione.network/cross-chain/odyssey-warp-messaging/deep-dive#bls-multi-signatures-with-public-key-aggregation
+	// For more information about how BLS is used on the O-Chain, please head to https://docs.dione.network/cross-chain/odyssey-warp-messaging/deep-dive#bls-multi-signatures-with-public-key-aggregation
 	BlsSecretKey *bls.SecretKey
 }
 

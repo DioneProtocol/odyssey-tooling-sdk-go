@@ -144,7 +144,7 @@ func TestSubnetDeployMultiSig(t *testing.T) {
 	require.NoError(err)
 
 	// second signature using keychain B
-	err = walletB.O().Signer().Sign(context.Background(), deployChainTx.PChainTx)
+	err = walletB.O().Signer().Sign(context.Background(), deployChainTx.OChainTx)
 	require.NoError(err)
 
 	// since we are using the fee paying key as control key too, we can commit the transaction
@@ -219,7 +219,7 @@ func TestSubnetDeployLedger(t *testing.T) {
 	require.NoError(err)
 
 	// second signature
-	err = walletB.O().Signer().Sign(context.Background(), deployChainTx.PChainTx)
+	err = walletB.O().Signer().Sign(context.Background(), deployChainTx.OChainTx)
 	require.NoError(err)
 
 	blockchainID, err := newSubnet.Commit(*deployChainTx, walletB, true)

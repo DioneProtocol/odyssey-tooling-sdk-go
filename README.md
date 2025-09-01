@@ -258,7 +258,7 @@ validating Primary Network / Subnet will be available in the next Avalanche Tool
 
 This examples also shows how to create an Avalanche Monitoring Node, which enables you to have a 
 centralized Grafana Dashboard where you can view metrics relevant to any Validator & API nodes that
-the monitoring node is linked to as well as a centralized logs for the X/P/C Chain and Subnet logs 
+the monitoring node is linked to as well as a centralized logs for the A/O/D Chain and Subnet logs 
 for the Validator & API nodes. An example on how the dashboard and logs look like can be found at https://docs.dione.network/tooling/cli-create-nodes/create-a-validator-aws
 
 More examples can be found at examples directory.
@@ -368,7 +368,7 @@ func CreateNodes() {
 	// Create a monitoring node.
 	// Monitoring node enables you to have a centralized Grafana Dashboard where you can view
 	// metrics relevant to any Validator & API nodes that the monitoring node is linked to as well
-	// as a centralized logs for the X/P/C Chain and Subnet logs for the Validator & API nodes.
+	// as a centralized logs for the A/O/D Chain and Subnet logs for the Validator & API nodes.
 	// An example on how the dashboard and logs look like can be found at https://docs.dione.network/tooling/cli-create-nodes/create-a-validator-aws
 	monitoringHosts, err := node.CreateNodes(ctx,
 		&node.NodeParams{

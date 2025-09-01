@@ -13,7 +13,7 @@ import (
 	"github.com/DioneProtocol/odysseygo/utils/crypto/secp256k1"
 )
 
-const ewoqPChainAddr = "P-custom18jma8ppw3nhx5r4ap8clazz0dps7rv5u9xde7p"
+const ewoqOChainAddr = "O-custom18jma8ppw3nhx5r4ap8clazz0dps7rv5u9xde7p"
 
 func TestNewKeyEwoq(t *testing.T) {
 	t.Parallel()
@@ -25,12 +25,12 @@ func TestNewKeyEwoq(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	pAddr, err := m.P("custom")
+	pAddr, err := m.O("custom")
 	if err != nil {
 		t.Fatal(err)
 	}
-	if pAddr != ewoqPChainAddr {
-		t.Fatalf("unexpected P-Chain address %q, expected %q", pAddr, ewoqPChainAddr)
+	if pAddr != ewoqOChainAddr {
+		t.Fatalf("unexpected O-Chain address %q, expected %q", pAddr, ewoqOChainAddr)
 	}
 
 	keyPath := filepath.Join(t.TempDir(), "key.pk")

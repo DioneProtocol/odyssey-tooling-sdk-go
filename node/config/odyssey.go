@@ -67,8 +67,8 @@ func RenderOdysseyNodeConfig(config OdysseyConfigInputs) ([]byte, error) {
 	}
 }
 
-func RenderOdysseyCChainConfig(config OdysseyConfigInputs) ([]byte, error) {
-	if output, err := RenderOdysseyTemplate("templates/odyssey-cchain.tmpl", config); err != nil {
+func RenderOdysseyDChainConfig(config OdysseyConfigInputs) ([]byte, error) {
+	if output, err := RenderOdysseyTemplate("templates/odyssey-dchain.tmp", config); err != nil {
 		return nil, err
 	} else {
 		return output, nil
@@ -83,7 +83,7 @@ func GetRemoteOdysseyNodeConfig() string {
 	return filepath.Join(constants.CloudNodeConfigPath, "node.json")
 }
 
-func GetRemoteOdysseyCChainConfig() string {
+func GetRemoteOdysseyDChainConfig() string {
 	return filepath.Join(constants.CloudNodeConfigPath, "chains", "C", "config.json")
 }
 

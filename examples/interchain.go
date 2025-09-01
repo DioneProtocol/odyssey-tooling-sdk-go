@@ -112,7 +112,7 @@ func InterchainExample(
 	// // Where TOKEN is the native gas token of each blockchain
 	// // Assumes that the TOKEN decimals are 18, so, this equals
 	// // to 1e18 of the smallest gas amount in each chain
-	// fmt.Printf("Funding relayer keys %s, %s\n", chain1RelayerKey.C(), chain2RelayerKey.C())
+	// fmt.Printf("Funding relayer keys %s, %s\n", chain1RelayerKey.D(), chain2RelayerKey.D())
 	// desiredRelayerBalance := big.NewInt(0).Mul(big.NewInt(1e18), big.NewInt(10))
 	// // chain1PK will have a balance 10 native gas tokens on chain.
 	// if err := relayer.FundRelayer(
@@ -244,7 +244,7 @@ func SetupICM(
 // 		chain1BlockchainID,
 // 		chain1RegistryAddress,
 // 		chain1MessengerAddress,
-// 		chain1RelayerKey.C(),
+// 		chain1RelayerKey.D(),
 // 		chain1RelayerKey.PrivKeyHex(),
 // 	)
 // 	// Add blockchain chain2 to the relayer config,
@@ -259,7 +259,7 @@ func SetupICM(
 // 		chain2BlockchainID,
 // 		chain2RegistryAddress,
 // 		chain2MessengerAddress,
-// 		chain2RelayerKey.C(),
+// 		chain2RelayerKey.D(),
 // 		chain2RelayerKey.PrivKeyHex(),
 // 	)
 // 	bs, err := relayer.SerializeRelayerConfig(config)

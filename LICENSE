@@ -18,8 +18,8 @@ regardless of form.
 
 You will use the Licensed Software solely (i) in connection with the Avalanche
 Public Blockchain platform, having a NetworkID of 1 (Mainnet) or 5 (Fuji), and
-associated blockchains, comprised exclusively of the Avalanche X-Chain,
-C-Chain, P-Chain and any subnets linked to the P-Chain (“Avalanche Authorized
+associated blockchains, comprised exclusively of the Avalanche A-Chain,
+D-Chain, O-Chain and any subnets linked to the O-Chain (“Avalanche Authorized
 Platform”) or (ii) for non-production, testing or research purposes within the
 Avalanche ecosystem, in each case, without any commercial application
 (“Non-Commercial Use”); provided that this License does not permit use of the

@@ -22,10 +22,10 @@ var (
 
 // Key defines methods for key manager interface.
 type Key interface {
-	// P returns all formatted P-Chain addresses.
-	P(string) (string, error)
-	// C returns the C-Chain address in Ethereum format
-	C() string
+	// O returns all formatted O-Chain addresses.
+	O(string) (string, error)
+	// D returns the D-Chain address in Ethereum format
+	D() string
 	// Addresses returns the all raw ids.ShortID address.
 	Addresses() []ids.ShortID
 	// Match attempts to match a list of addresses up to the provided threshold.
@@ -72,7 +72,7 @@ func WithTargetAmount(ta uint64) OpOption {
 }
 
 // To deduct transfer fee from total spend (output).
-// e.g., "units.MilliAvax" for X/P-Chain transfer.
+// e.g., "units.MilliAvax" for X/O-Chain transfer.
 func WithFeeDeduct(fee uint64) OpOption {
 	return func(op *Op) {
 		op.feeDeduct = fee

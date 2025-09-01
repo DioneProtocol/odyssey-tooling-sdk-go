@@ -82,7 +82,7 @@ func DeploySubnetMultiSig() {
 	}
 
 	// we need to include subnetID in OChainTxsToFetch when creating second wallet
-	// so that the wallet can fetch the CreateSubnet P-chain transaction to be able to
+	// so that the wallet can fetch the CreateSubnet O-chain transaction to be able to
 	// generate transactions.
 	walletB, _ := wallet.New(
 		context.Background(),
@@ -95,7 +95,7 @@ func DeploySubnetMultiSig() {
 	)
 
 	// sign with second wallet so that we have 2/2 threshold reached
-	if err := walletB.O().Signer().Sign(context.Background(), deployChainTx.PChainTx); err != nil {
+	if err := walletB.O().Signer().Sign(context.Background(), deployChainTx.OChainTx); err != nil {
 		fmt.Errorf("error signing tx walletB: %w", err)
 	}
 

@@ -184,7 +184,7 @@ func DeploySubnetWithLedger() {
 	)
 
 	// Sign with our Subnet auth key
-	_ = walletB.O().Signer().Sign(context.Background(), deployChainTx.PChainTx)
+	_ = walletB.O().Signer().Sign(context.Background(), deployChainTx.OChainTx)
 
 	// Now that the number of signatures have been met, we can commit our transaction
 	// on chain

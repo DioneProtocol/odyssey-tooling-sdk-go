@@ -655,7 +655,7 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
-      "description": "Measures how many of each database operation is performed each second on X-Chain",
+      "description": "Measures how many of each database operation is performed each second on A-Chain",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -854,7 +854,7 @@
           "refId": "I"
         }
       ],
-      "title": "X-Chain Operations per Second",
+      "title": "A-Chain Operations per Second",
       "type": "timeseries"
     },
     {
@@ -862,7 +862,7 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
-      "description": "Measures how long each database operation is taking on average on X-Chain",
+      "description": "Measures how long each database operation is taking on average on A-Chain",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1062,7 +1062,7 @@
           "refId": "I"
         }
       ],
-      "title": "X-Chain Operations Latency",
+      "title": "A-Chain Operations Latency",
       "type": "timeseries"
     },
     {
@@ -1070,7 +1070,7 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
-      "description": "Measures how many of each database operation is performed each second on P-Chain",
+      "description": "Measures how many of each database operation is performed each second on O-Chain",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1269,7 +1269,7 @@
           "refId": "I"
         }
       ],
-      "title": "P-Chain Operations per Second",
+      "title": "O-Chain Operations per Second",
       "type": "timeseries"
     },
     {
@@ -1277,7 +1277,7 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
-      "description": "Measures how long each database operation is taking on average on P-Chain",
+      "description": "Measures how long each database operation is taking on average on O-Chain",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1477,7 +1477,7 @@
           "refId": "I"
         }
       ],
-      "title": "P-Chain Operations Latency",
+      "title": "O-Chain Operations Latency",
       "type": "timeseries"
     },
     {
@@ -1684,7 +1684,7 @@
           "refId": "I"
         }
       ],
-      "title": "C-Chain Operations per Second",
+      "title": "D-Chain Operations per Second",
       "type": "timeseries"
     },
     {
@@ -1692,7 +1692,7 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
-      "description": "Measures how long each database operation is taking on average on C-Chain",
+      "description": "Measures how long each database operation is taking on average on D-Chain",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1892,7 +1892,7 @@
           "refId": "I"
         }
       ],
-      "title": "C-Chain Operations Latency",
+      "title": "D-Chain Operations Latency",
       "type": "timeseries"
     }
   ],

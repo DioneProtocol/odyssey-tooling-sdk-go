@@ -20,24 +20,24 @@ scrape_configs:
     - targets:
         - localhost
       labels:
-        job: c-chain
+        job: d-chain
         host: {{ .Host }}
         nodeID: {{ .NodeID }}
-        __path__: /logs/C.log
+        __path__: /logs/D.log
     - targets:
         - localhost
       labels:
-        job: p-chain
+        job: o-chain
         host: {{ .Host }}
         nodeID: {{ .NodeID }}
-        __path__: /logs/P.log
+        __path__: /logs/O.log
     - targets:
         - localhost
       labels:
-        job: x-chain
+        job: a-chain
         host: {{ .Host }}
         nodeID: {{ .NodeID }}
-        __path__: /logs/X.log
+        __path__: /logs/A.log
     - targets:
         - localhost
       labels:

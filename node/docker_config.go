@@ -42,11 +42,11 @@ func (h *Node) RunSSHRenderOdysseyNodeConfig(networkID string, trackSubnets []st
 	if err := h.UploadBytes(nodeConf, remoteconfig.GetRemoteOdysseyNodeConfig(), constants.SSHFileOpsTimeout); err != nil {
 		return err
 	}
-	cChainConf, err := remoteconfig.RenderOdysseyCChainConfig(avagoConf)
+	dChainConf, err := remoteconfig.RenderOdysseyDChainConfig(avagoConf)
 	if err != nil {
 		return err
 	}
-	if err := h.UploadBytes(cChainConf, remoteconfig.GetRemoteOdysseyCChainConfig(), constants.SSHFileOpsTimeout); err != nil {
+	if err := h.UploadBytes(dChainConf, remoteconfig.GetRemoteOdysseyDChainConfig(), constants.SSHFileOpsTimeout); err != nil {
 		return err
 	}
 	return nil

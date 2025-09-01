@@ -23,43 +23,43 @@ var ErrUndefinedTx = fmt.Errorf("tx is undefined")
 
 const (
 	Undefined TxKind = iota
-	PChainRemoveSubnetValidatorTx
-	PChainAddSubnetValidatorTx
-	PChainCreateChainTx
-	PChainTransformSubnetTx
-	PChainAddPermissionlessValidatorTx
-	PChainTransferSubnetOwnershipTx
+	OChainRemoveSubnetValidatorTx
+	OChainAddSubnetValidatorTx
+	OChainCreateChainTx
+	OChainTransformSubnetTx
+	OChainAddPermissionlessValidatorTx
+	OChainTransferSubnetOwnershipTx
 )
 
 type Multisig struct {
-	PChainTx    *txs.Tx
+	OChainTx    *txs.Tx
 	controlKeys []ids.ShortID
 	threshold   uint32
 }
 
-func New(pChainTx *txs.Tx) *Multisig {
+func New(OChainTx *txs.Tx) *Multisig {
 	ms := Multisig{
-		PChainTx: pChainTx,
+		OChainTx: OChainTx,
 	}
 	return &ms
 }
 
 func (ms *Multisig) String() string {
-	if ms.PChainTx != nil {
-		return ms.PChainTx.ID().String()
+	if ms.OChainTx != nil {
+		return ms.OChainTx.ID().String()
 	}
 	return ""
 }
 
 func (ms *Multisig) Undefined() bool {
-	return ms.PChainTx == nil
+	return ms.OChainTx == nil
 }
 
 func (ms *Multisig) ToBytes() ([]byte, error) {
 	if ms.Undefined() {
 		return nil, ErrUndefinedTx
 	}
-	txBytes, err := txs.Codec.Marshal(txs.Version, ms.PChainTx)
+	txBytes, err := txs.Codec.Marshal(txs.Version, ms.OChainTx)
 	if err != nil {
 		return nil, fmt.Errorf("couldn't marshal signed tx: %w", err)
 	}
@@ -98,7 +98,7 @@ func (ms *Multisig) FromBytes(txBytes []byte) error {
 	if err := tx.Initialize(txs.Codec); err != nil {
 		return fmt.Errorf("error initializing signed tx: %w", err)
 	}
-	ms.PChainTx = &tx
+	ms.OChainTx = &tx
 	return nil
 }
 
@@ -118,7 +118,7 @@ func (ms *Multisig) IsReadyToCommit() (bool, error) {
 	if ms.Undefined() {
 		return false, ErrUndefinedTx
 	}
-	unsignedTx := ms.PChainTx.Unsigned
+	unsignedTx := ms.OChainTx.Unsigned
 	switch unsignedTx.(type) {
 	case *txs.CreateSubnetTx:
 		return true, nil
@@ -149,16 +149,16 @@ func (ms *Multisig) GetRemainingAuthSigners() ([]ids.ShortID, []ids.ShortID, err
 		return nil, nil, err
 	}
 	emptySig := [secp256k1.SignatureLen]byte{}
-	numCreds := len(ms.PChainTx.Creds)
+	numCreds := len(ms.OChainTx.Creds)
 	// we should have at least 1 cred for output owners and 1 cred for subnet auth
 	if numCreds < 2 {
 		return nil, nil, fmt.Errorf("expected tx.Creds of len 2, got %d. doesn't seem to be a multisig tx with subnet auth requirements", numCreds)
 	}
 	// signatures for output owners should be filled (all creds except last one)
-	for credIndex := range ms.PChainTx.Creds[:numCreds-1] {
-		cred, ok := ms.PChainTx.Creds[credIndex].(*secp256k1fx.Credential)
+	for credIndex := range ms.OChainTx.Creds[:numCreds-1] {
+		cred, ok := ms.OChainTx.Creds[credIndex].(*secp256k1fx.Credential)
 		if !ok {
-			return nil, nil, fmt.Errorf("expected cred to be of type *secp256k1fx.Credential, got %T", ms.PChainTx.Creds[credIndex])
+			return nil, nil, fmt.Errorf("expected cred to be of type *secp256k1fx.Credential, got %T", ms.OChainTx.Creds[credIndex])
 		}
 		for i, sig := range cred.Sigs {
 			if sig == emptySig {
@@ -167,9 +167,9 @@ func (ms *Multisig) GetRemainingAuthSigners() ([]ids.ShortID, []ids.ShortID, err
 		}
 	}
 	// signatures for subnet auth (last cred)
-	cred, ok := ms.PChainTx.Creds[numCreds-1].(*secp256k1fx.Credential)
+	cred, ok := ms.OChainTx.Creds[numCreds-1].(*secp256k1fx.Credential)
 	if !ok {
-		return nil, nil, fmt.Errorf("expected cred to be of type *secp256k1fx.Credential, got %T", ms.PChainTx.Creds[1])
+		return nil, nil, fmt.Errorf("expected cred to be of type *secp256k1fx.Credential, got %T", ms.OChainTx.Creds[1])
 	}
 	if len(cred.Sigs) != len(authSigners) {
 		return nil, nil, fmt.Errorf("expected number of cred's signatures %d to equal number of auth signers %d",
@@ -187,7 +187,7 @@ func (ms *Multisig) GetRemainingAuthSigners() ([]ids.ShortID, []ids.ShortID, err
 }
 
 // GetAuthSigners gets all subnet auth addresses that are required to sign a given tx
-//   - get subnet control keys as string slice using P-Chain API (GetOwners)
+//   - get subnet control keys as string slice using O-Chain API (GetOwners)
 //   - get subnet auth indices from the tx, field tx.UnsignedTx.SubnetAuth
 //   - creates the string slice of required subnet auth addresses by applying
 //     the indices to the control keys slice
@@ -199,7 +199,7 @@ func (ms *Multisig) GetAuthSigners() ([]ids.ShortID, error) {
 	if err != nil {
 		return nil, err
 	}
-	unsignedTx := ms.PChainTx.Unsigned
+	unsignedTx := ms.OChainTx.Unsigned
 	var subnetAuth verify.Verifiable
 	switch unsignedTx := unsignedTx.(type) {
 	case *txs.RemoveSubnetValidatorTx:
@@ -237,20 +237,20 @@ func (ms *Multisig) GetTxKind() (TxKind, error) {
 	if ms.Undefined() {
 		return Undefined, ErrUndefinedTx
 	}
-	unsignedTx := ms.PChainTx.Unsigned
+	unsignedTx := ms.OChainTx.Unsigned
 	switch unsignedTx := unsignedTx.(type) {
 	case *txs.RemoveSubnetValidatorTx:
-		return PChainRemoveSubnetValidatorTx, nil
+		return OChainRemoveSubnetValidatorTx, nil
 	case *txs.AddSubnetValidatorTx:
-		return PChainAddSubnetValidatorTx, nil
+		return OChainAddSubnetValidatorTx, nil
 	case *txs.CreateChainTx:
-		return PChainCreateChainTx, nil
+		return OChainCreateChainTx, nil
 	case *txs.TransformSubnetTx:
-		return PChainTransformSubnetTx, nil
+		return OChainTransformSubnetTx, nil
 	case *txs.AddPermissionlessValidatorTx:
-		return PChainAddPermissionlessValidatorTx, nil
+		return OChainAddPermissionlessValidatorTx, nil
 	// case *txs.TransferSubnetOwnershipTx:
-	// 	return PChainTransferSubnetOwnershipTx, nil
+	// 	return OChainTransferSubnetOwnershipTx, nil
 	default:
 		return Undefined, fmt.Errorf("unexpected unsigned tx type %T", unsignedTx)
 	}
@@ -261,7 +261,7 @@ func (ms *Multisig) GetNetworkID() (uint32, error) {
 	if ms.Undefined() {
 		return 0, ErrUndefinedTx
 	}
-	unsignedTx := ms.PChainTx.Unsigned
+	unsignedTx := ms.OChainTx.Unsigned
 	var networkID uint32
 	switch unsignedTx := unsignedTx.(type) {
 	case *txs.RemoveSubnetValidatorTx:
@@ -302,7 +302,7 @@ func (ms *Multisig) GetBlockchainID() (ids.ID, error) {
 	if ms.Undefined() {
 		return ids.Empty, ErrUndefinedTx
 	}
-	unsignedTx := ms.PChainTx.Unsigned
+	unsignedTx := ms.OChainTx.Unsigned
 	var blockchainID ids.ID
 	switch unsignedTx := unsignedTx.(type) {
 	case *txs.RemoveSubnetValidatorTx:
@@ -328,7 +328,7 @@ func (ms *Multisig) GetSubnetID() (ids.ID, error) {
 	if ms.Undefined() {
 		return ids.Empty, ErrUndefinedTx
 	}
-	unsignedTx := ms.PChainTx.Unsigned
+	unsignedTx := ms.OChainTx.Unsigned
 	var subnetID ids.ID
 	switch unsignedTx := unsignedTx.(type) {
 	case *txs.RemoveSubnetValidatorTx:
@@ -389,9 +389,9 @@ func GetOwners(network odyssey.Network, subnetID ids.ID) ([]ids.ShortID, uint32,
 	return controlKeys, threshold, nil
 }
 
-func (ms *Multisig) GetWrappedPChainTx() (*txs.Tx, error) {
+func (ms *Multisig) GetWrappedOChainTx() (*txs.Tx, error) {
 	if ms.Undefined() {
 		return nil, ErrUndefinedTx
 	}
-	return ms.PChainTx, nil
+	return ms.OChainTx, nil
 }

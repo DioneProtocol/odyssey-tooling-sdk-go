@@ -40,14 +40,14 @@ func GetAPILargeContext() (context.Context, context.CancelFunc) {
 	return context.WithTimeout(context.Background(), constants.APIRequestLargeTimeout)
 }
 
-func P(
+func O(
 	networkHRP string,
 	addresses []ids.ShortID,
 ) ([]string, error) {
 	return MapWithError(
 		addresses,
 		func(addr ids.ShortID) (string, error) {
-			return address.Format("P", networkHRP, addr[:])
+			return address.Format("O", networkHRP, addr[:])
 		},
 	)
 }

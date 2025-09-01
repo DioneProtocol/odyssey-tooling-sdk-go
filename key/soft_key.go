@@ -255,7 +255,7 @@ func decodePrivateKey(enc string) (*secp256k1.PrivateKey, error) {
 	return privKey, nil
 }
 
-func (m *SoftKey) C() string {
+func (m *SoftKey) D() string {
 	ecdsaPrv := m.privKey.ToECDSA()
 	pub := ecdsaPrv.PublicKey
 
@@ -293,12 +293,12 @@ func (m *SoftKey) Save(p string) error {
 	return os.WriteFile(p, []byte(m.PrivKeyHex()), constants.WriteReadUserOnlyPerms)
 }
 
-func (m *SoftKey) P(networkHRP string) (string, error) {
-	return address.Format("P", networkHRP, m.privKey.PublicKey().Address().Bytes())
+func (m *SoftKey) O(networkHRP string) (string, error) {
+	return address.Format("O", networkHRP, m.privKey.PublicKey().Address().Bytes())
 }
 
-func (m *SoftKey) X(networkHRP string) (string, error) {
-	return address.Format("X", networkHRP, m.privKey.PublicKey().Address().Bytes())
+func (m *SoftKey) A(networkHRP string) (string, error) {
+	return address.Format("A", networkHRP, m.privKey.PublicKey().Address().Bytes())
 }
 
 func (m *SoftKey) Spends(outputs []*dione.UTXO, opts ...OpOption) (

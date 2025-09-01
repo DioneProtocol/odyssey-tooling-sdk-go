@@ -35,7 +35,7 @@ func LoadLedgerFromBytes(_ []byte) (*SoftKey, error) {
 	return nil, fmt.Errorf("not implemented")
 }
 
-func (*LedgerKey) C() string {
+func (*LedgerKey) D() string {
 	return ""
 }
 
@@ -49,11 +49,11 @@ func (*LedgerKey) Save(_ string) error {
 	return fmt.Errorf("not implemented")
 }
 
-func (*LedgerKey) P(_ string) (string, error) {
+func (*LedgerKey) O(_ string) (string, error) {
 	return "", fmt.Errorf("not implemented")
 }
 
-func (*LedgerKey) X(_ string) (string, error) {
+func (*LedgerKey) A(_ string) (string, error) {
 	return "", fmt.Errorf("not implemented")
 }
 

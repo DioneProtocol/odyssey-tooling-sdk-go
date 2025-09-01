@@ -39,7 +39,7 @@
 - Multi-signature Support: Threshold-based transaction signing
 
 ### 6. Wallet & Transaction Management
-- Wallet Creation: Multi-chain wallet support (P-Chain, C-Chain, X-Chain)
+- Wallet Creation: Multi-chain wallet support (O-Chain, D-Chain, A-Chain)
 - Transaction Building: Create and sign various transaction types
 - Fee Management: Automatic fee calculation and payment
 - Change Address Management: Secure change UTXO handling
@@ -55,7 +55,7 @@
 - Prometheus Metrics: Comprehensive metrics collection
 - Loki Logging: Centralized log aggregation
 - Promtail Configuration: Log shipping and processing
-- Custom Dashboards: Support for C-Chain, P-Chain, X-Chain, and Subnet metrics
+- Custom Dashboards: Support for D-Chain, O-Chain, A-Chain, and Subnet metrics
 
 ### 9. Interchain Features (Experimental)
 - Teleporter Integration: Cross-chain messaging infrastructure
@@ -88,7 +88,7 @@
 ## Dependencies & Integrations
 - AvalancheGo: Core Avalanche node software
 - Subnet-EVM: EVM-compatible subnet implementation
-- Coreth: C-Chain implementation
+- Coreth: D-Chain implementation
 - AWM Relayer: Cross-chain messaging relay
 - Teleporter: Cross-chain messaging protocol
 

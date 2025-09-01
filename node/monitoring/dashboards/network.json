@@ -2527,7 +2527,7 @@
         "type": "__expr__",
         "uid": "__expr__"
       },
-      "description": "Considers the X-Chain, P-Chain and C-Chain. A lower value indicates vote pipelining (good.) A higher value indicates failed polls (not good.)",
+      "description": "Considers the A-Chain, O-Chain and D-Chain. A lower value indicates vote pipelining (good.) A higher value indicates failed polls (not good.)",
       "fieldConfig": {
         "defaults": {
           "color": {
