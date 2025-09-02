@@ -29,7 +29,7 @@ type NodeParams struct {
 	Roles []SupportedRole
 
 	// Network is whether the Validator / API node is meant to track OdysseyGo Primary Network
-	// in Fuji / Mainnet / Devnet
+	// in Testnet / Mainnet / Devnet
 	Network odyssey.Network
 
 	// SubnetIDs is the list of subnet IDs that the created nodes will be tracking

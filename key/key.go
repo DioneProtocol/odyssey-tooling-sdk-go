@@ -72,7 +72,7 @@ func WithTargetAmount(ta uint64) OpOption {
 }
 
 // To deduct transfer fee from total spend (output).
-// e.g., "units.MilliAvax" for X/O-Chain transfer.
+// e.g., "units.MilliDione" for A/O-Chain transfer.
 func WithFeeDeduct(fee uint64) OpOption {
 	return func(op *Op) {
 		op.feeDeduct = fee

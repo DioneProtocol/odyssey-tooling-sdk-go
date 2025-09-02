@@ -10,7 +10,7 @@ import (
 	"github.com/DioneProtocol/subnet-evm/precompile/contracts/deployerallowlist"
 	"github.com/DioneProtocol/subnet-evm/precompile/contracts/txallowlist"
 
-	// "github.com/ava-labs/subnet-evm/precompile/contracts/warp"
+	// "github.com/DioneProtocol/subnet-evm/precompile/contracts/warp"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -28,7 +28,7 @@ import (
 // 	warpConfig := warp.Config{
 // 		QuorumNumerator: warp.WarpDefaultQuorumNumerator,
 // 	}
-// 	// Note: Type mismatch between DioneProtocol and ava-labs packages
+// 	// Note: Type mismatch between DioneProtocol and DioneProtocol packages
 // 	// This will need to be resolved when warp is actually enabled
 // 	// For now, return empty config to avoid compilation errors
 // 	return warpConfig

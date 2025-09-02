@@ -22,7 +22,7 @@ import (
 )
 
 func AddSubnetValidator() {
-	// We are using existing Subnet that we have already deployed on Fuji
+	// We are using existing Subnet that we have already deployed on Testnet
 	subnetParams := subnet.SubnetParams{
 		GenesisFilePath: "GENESIS_FILE_PATH",
 		Name:            "SUBNET_NAME",

@@ -2,7 +2,7 @@
 	"http-host": "{{.HTTPHost}}",
 	"api-admin-enabled": {{.APIAdminEnabled}},
 	"index-enabled": {{.IndexEnabled}},
-	"network-id": "{{if .NetworkID}}{{.NetworkID}}{{else}}fuji{{end}}",
+	"network-id": "{{if .NetworkID}}{{.NetworkID}}{{else}}testnet{{end}}",
 {{- if .BootstrapIDs }}
 	"bootstrap-ids": "{{ .BootstrapIDs }}",
 {{- end }}

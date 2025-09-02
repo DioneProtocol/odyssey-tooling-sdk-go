@@ -28,7 +28,7 @@ import (
 )
 
 // ValidatePrimaryNetwork adds node as primary network validator.
-// It adds the node in the specified network (Fuji / Mainnet / Devnet)
+// It adds the node in the specified network (Testnet / Mainnet / Devnet)
 // and uses the wallet provided in the argument to pay for the transaction fee
 func (h *Node) ValidatePrimaryNetwork(
 	network odyssey.Network,

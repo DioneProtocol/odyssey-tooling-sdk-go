@@ -72,7 +72,7 @@ func DeploySubnetMultiSig() {
 	subnetID, _ := newSubnet.Commit(*deploySubnetTx, walletA, true)
 	fmt.Printf("subnetID %s \n", subnetID.String())
 
-	// we need to wait to allow the transaction to reach other nodes in Fuji
+	// we need to wait to allow the transaction to reach other nodes in Testnet
 	time.Sleep(2 * time.Second)
 
 	newSubnet.SetSubnetAuthKeys(subnetAuthKeys)

@@ -15,11 +15,11 @@ type PrimaryNetworkValidatorParams struct {
 
 	// Duration is how long the node will be staking the Primary Network
 	// Duration has to be greater than or equal to minimum duration for the specified network
-	// (Fuji / Mainnet)
+	// (Testnet / Mainnet)
 	Duration time.Duration
 
 	// StakeAmount is the amount of Odyssey tokens (DIONE) to stake in this validator, which is
-	// denominated in nAVAX. StakeAmount has to be greater than or equal to minimum stake required
+	// denominated in nDIONE. StakeAmount has to be greater than or equal to minimum stake required
 	// for the specified network
 	StakeAmount uint64
 

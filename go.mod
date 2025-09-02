@@ -22,7 +22,6 @@ require (
 	google.golang.org/api v0.148.0
 )
 
-// require github.com/ava-labs/avalanchego v1.11.10 // indirect
 
 // require (
 // 	github.com/ava-labs/awm-relayer v1.4.1

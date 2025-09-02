@@ -88,7 +88,7 @@ func DeploySubnet() {
 	subnetID, _ := newSubnet.Commit(*deploySubnetTx, wallet, true)
 	fmt.Printf("subnetID %s \n", subnetID.String())
 
-	// we need to wait to allow the transaction to reach other nodes in Fuji
+	// we need to wait to allow the transaction to reach other nodes in Testnet
 	time.Sleep(2 * time.Second)
 
 	newSubnet.SetSubnetAuthKeys(subnetAuthKeys)
@@ -124,7 +124,7 @@ func DeploySubnetWithLedger() {
 	//
 	// To transfer funds between addresses in Ledger, refer to https://docs.dione.network/tooling/cli-transfer-funds/how-to-transfer-funds
 	ledgerInfo := keychain.LedgerParams{
-		LedgerAddresses: []string{"P-fujixxxxxxxxx"},
+		LedgerAddresses: []string{"O-testnetxxxxxxxxx"},
 	}
 
 	// Here we are creating keychain A which will be used as fee-paying key for CreateSubnetTx
@@ -142,7 +142,7 @@ func DeploySubnetWithLedger() {
 
 	// In this example, we are using a key different from fee-paying key generated above
 	// as control key and subnet auth key
-	addressesIDs, _ := address.ParseToIDs([]string{"P-fujiyyyyyyyy"})
+	addressesIDs, _ := address.ParseToIDs([]string{"O-testnetyyyyyyyy"})
 	controlKeys := addressesIDs
 	subnetAuthKeys := addressesIDs
 	threshold := 1
@@ -153,7 +153,7 @@ func DeploySubnetWithLedger() {
 	subnetID, _ := newSubnet.Commit(*deploySubnetTx, walletA, true)
 	fmt.Printf("subnetID %s \n", subnetID.String())
 
-	// we need to wait to allow the transaction to reach other nodes in Fuji
+	// we need to wait to allow the transaction to reach other nodes in Testnet
 	time.Sleep(2 * time.Second)
 
 	newSubnet.SetSubnetAuthKeys(subnetAuthKeys)
@@ -168,7 +168,7 @@ func DeploySubnetWithLedger() {
 	// Here we are creating keychain B using the Ledger address that was used as the control key and
 	// subnet auth key for our subnet.
 	ledgerInfoB := keychain.LedgerParams{
-		LedgerAddresses: []string{"P-fujiyyyyyyyy"},
+		LedgerAddresses: []string{"O-testnetyyyyyyyy"},
 	}
 	keychainB, _ := keychain.NewKeychain(network, "", &ledgerInfoB)
 

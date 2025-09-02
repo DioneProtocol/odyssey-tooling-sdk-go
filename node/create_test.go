@@ -47,9 +47,9 @@ func TestCreateNodes(t *testing.T) {
 		odysseyGoVersion = "v1.11.8"
 	)
 
-	// Create two new Odyssey Validator nodes on Fuji Network on AWS without Elastic IPs
+	// Create two new Odyssey Validator nodes on Testnet Network on AWS without Elastic IPs
 	// attached. Once CreateNodes is completed, the validators will begin bootstrapping process
-	// to Primary Network in Fuji Network. Nodes need to finish bootstrapping process
+	// to Primary Network in Testnet Network. Nodes need to finish bootstrapping process
 	// before they can validate Odyssey Primary Network / Subnet.
 	//
 	// SDK function for nodes to start validating Primary Network / Subnet will be available

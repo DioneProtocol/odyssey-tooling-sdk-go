@@ -23,7 +23,7 @@ import (
 	"github.com/DioneProtocol/odysseygo/ids"
 
 	// "github.com/DioneProtocol/odysseygo/utils/logging"
-	// "github.com/ava-labs/awm-relayer/config"
+	// "github.com/DioneProtocol/awm-relayer/config"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -47,7 +47,7 @@ func InterchainExample(
 	}
 
 	// // Deploy Interchain Messenger (ICM)
-	// // More information: https://github.com/ava-labs/teleporter
+	// // More information: https://github.com/DioneProtocol/teleporter
 	// fmt.Println("Deploying Interchain Messenger")
 	// chain1RegistryAddress, chain1MessengerAddress, chain2RegistryAddress, chain2MessengerAddress, err := SetupICM(
 	// 	chain1RPC,
@@ -66,7 +66,7 @@ func InterchainExample(
 	// // Besides this, some source blockchain may provide incentives to relayers
 	// // that send their messages. For that, the relayer needs to be configured with
 	// // the address that will receive such payments at source.
-	// // More information: https: //github.com/ava-labs/awm-relayer/blob/main/relayer/README.md
+	// // More information: https: //github.com/DioneProtocol/awm-relayer/blob/main/relayer/README.md
 	// chain1RelayerKey, err := key.NewSoft()
 	// if err != nil {
 	// 	return err
@@ -343,7 +343,7 @@ func TestMessageDelivery(
 	)
 }
 
-// Fuji ICM Example
+// Testnet ICM Example
 //
 // Deploys ICM into CHAIN1_RPC and CHAIN2_RPC,
 // paying deploy fees with CHAIN1_PK and CHAIN2_PK

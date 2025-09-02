@@ -123,7 +123,7 @@ func TestSubnetDeployMultiSig(t *testing.T) {
 	require.NoError(err)
 	fmt.Printf("subnetID %s \n", subnetID.String())
 
-	// we need to wait to allow the transaction to reach other nodes in Fuji
+	// we need to wait to allow the transaction to reach other nodes in Testnet
 	time.Sleep(2 * time.Second)
 
 	newSubnet.SetSubnetAuthKeys(subnetAuthKeys)
@@ -162,12 +162,12 @@ func TestSubnetDeployLedger(t *testing.T) {
 	network := odyssey.TestnetNetwork()
 
 	ledgerInfo := keychain.LedgerParams{
-		LedgerAddresses: []string{"P-fujixxxxxxxxx"},
+		LedgerAddresses: []string{"O-testnetxxxxxxxxx"},
 	}
 	keychainA, err := keychain.NewKeychain(network, "", &ledgerInfo)
 	require.NoError(err)
 
-	addressesIDs, err := address.ParseToIDs([]string{"P-fujiyyyyyyyy"})
+	addressesIDs, err := address.ParseToIDs([]string{"O-testnetyyyyyyyy"})
 	require.NoError(err)
 	controlKeys := addressesIDs
 	subnetAuthKeys := addressesIDs
@@ -199,7 +199,7 @@ func TestSubnetDeployLedger(t *testing.T) {
 	require.NoError(err)
 
 	ledgerInfoB := keychain.LedgerParams{
-		LedgerAddresses: []string{"P-fujiyyyyyyyy"},
+		LedgerAddresses: []string{"O-testnetyyyyyyyy"},
 	}
 	err = keychainA.Ledger.LedgerDevice.Disconnect()
 	require.NoError(err)

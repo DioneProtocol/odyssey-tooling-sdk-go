@@ -20,3 +20,4 @@
 
 # ignore GoLand metafiles directory
 .idea/
+.env

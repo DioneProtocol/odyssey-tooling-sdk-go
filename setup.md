@@ -66,7 +66,7 @@ go version
 
 ```bash
 # Navigate to your Windows 11 project directory
-cd /mnt/d/Projects/Dione\ Protocol/odyssey-tooling-sdk-go/avalanche-tooling-sdk-go
+cd /mnt/d/Projects/Dione\ Protocol/odyssey-tooling-sdk-go/odyssey-tooling-sdk-go
 
 # Verify you're in the correct directory
 ls -la
@@ -79,8 +79,8 @@ ls -la
 cd /mnt/d/Projects/Dione\ Protocol/
 
 # Clone the repository
-git clone https://github.com/ava-labs/avalanche-tooling-sdk-go.git
-cd avalanche-tooling-sdk-go
+git clone https://github.com/DioneProtocol/odyssey-tooling-sdk-go.git
+cd odyssey-tooling-sdk-go
 ```
 
 ### Important Notes for Windows 11 + WSL Setup
@@ -148,14 +148,14 @@ go test ./cloud/aws -v
 When running `go test ./...`, you should see output similar to:
 
 ```
-?       github.com/ava-labs/avalanche-tooling-sdk-go/avalanche  [no test files]
-?       github.com/ava-labs/avalanche-tooling-sdk-go/cloud/gcp  [no test files]
-?       github.com/ava-labs/avalanche-tooling-sdk-go/constants  [no test files]
-ok      github.com/ava-labs/avalanche-tooling-sdk-go/cloud/aws  0.010s
-ok      github.com/ava-labs/avalanche-tooling-sdk-go/evm        0.102s
-?       github.com/ava-labs/avalanche-tooling-sdk-go/examples   [no test files]
-ok      github.com/ava-labs/avalanche-tooling-sdk-go/key        0.112s
-ok      github.com/ava-labs/avalanche-tooling-sdk-go/utils      6.515s
+?       github.com/DioneProtocol/odyssey-tooling-sdk-go/odyssey  [no test files]
+?       github.com/DioneProtocol/odyssey-tooling-sdk-go/cloud/gcp  [no test files]
+?       github.com/DioneProtocol/odyssey-tooling-sdk-go/constants  [no test files]
+ok      github.com/DioneProtocol/odyssey-tooling-sdk-go/cloud/aws  0.010s
+ok      github.com/DioneProtocol/odyssey-tooling-sdk-go/evm        0.102s
+?       github.com/DioneProtocol/odyssey-tooling-sdk-go/examples   [no test files]
+ok      github.com/DioneProtocol/odyssey-tooling-sdk-go/key        0.112s
+ok      github.com/DioneProtocol/odyssey-tooling-sdk-go/utils      6.515s
 ```
 
 ### Note about failing tests
@@ -228,14 +228,14 @@ If you experience slow performance when accessing files on Windows 11 filesystem
 
 ```bash
 # Consider copying project to WSL filesystem for better performance
-cp -r /mnt/d/Projects/Dione\ Protocol/odyssey-tooling-sdk-go ~/avalanche-tooling-sdk-go
-cd ~/avalanche-tooling-sdk-go
+cp -r /mnt/d/Projects/Dione\ Protocol/odyssey-tooling-sdk-go ~/odyssey-tooling-sdk-go
+cd ~/odyssey-tooling-sdk-go
 
 # Or use WSL filesystem for development
 mkdir -p ~/projects
 cd ~/projects
-git clone https://github.com/ava-labs/avalanche-tooling-sdk-go.git
-cd avalanche-tooling-sdk-go
+git clone https://github.com/DioneProtocol/odyssey-tooling-sdk-go.git
+cd odyssey-tooling-sdk-go
 ```
 
 #### Path issues with spaces
@@ -244,10 +244,10 @@ If your Windows path contains spaces, use proper escaping:
 
 ```bash
 # Correct way to navigate paths with spaces
-cd "/mnt/d/Projects/Dione Protocol/odyssey-tooling-sdk-go/avalanche-tooling-sdk-go"
+cd "/mnt/d/Projects/Dione Protocol/odyssey-tooling-sdk-go/odyssey-tooling-sdk-go"
 
 # Or escape spaces
-cd /mnt/d/Projects/Dione\ Protocol/odyssey-tooling-sdk-go/avalanche-tooling-sdk-go
+cd /mnt/d/Projects/Dione\ Protocol/odyssey-tooling-sdk-go/odyssey-tooling-sdk-go
 ```
 
 ### Permission denied errors

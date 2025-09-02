@@ -16,19 +16,19 @@ other form or usage of the Licensed Software. You will include and display
 this License, without modification, with all uses of the Licensed Software,
 regardless of form.
 
-You will use the Licensed Software solely (i) in connection with the Avalanche
-Public Blockchain platform, having a NetworkID of 1 (Mainnet) or 5 (Fuji), and
-associated blockchains, comprised exclusively of the Avalanche A-Chain,
-D-Chain, O-Chain and any subnets linked to the O-Chain (“Avalanche Authorized
+You will use the Licensed Software solely (i) in connection with the Odyssey
+Public Blockchain platform, having a NetworkID of 1 (Mainnet) or 5 (Testnet), and
+associated blockchains, comprised exclusively of the Odyssey A-Chain,
+D-Chain, O-Chain and any subnets linked to the O-Chain (“Odyssey Authorized
 Platform”) or (ii) for non-production, testing or research purposes within the
-Avalanche ecosystem, in each case, without any commercial application
+Odyssey ecosystem, in each case, without any commercial application
 (“Non-Commercial Use”); provided that this License does not permit use of the
-Licensed Software in connection with (a) any forks of the Avalanche Authorized
-Platform or (b) in any manner not operationally connected to the Avalanche
+Licensed Software in connection with (a) any forks of the Odyssey Authorized
+Platform or (b) in any manner not operationally connected to the Odyssey
 Authorized Platform other than, for the avoidance of doubt, the limited
 exception for Non-Commercial Use. Ava Labs may publicly announce changes or
-additions to the Avalanche Authorized Platform, which may expand or modify
-usage of the Licensed Software. Upon such announcement, the Avalanche
+additions to the Odyssey Authorized Platform, which may expand or modify
+usage of the Licensed Software. Upon such announcement, the Odyssey
 Authorized Platform will be deemed to be the then-current iteration of such
 platform.
 
