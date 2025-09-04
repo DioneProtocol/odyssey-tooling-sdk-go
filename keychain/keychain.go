@@ -97,9 +97,22 @@ func NewKeychain(
 	return &kc, nil
 }
 
-// O returns string formatted addresses in the keychain
+// NewKeychainFromExisting creates a new keychain from an existing secp256k1fx.Keychain with the specified network
+func NewKeychainFromExisting(existingKeychain keychain.Keychain, network odyssey.Network) Keychain {
+	return Keychain{
+		Keychain: existingKeychain,
+		network:  network,
+	}
+}
+
+// O returns string formatted O-Chain addresses in the keychain
 func (kc *Keychain) O() ([]string, error) {
 	return utils.O(kc.network.HRP(), kc.Addresses().List())
+}
+
+// A returns string formatted A-Chain addresses in the keychain
+func (kc *Keychain) A() ([]string, error) {
+	return utils.A(kc.network.HRP(), kc.Addresses().List())
 }
 
 func (kc *Keychain) LedgerEnabled() bool {

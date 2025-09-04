@@ -118,3 +118,16 @@ func (n Network) GetMinStakingAmount() (uint64, error) {
 	}
 	return minValStake, nil
 }
+
+// NetworkFromURI determines the network type from a URI endpoint
+func NetworkFromURI(uri string) Network {
+	switch uri {
+	case TestnetAPIEndpoint:
+		return TestnetNetwork()
+	case MainnetAPIEndpoint:
+		return MainnetNetwork()
+	default:
+		// For unknown endpoints, return undefined network
+		return UndefinedNetwork
+	}
+}

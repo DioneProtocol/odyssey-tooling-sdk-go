@@ -7,6 +7,7 @@ import (
 	"errors"
 
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/keychain"
+	"github.com/DioneProtocol/odyssey-tooling-sdk-go/odyssey"
 	"github.com/DioneProtocol/odysseygo/ids"
 	"github.com/DioneProtocol/odysseygo/utils/set"
 	"github.com/DioneProtocol/odysseygo/vms/secp256k1fx"
@@ -24,16 +25,23 @@ type Wallet struct {
 }
 
 func New(ctx context.Context, config *primary.WalletConfig) (Wallet, error) {
+	if config == nil {
+		return Wallet{}, errors.New("wallet config cannot be nil")
+	}
+
 	wallet, err := primary.MakeWallet(
 		ctx,
 		config,
 	)
+
+	// Determine network from URI and create keychain with proper network
+	network := odyssey.NetworkFromURI(config.URI)
+	kc := keychain.NewKeychainFromExisting(config.DIONEKeychain, network)
+
 	return Wallet{
-		Wallet: wallet,
-		Keychain: keychain.Keychain{
-			Keychain: config.DIONEKeychain,
-		},
-		config: config,
+		Wallet:   wallet,
+		Keychain: kc,
+		config:   config,
 	}, err
 }
 

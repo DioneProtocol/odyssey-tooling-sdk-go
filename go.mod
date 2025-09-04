@@ -22,7 +22,6 @@ require (
 	google.golang.org/api v0.148.0
 )
 
-
 // require (
 // 	github.com/ava-labs/awm-relayer v1.4.1
 // 	github.com/ava-labs/subnet-evm v0.6.8

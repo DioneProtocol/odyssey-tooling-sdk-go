@@ -5,7 +5,7 @@ The official Odyssey Tooling Go SDK library.
 *** Please note that this SDK is in experimental mode, major changes to the SDK are to be expected
 in between releases ***
 
-Current version (v0.3.0) currently supports: 
+Current version (v0.0.1) currently supports: 
 - Create Subnet and Create Blockchain in a Subnet in Fuji / Mainnet. 
 - Create Odyssey Node (Validator / API / Monitoring / Load Test Node) & install all required
 dependencies (odysseygo, gcc, Promtail, Grafana, etc).

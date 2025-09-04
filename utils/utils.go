@@ -52,6 +52,18 @@ func O(
 	)
 }
 
+func A(
+	networkHRP string,
+	addresses []ids.ShortID,
+) ([]string, error) {
+	return MapWithError(
+		addresses,
+		func(addr ids.ShortID) (string, error) {
+			return address.Format("A", networkHRP, addr[:])
+		},
+	)
+}
+
 func RemoveSurrounding(s string, left string, right string) (string, error) {
 	s = strings.TrimSpace(s)
 	if len(s) > 0 {
