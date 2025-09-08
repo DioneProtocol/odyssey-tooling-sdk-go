@@ -44,8 +44,11 @@
 |---------|------------|-------------|
 | `wallet/` | `wallet_test.go` | Complete wallet management with production patterns |
 | `keychain/` | Integrated in wallet tests | Keychain management with network context |
+| `key/` | `key_test.go` | Comprehensive key management and cryptographic operations |
 
 **New Test Functions Added:**
+
+### **Wallet Package Tests:**
 - `TestWalletCreation` - Production approach
 - `TestWalletCreationNilConfig` - Production approach  
 - `TestWalletAddresses` - Production approach
@@ -71,12 +74,21 @@
 - `BenchmarkWalletCreation` - Production approach
 - `BenchmarkWalletAddresses` - Production approach
 
+### **Key Package Tests:**
+- `TestKeyInterfaceUtilities` - Tests utility functions (WithTime, WithTargetAmount, WithFeeDeduct, SortTransferableInputsWithSigners)
+- `TestSoftKeyMethods` - Tests all SoftKey methods (D, KeyChain, PrivKey, PrivKeyCB58, O, A, Addresses, Match)
+- `TestSoftKeySpends` - Comprehensive testing of UTXO spending with various options
+- `TestSoftKeySign` - Tests transaction signing with valid and invalid signers
+- `TestSoftKeyLoaders` - Tests LoadSoftOrCreate and LoadEwoq functions
+- `TestSoftKeyErrorCases` - Comprehensive error scenario testing
+- `TestLedgerKeyStubs` - Tests all LedgerKey stub functions
+
 
 ## **CURRENT TESTS COVERAGE**
 
 | Package | Coverage % |
 |---------|------------|
-| `key/` | 40.1% |
+| `key/` | **93.6%** |
 | `subnet/` | 35.7% |
 | `node/` | 1.7% |
 | `evm/` | 25.7% |
@@ -92,23 +104,21 @@
 
 ## **TOTAL NEW COVERAGE**
 
-**Total Current Coverage: 12.9% of statements**
+**Total Current Coverage: 16.6% of statements**
 
 **Coverage Improvement:**
-- **Original Coverage**: ~8% of statements
-- **New Coverage Added**: ~5% of statements (wallet package contribution)
-- **Total Current Coverage**: 12.9% of statements
+- **Original Coverage**: ~8.2% of statements
+- **New Coverage Added**: ~8.4% of statements (wallet + key package contributions)
+- **Total Current Coverage**: 16.6% of statements
 
 **Detailed Coverage Breakdown:**
+- **Key Package**: **93.6% coverage** (comprehensive testing of all key management functions)
 - **Wallet Package**: 100% coverage (5 functions: New, SecureWalletIsChangeOwner, SetAuthKeys, SetSubnetAuthMultisig, Addresses)
-- **Key Package**: 40.1% coverage (soft key functions tested)
 - **Subnet Package**: 35.7% coverage (basic subnet operations tested)
 - **EVM Package**: 25.7% coverage (contract parsing functions tested)
 - **Utils Package**: 20.0% coverage (utility functions tested)
 - **Node Package**: 1.7% coverage (minimal testing due to test failures)
 - **AWS Package**: 5.1% coverage (security group functions tested)
-
-**Note**: The wallet tests ARE contributing to coverage (all 5 wallet functions show 100% coverage), but the overall project coverage is 12.9% because the wallet package represents a small portion of the total codebase compared to the large node, subnet, and other packages with many untested functions.
 
 ---
 
