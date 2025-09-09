@@ -21,3 +21,5 @@
 # ignore GoLand metafiles directory
 .idea/
 .env
+go.mod
+odyssey-sdk-functionalities.md
