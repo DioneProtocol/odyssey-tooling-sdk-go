@@ -46,6 +46,7 @@
 | `keychain/` | Integrated in wallet tests | Keychain management with network context |
 | `key/` | `key_test.go` | Comprehensive key management and cryptographic operations |
 | `subnet/` | `subnet_simple_test.go`, `subnet_validation_test.go`, `subnet_wallet_integration_test.go`, `subnet_multisig_test.go`, `subnet_commit_test.go`, `subnet_edge_cases_test.go` | Comprehensive subnet package testing with multisig support |
+| `evm/` | `contract_abi_test.go`, `evm_client_helpers_test.go`, `mock_ethclient_test.go` | ABI parsing and event decoding; tx params and funding; tx issue/wait; client helper flows with gomock |
 
 **New Test Functions Added:**
 
@@ -132,6 +133,12 @@
 - `TestValidator_EdgeCases` - Tests validator edge cases
 - `TestSubnet_EdgeCases` - Tests subnet struct edge cases
 
+### **EVM Package Tests:**
+- `TestParseMethodSignature`, `TestUnpackLog`, `TestGetEventFromLogs`
+- `TestIssueTx_InvalidBytes`, `TestGetTxOptsWithSigner_InvalidKey`, `TestGetABIMaps_ErrorPaths`
+- `TestGetContractBytecodeAndAlreadyDeployed`, `TestGetAddressBalanceNonceTipBaseFee`, `TestCalculateTxParams_Succeeds`
+- `TestSetMinBalance_FundsWhenBelow`, `TestWaitForTransaction_SuccessAndFailure`, `TestTransfer_SuccessAndFailedReceipt`
+- `TestGetTxOptsWithSigner_Success`, `TestIssueTx_Success`, `TestSendTransaction_SuccessImmediate`
 
 ## **CURRENT TESTS COVERAGE**
 
@@ -140,7 +147,7 @@
 | `wallet/` | **100.0%** | ✅ Perfect |
 | `key/` | **93.6%** | ✅ Excellent |
 | `subnet/` | **67.9%** | ✅ Very Good |
-| `evm/` | **25.7%** | 🟡 Partial |
+| `evm/` | **67.5%** | ✅ Very Good |
 | `utils/` | **20.0%** | 🟡 Partial |
 | `cloud/aws/` | **5.1%** | 🟡 Partial |
 | `node/` | **1.7%** | 🔴 Very Low |
@@ -158,21 +165,12 @@
 
 ## **TOTAL NEW COVERAGE**
 
-**Total Current Coverage: 18.4% of statements**
+**Total Current Coverage: 24.0% of statements**
 
 **Coverage Improvement:**
 - **Original Coverage**: ~8.2% of statements
-- **New Coverage Added**: ~10.2% of statements (wallet + key + subnet package contributions)
-- **Total Current Coverage**: 18.4% of statements
-
-**Detailed Coverage Breakdown:**
-- **Wallet Package**: **100.0% coverage** (5 functions: New, SecureWalletIsChangeOwner, SetAuthKeys, SetSubnetAuthMultisig, Addresses)
-- **Key Package**: **93.6% coverage** (comprehensive testing of all key management functions)
-- **Subnet Package**: **67.9% coverage** (comprehensive subnet operations with multisig support)
-- **EVM Package**: **25.7% coverage** (original tests: splitTypes, getABIMaps functions)
-- **Utils Package**: **20.0% coverage** (original tests: AppendSlices, Retry, ExpandHome, IsSSHKey, ExtractPlaceholderValue, AddSingleQuotes)
-- **Cloud/AWS Package**: **5.1% coverage** (original tests: CheckIPInSg function)
-- **Node Package**: **1.7% coverage** (original tests: getDefaultProjectNameFromGCPCredentials, GetPublicKeyFromSSHKey)
+- **New Coverage Added**: ~15.8% of statements (wallet + key + subnet package contributions)
+- **Total Current Coverage**: 24.0% of statements
 
 ---
 
