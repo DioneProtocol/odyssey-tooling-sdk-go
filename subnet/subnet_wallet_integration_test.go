@@ -124,6 +124,7 @@ func TestSubnet_CreateBlockchainTx_Success(t *testing.T) {
 }
 
 func TestSubnet_CreateBlockchainTx_ValidationErrors(t *testing.T) {
+	addTestDelay() // Add delay to avoid rate limiting
 	tests := []struct {
 		name        string
 		subnet      *Subnet

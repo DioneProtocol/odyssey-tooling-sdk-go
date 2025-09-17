@@ -146,8 +146,8 @@
 |---------|------------|---------|
 | `wallet/` | **100.0%** | ✅ Perfect |
 | `key/` | **93.6%** | ✅ Excellent |
-| `subnet/` | **67.9%** | ✅ Very Good |
-| `evm/` | **67.5%** | ✅ Very Good |
+| `subnet/` | **68.8%** | ✅ Very Good |
+| `evm/` | **71.9%** | ✅ Very Good |
 | `utils/` | **20.0%** | 🟡 Partial |
 | `cloud/aws/` | **5.1%** | 🟡 Partial |
 | `node/` | **1.7%** | 🔴 Very Low |
@@ -165,12 +165,12 @@
 
 ## **TOTAL NEW COVERAGE**
 
-**Total Current Coverage: 24.0% of statements**
+**Total Current Coverage: 24.7% of statements**
 
 **Coverage Improvement:**
 - **Original Coverage**: ~8.2% of statements
 - **New Coverage Added**: ~15.8% of statements (wallet + key + subnet package contributions)
-- **Total Current Coverage**: 24.0% of statements
+- **Total Current Coverage**: 24.7% of statements
 
 ---
 

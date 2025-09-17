@@ -368,6 +368,7 @@ func TestMultisig_CompleteWorkflow(t *testing.T) {
 
 // TestMultisig_WalletIntegration tests wallet multisig integration
 func TestMultisig_WalletIntegration(t *testing.T) {
+	addTestDelay() // Add delay to avoid rate limiting
 	testWallet := createTestWalletForMultisig(t)
 
 	// Test wallet multisig setup

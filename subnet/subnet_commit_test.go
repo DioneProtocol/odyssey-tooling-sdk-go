@@ -191,6 +191,7 @@ func TestCommit_RetryLogic(t *testing.T) {
 
 // TestCommit_ContextHandling tests Commit context handling
 func TestCommit_ContextHandling(t *testing.T) {
+	addTestDelay() // Add delay to avoid rate limiting
 	subnet := createTestSubnet(t)
 	testWallet := createTestWalletForCommit(t)
 

@@ -46,6 +46,9 @@ func getDefaultSubnetEVMGenesis() SubnetParams {
 
 func TestSubnetDeploy(t *testing.T) {
 	require := require.New(t)
+	// Add delay to avoid rate limiting
+	time.Sleep(2 * time.Second)
+
 	subnetParams := getDefaultSubnetEVMGenesis()
 	newSubnet, err := New(&subnetParams)
 	require.NoError(err)
@@ -84,6 +87,9 @@ func TestSubnetDeploy(t *testing.T) {
 
 func TestSubnetDeployMultiSig(t *testing.T) {
 	require := require.New(t)
+	// Add delay to avoid rate limiting
+	time.Sleep(2 * time.Second)
+
 	subnetParams := getDefaultSubnetEVMGenesis()
 	newSubnet, _ := New(&subnetParams)
 	network := odyssey.TestnetNetwork()

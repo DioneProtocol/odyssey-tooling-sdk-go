@@ -739,7 +739,7 @@ func TestWalletLedgerSupport(t *testing.T) {
 
 // Helper function to add delay between tests to avoid rate limiting
 func addTestDelay() {
-	time.Sleep(500 * time.Millisecond)
+	time.Sleep(2 * time.Second) // Increased from 500ms to 2s
 }
 
 // Benchmark tests for wallet operations
