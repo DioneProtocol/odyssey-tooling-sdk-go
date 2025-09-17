@@ -47,98 +47,7 @@
 | `key/` | `key_test.go` | Comprehensive key management and cryptographic operations |
 | `subnet/` | `subnet_simple_test.go`, `subnet_validation_test.go`, `subnet_wallet_integration_test.go`, `subnet_multisig_test.go`, `subnet_commit_test.go`, `subnet_edge_cases_test.go` | Comprehensive subnet package testing with multisig support |
 | `evm/` | `contract_abi_test.go`, `evm_client_helpers_test.go`, `mock_ethclient_test.go` | ABI parsing and event decoding; tx params and funding; tx issue/wait; client helper flows with gomock |
-
-**New Test Functions Added:**
-
-### **Wallet Package Tests:**
-- `TestWalletCreation` - Production approach
-- `TestWalletCreationNilConfig` - Production approach  
-- `TestWalletAddresses` - Production approach
-- `TestWalletMultiChainAddressGeneration` - Production approach
-- `TestWalletSecureChangeOwner` - Production approach
-- `TestWalletSetAuthKeys` - Production approach
-- `TestWalletSetSubnetAuthMultisig` - Production approach
-- `TestWalletWithMultipleKeys` - Production approach
-- `TestWalletWithOChainTxsToFetch` - Production approach
-- `TestWalletErrorHandling` - Production approach
-- `TestWalletKeychainIntegration` - Production approach
-- `TestWalletLedgerSupport` - Production approach
-- `TestWalletNetworkHRPGeneration` - Production approach
-- `TestWalletGenerationFromPrivateKey` - Production approach
-- `TestWalletDeterministicAddressGeneration` - Production approach
-- `TestAddressEncodingDifference` - Production approach
-- `TestWalletAChainAddressGeneration` - Production approach
-- `TestWalletBothChainAddressGeneration` - Production approach
-- `TestWalletAChainFromPrivateKey` - Production approach
-- `TestWalletPrivateKeyValidation` - Production approach
-- `TestWalletWithNetworkAndKeychain` - Production approach
-- `TestWalletWithNetworkAndKeychainFromPrivateKey` - Production approach
-- `BenchmarkWalletCreation` - Production approach
-- `BenchmarkWalletAddresses` - Production approach
-
-### **Key Package Tests:**
-- `TestKeyInterfaceUtilities` - Tests utility functions (WithTime, WithTargetAmount, WithFeeDeduct, SortTransferableInputsWithSigners)
-- `TestSoftKeyMethods` - Tests all SoftKey methods (D, KeyChain, PrivKey, PrivKeyCB58, O, A, Addresses, Match)
-- `TestSoftKeySpends` - Comprehensive testing of UTXO spending with various options
-- `TestSoftKeySign` - Tests transaction signing with valid and invalid signers
-- `TestSoftKeyLoaders` - Tests LoadSoftOrCreate and LoadEwoq functions
-- `TestSoftKeyErrorCases` - Comprehensive error scenario testing
-- `TestLedgerKeyStubs` - Tests all LedgerKey stub functions
-
-### **Subnet Package Tests:**
-- `TestNew_WithGenesisFilePath` - Tests subnet creation with genesis file
-- `TestNew_ValidationErrors` - Tests validation error handling
-- `TestCreateEvmGenesis_ValidationErrors` - Tests genesis validation
-- `TestCreateEvmGenesis_Success` - Tests successful genesis creation
-- `TestVmID` - Tests VM ID generation
-- `TestSubnet_SetParams` - Tests parameter setting
-- `TestSubnet_SetSubnetControlParams` - Tests control parameter setting
-- `TestSubnet_SetSubnetAuthKeys` - Tests auth key setting
-- `TestSubnet_SetSubnetID` - Tests subnet ID setting
-- `TestAddValidator_ValidationErrors` - Tests validator validation
-- `TestAddValidator_DefaultWeight` - Tests default weight handling
-- `TestCreateSubnetTx_ValidationErrors` - Tests subnet creation validation
-- `TestCreateBlockchainTx_ValidationErrors` - Tests blockchain creation validation
-- `TestSubnet_CreateSubnetTx_Success` - Tests successful subnet creation
-- `TestSubnet_CreateBlockchainTx_Success` - Tests successful blockchain creation
-- `TestSubnet_AddValidator_Success` - Tests successful validator addition
-- `TestSubnet_AddValidator_DefaultWeight` - Tests validator with default weight
-- `TestSubnet_CompleteWorkflow` - Tests complete subnet workflow
-- `TestMultisig_CreateSubnetTx_WithMultisig` - Tests multisig subnet creation
-- `TestMultisig_CreateBlockchainTx_WithMultisig` - Tests multisig blockchain creation
-- `TestMultisig_AddValidator_WithMultisig` - Tests multisig validator addition
-- `TestMultisig_Commit_ValidationLogic` - Tests multisig commit validation
-- `TestMultisig_Commit_NotReadyToCommit` - Tests multisig not ready state
-- `TestMultisig_StateManagement` - Tests multisig state management
-- `TestMultisig_Serialization` - Tests multisig serialization
-- `TestMultisig_String` - Tests multisig string representation
-- `TestMultisig_CompleteWorkflow` - Tests complete multisig workflow
-- `TestMultisig_WalletIntegration` - Tests multisig wallet integration
-- `TestMultisig_ErrorHandling` - Tests multisig error handling
-- `TestMultisig_EdgeCases` - Tests multisig edge cases
-- `TestCommit_UndefinedMultisig` - Tests commit with undefined multisig
-- `TestCommit_NotReadyToCommit` - Tests commit when not ready
-- `TestCommit_ValidationLogic` - Tests commit validation logic
-- `TestCommit_WithWaitForTxAcceptance` - Tests commit with transaction waiting
-- `TestCommit_SubnetIDUpdate` - Tests subnet ID update on commit
-- `TestCommit_EdgeCases` - Tests commit edge cases
-- `TestCommit_ComprehensiveErrorPaths` - Tests comprehensive commit error paths
-- `TestCreateEvmGenesis_ComplexAllocation` - Tests complex genesis allocation
-- `TestCreateEvmGenesis_LargeValues` - Tests large value handling
-- `TestCreateEvmGenesis_EdgeCases` - Tests genesis edge cases
-- `TestVmID_EdgeCases` - Tests VM ID edge cases
-- `TestNew_EdgeCases` - Tests subnet creation edge cases
-- `TestSubnet_Setters_EdgeCases` - Tests setter edge cases
-- `TestDeployParams_EdgeCases` - Tests deployment parameter edge cases
-- `TestValidator_EdgeCases` - Tests validator edge cases
-- `TestSubnet_EdgeCases` - Tests subnet struct edge cases
-
-### **EVM Package Tests:**
-- `TestParseMethodSignature`, `TestUnpackLog`, `TestGetEventFromLogs`
-- `TestIssueTx_InvalidBytes`, `TestGetTxOptsWithSigner_InvalidKey`, `TestGetABIMaps_ErrorPaths`
-- `TestGetContractBytecodeAndAlreadyDeployed`, `TestGetAddressBalanceNonceTipBaseFee`, `TestCalculateTxParams_Succeeds`
-- `TestSetMinBalance_FundsWhenBelow`, `TestWaitForTransaction_SuccessAndFailure`, `TestTransfer_SuccessAndFailedReceipt`
-- `TestGetTxOptsWithSigner_Success`, `TestIssueTx_Success`, `TestSendTransaction_SuccessImmediate`
+| `utils/` | `common_test.go`, `e2e_test.go`, `file_test.go`, `github_test.go`, `http_test.go`, `net_test.go`, `ssh_test.go`, `staking_test.go`, `strings_test.go`, `utils_test.go` | Comprehensive utility functions testing including file operations, networking, HTTP, SSH, staking, and string utilities |
 
 ## **CURRENT TESTS COVERAGE**
 
@@ -148,7 +57,7 @@
 | `key/` | **93.6%** | ✅ Excellent |
 | `subnet/` | **68.8%** | ✅ Very Good |
 | `evm/` | **71.9%** | ✅ Very Good |
-| `utils/` | **20.0%** | 🟡 Partial |
+| `utils/` | **68.8%** | ✅ Very Good  |
 | `cloud/aws/` | **5.1%** | 🟡 Partial |
 | `node/` | **1.7%** | 🔴 Very Low |
 | `cloud/gcp/` | **0.0%** | 🔴 No Coverage |
@@ -165,12 +74,12 @@
 
 ## **TOTAL NEW COVERAGE**
 
-**Total Current Coverage: 24.7% of statements**
+**Total Current Coverage: 30.4% of statements**
 
 **Coverage Improvement:**
 - **Original Coverage**: ~8.2% of statements
-- **New Coverage Added**: ~15.8% of statements (wallet + key + subnet package contributions)
-- **Total Current Coverage**: 24.7% of statements
+- **New Coverage Added**: ~22.2% of statements (wallet + key + subnet package contributions)
+- **Total Current Coverage**: 30.4% of statements
 
 ---
 
