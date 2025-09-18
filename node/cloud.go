@@ -218,7 +218,7 @@ func (cp *CloudParams) Validate() error {
 		}
 	case GCPCloud:
 		if cp.GCPConfig == nil {
-			return fmt.Errorf("AWS config needs to be set")
+			return fmt.Errorf("GCP config needs to be set")
 		}
 		if cp.GCPConfig.GCPNetwork == "" {
 			return fmt.Errorf("GCP network is required")
