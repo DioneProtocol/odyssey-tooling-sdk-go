@@ -261,6 +261,7 @@ func TestCommit_ComprehensiveErrorPaths(t *testing.T) {
 
 // TestCommit_IntegrationWithOtherFunctions tests Commit integration with other functions
 func TestCommit_IntegrationWithOtherFunctions(t *testing.T) {
+	addTestDelay() // Add delay to avoid rate limiting
 	subnet := createTestSubnet(t)
 	testWallet := createTestWalletForCommit(t)
 

@@ -20,6 +20,7 @@ import (
 // - ODX_TX_HASH (optional): Tx hash to trace when ODX_ENABLE_TRACE=1
 
 func TestE2ENativeTransfer_RealNode(t *testing.T) {
+	addTestDelay() // Add delay to avoid rate limiting
 	rpcURL := os.Getenv("ODX_RPC_URL")
 	if rpcURL == "" {
 		rpcURL = testnetDefaultRPC
@@ -55,6 +56,7 @@ func TestE2ENativeTransfer_RealNode(t *testing.T) {
 }
 
 func TestE2EDebugTrace_RealNode(t *testing.T) {
+	addTestDelay() // Add delay to avoid rate limiting
 	if os.Getenv("ODX_ENABLE_TRACE") != "1" {
 		t.Skip("ODX_ENABLE_TRACE!=1; skipping")
 	}

@@ -20,6 +20,7 @@ import (
 // Note: ERC721 tests use hardcoded addresses (0xA2D8ccB2415a5E88f5dBDd9BdcC827bac1A2224A and 0xEa4A0aA8aD7418f22373567BcA5728cB030f27Af)
 
 func TestE2E_ReadOnly_NodeParams(t *testing.T) {
+	addTestDelay() // Add delay to avoid rate limiting
 	rpcURL := os.Getenv("ODX_RPC_URL")
 	if rpcURL == "" {
 		rpcURL = testnetDefaultRPC
@@ -45,6 +46,7 @@ func TestE2E_ReadOnly_NodeParams(t *testing.T) {
 }
 
 func TestE2E_ReadOnly_GetAddressBalance(t *testing.T) {
+	addTestDelay() // Add delay to avoid rate limiting
 	rpcURL := os.Getenv("ODX_RPC_URL")
 	if rpcURL == "" {
 		rpcURL = testnetDefaultRPC
@@ -63,6 +65,7 @@ func TestE2E_ReadOnly_GetAddressBalance(t *testing.T) {
 }
 
 func TestE2E_ReadOnly_ContractBytecodeAndDeployed(t *testing.T) {
+	addTestDelay() // Add delay to avoid rate limiting
 	rpcURL := os.Getenv("ODX_RPC_URL")
 	if rpcURL == "" {
 		rpcURL = testnetDefaultRPC
@@ -86,6 +89,7 @@ func TestE2E_ReadOnly_ContractBytecodeAndDeployed(t *testing.T) {
 }
 
 func TestE2E_ReadOnly_CallToMethod_BalanceOf(t *testing.T) {
+	addTestDelay() // Add delay to avoid rate limiting
 	rpcURL := os.Getenv("ODX_RPC_URL")
 	if rpcURL == "" {
 		rpcURL = testnetDefaultRPC
@@ -110,6 +114,7 @@ func TestE2E_ReadOnly_CallToMethod_BalanceOf(t *testing.T) {
 }
 
 func TestE2E_ReadOnly_ERC721_MetadataAndSupports(t *testing.T) {
+	addTestDelay() // Add delay to avoid rate limiting
 	rpcURL := os.Getenv("ODX_RPC_URL")
 	if rpcURL == "" {
 		rpcURL = testnetDefaultRPC
@@ -143,6 +148,7 @@ func TestE2E_ReadOnly_ERC721_MetadataAndSupports(t *testing.T) {
 }
 
 func TestE2E_ReadOnly_ERC721_BalanceOf(t *testing.T) {
+	addTestDelay() // Add delay to avoid rate limiting
 	rpcURL := os.Getenv("ODX_RPC_URL")
 	if rpcURL == "" {
 		rpcURL = testnetDefaultRPC

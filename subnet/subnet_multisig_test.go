@@ -81,6 +81,7 @@ func createTestSubnet(t *testing.T) *Subnet {
 
 // TestMultisig_CreateSubnetTx_WithMultisig tests CreateSubnetTx with multisig setup
 func TestMultisig_CreateSubnetTx_WithMultisig(t *testing.T) {
+	addTestDelay() // Add delay to avoid rate limiting
 	subnet := createTestSubnet(t)
 	testWallet := createTestWalletForMultisig(t)
 
@@ -208,6 +209,7 @@ func TestMultisig_Commit_ValidationLogic(t *testing.T) {
 
 // TestMultisig_Commit_NotReadyToCommit tests Commit when multisig is not ready
 func TestMultisig_Commit_NotReadyToCommit(t *testing.T) {
+	addTestDelay() // Add delay to avoid rate limiting
 	subnet := createTestSubnet(t)
 	testWallet := createTestWalletForMultisig(t)
 

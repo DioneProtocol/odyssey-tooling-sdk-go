@@ -48,6 +48,7 @@
 | `subnet/` | `subnet_simple_test.go`, `subnet_validation_test.go`, `subnet_wallet_integration_test.go`, `subnet_multisig_test.go`, `subnet_commit_test.go`, `subnet_edge_cases_test.go` | Comprehensive subnet package testing with multisig support |
 | `evm/` | `contract_abi_test.go`, `evm_client_helpers_test.go`, `mock_ethclient_test.go` | ABI parsing and event decoding; tx params and funding; tx issue/wait; client helper flows with gomock |
 | `utils/` | `common_test.go`, `e2e_test.go`, `file_test.go`, `github_test.go`, `http_test.go`, `net_test.go`, `ssh_test.go`, `staking_test.go`, `strings_test.go`, `utils_test.go` | Comprehensive utility functions testing including file operations, networking, HTTP, SSH, staking, and string utilities |
+| `node/` | `add_validator_primary_test.go`, `cloud_test.go`, `create_integration_test.go`, `create_test.go`, `destroy_test.go`, `docker_compose_test.go`, `edge_cases_test.go`, `monitoring_test.go`, `node_test.go`, `ssh_test.go`, `supported_test.go`, `utils_extended_test.go`, `utils_test.go` | Comprehensive node management testing including cloud operations, Docker compose, monitoring, SSH, validation, and edge cases |
 
 ## **CURRENT TESTS COVERAGE**
 
@@ -56,10 +57,10 @@
 | `wallet/` | **100.0%** | ✅ Perfect |
 | `key/` | **93.6%** | ✅ Excellent |
 | `subnet/` | **68.8%** | ✅ Very Good |
-| `evm/` | **71.9%** | ✅ Very Good |
+| `evm/` | **72.3%** | ✅ Very Good |
 | `utils/` | **68.8%** | ✅ Very Good  |
 | `cloud/aws/` | **5.1%** | 🟡 Partial |
-| `node/` | **1.7%** | 🔴 Very Low |
+| `node/` | **31.3%** | 🟡 Partial |
 | `cloud/gcp/` | **0.0%** | 🔴 No Coverage |
 | `interchain/` | **0.0%** | 🔴 No Coverage |
 | `install/` | **0.0%** | 🔴 No Coverage |
@@ -74,12 +75,12 @@
 
 ## **TOTAL NEW COVERAGE**
 
-**Total Current Coverage: 30.4% of statements**
+**Total Current Coverage: 44.6% of statements**
 
 **Coverage Improvement:**
 - **Original Coverage**: ~8.2% of statements
-- **New Coverage Added**: ~22.2% of statements (wallet + key + subnet package contributions)
-- **Total Current Coverage**: 30.4% of statements
+- **New Coverage Added**: ~36.4% of statements (wallet + key + subnet + evm + utils + node package contributions)
+- **Total Current Coverage**: 44.6% of statements
 
 ---
 

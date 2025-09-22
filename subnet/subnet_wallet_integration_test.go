@@ -53,6 +53,7 @@ func createTestWallet(t *testing.T) wallet.Wallet {
 }
 
 func TestSubnet_CreateSubnetTx_Success(t *testing.T) {
+	addTestDelay() // Add delay to avoid rate limiting
 	subnet := &Subnet{
 		DeployInfo: DeployParams{
 			ControlKeys: []ids.ShortID{ids.GenerateTestShortID()},
@@ -106,6 +107,7 @@ func TestSubnet_CreateSubnetTx_ValidationErrors(t *testing.T) {
 }
 
 func TestSubnet_CreateBlockchainTx_Success(t *testing.T) {
+	addTestDelay() // Add delay to avoid rate limiting
 	subnet := &Subnet{
 		SubnetID: ids.GenerateTestID(),
 		VMID:     ids.GenerateTestID(),
@@ -202,6 +204,7 @@ func TestSubnet_CreateBlockchainTx_ValidationErrors(t *testing.T) {
 }
 
 func TestSubnet_AddValidator_Success(t *testing.T) {
+	addTestDelay() // Add delay to avoid rate limiting
 	subnet := &Subnet{
 		SubnetID: ids.GenerateTestID(),
 		DeployInfo: DeployParams{
@@ -223,6 +226,7 @@ func TestSubnet_AddValidator_Success(t *testing.T) {
 }
 
 func TestSubnet_AddValidator_DefaultWeight(t *testing.T) {
+	addTestDelay() // Add delay to avoid rate limiting
 	subnet := &Subnet{
 		SubnetID: ids.GenerateTestID(),
 		DeployInfo: DeployParams{
@@ -319,6 +323,7 @@ func TestSubnet_AddValidator_ValidationErrors(t *testing.T) {
 
 // Integration test that creates a complete subnet workflow
 func TestSubnet_CompleteWorkflow(t *testing.T) {
+	addTestDelay() // Add delay to avoid rate limiting
 	// Create a subnet with proper parameters
 	subnetParams := &SubnetParams{
 		SubnetEVM: &SubnetEVMParams{

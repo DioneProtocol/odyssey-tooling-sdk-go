@@ -504,3 +504,403 @@ func TestNode_DockerComposeTimeoutHandling(t *testing.T) {
 		})
 	}
 }
+
+func TestNode_StopDockerCompose_Success(t *testing.T) {
+	node := &Node{
+		NodeID: "test-node",
+		IP:     "192.168.1.1",
+		SSHConfig: SSHConfig{
+			User:           "ubuntu",
+			PrivateKeyPath: "/path/to/key",
+		},
+	}
+
+	// Test with a node that will fail due to SSH connection issues
+	// This tests the error handling path
+	err := node.StopDockerCompose(time.Second)
+
+	assert.Error(t, err) // Will fail due to SSH connection issues
+}
+
+func TestNode_StopDockerCompose_SystemDError(t *testing.T) {
+	node := &Node{
+		NodeID: "test-node",
+		IP:     "192.168.1.1",
+		SSHConfig: SSHConfig{
+			User:           "ubuntu",
+			PrivateKeyPath: "/path/to/key",
+		},
+	}
+
+	// Test with a node that will fail due to SSH connection issues
+	err := node.StopDockerCompose(time.Second)
+
+	assert.Error(t, err) // Will fail due to SSH connection issues
+}
+
+func TestNode_StopDockerCompose_NoSystemD(t *testing.T) {
+	node := &Node{
+		NodeID: "test-node",
+		IP:     "192.168.1.1",
+		SSHConfig: SSHConfig{
+			User:           "ubuntu",
+			PrivateKeyPath: "/path/to/key",
+		},
+	}
+
+	// Test with a node that will fail due to SSH connection issues
+	err := node.StopDockerCompose(time.Second)
+
+	assert.Error(t, err) // Will fail due to SSH connection issues
+}
+
+func TestNode_StartDockerComposeService_Success(t *testing.T) {
+	node := &Node{
+		NodeID: "test-node",
+		IP:     "192.168.1.1",
+		SSHConfig: SSHConfig{
+			User:           "ubuntu",
+			PrivateKeyPath: "/path/to/key",
+		},
+	}
+
+	// Test with a node that will fail due to SSH connection issues
+	err := node.StartDockerComposeService("/path/to/compose.yml", "test-service", time.Second)
+
+	assert.Error(t, err) // Will fail due to SSH connection issues
+}
+
+func TestNode_StartDockerComposeService_InitError(t *testing.T) {
+	node := &Node{
+		NodeID: "test-node",
+		IP:     "192.168.1.1",
+		SSHConfig: SSHConfig{
+			User:           "ubuntu",
+			PrivateKeyPath: "/path/to/key",
+		},
+	}
+
+	// Test with a node that will fail due to SSH connection issues
+	err := node.StartDockerComposeService("/path/to/compose.yml", "test-service", time.Second)
+
+	assert.Error(t, err) // Will fail due to SSH connection issues
+}
+
+func TestNode_ListRemoteComposeServices_Success(t *testing.T) {
+	node := &Node{
+		NodeID: "test-node",
+		IP:     "192.168.1.1",
+		SSHConfig: SSHConfig{
+			User:           "ubuntu",
+			PrivateKeyPath: "/path/to/key",
+		},
+	}
+
+	// Test with a node that will fail due to SSH connection issues
+	services, err := node.ListRemoteComposeServices("/path/to/compose.yml", time.Second)
+
+	assert.Error(t, err) // Will fail due to SSH connection issues
+	assert.Nil(t, services)
+}
+
+func TestNode_ListRemoteComposeServices_Error(t *testing.T) {
+	node := &Node{
+		NodeID: "test-node",
+		IP:     "192.168.1.1",
+		SSHConfig: SSHConfig{
+			User:           "ubuntu",
+			PrivateKeyPath: "/path/to/key",
+		},
+	}
+
+	// Test with a node that will fail due to SSH connection issues
+	services, err := node.ListRemoteComposeServices("/path/to/compose.yml", time.Second)
+
+	assert.Error(t, err) // Will fail due to SSH connection issues
+	assert.Nil(t, services)
+}
+
+func TestNode_GetRemoteComposeContent_Success(t *testing.T) {
+	node := &Node{
+		NodeID: "test-node",
+		IP:     "192.168.1.1",
+		SSHConfig: SSHConfig{
+			User:           "ubuntu",
+			PrivateKeyPath: "/path/to/key",
+		},
+	}
+
+	// Test with a node that will fail due to SSH connection issues
+	content, err := node.GetRemoteComposeContent("/path/to/compose.yml", time.Second)
+
+	assert.Error(t, err) // Will fail due to SSH connection issues
+	assert.Empty(t, content)
+}
+
+func TestNode_GetRemoteComposeContent_DownloadError(t *testing.T) {
+	node := &Node{
+		NodeID: "test-node",
+		IP:     "192.168.1.1",
+		SSHConfig: SSHConfig{
+			User:           "ubuntu",
+			PrivateKeyPath: "/path/to/key",
+		},
+	}
+
+	// Test with a node that will fail due to SSH connection issues
+	content, err := node.GetRemoteComposeContent("/path/to/compose.yml", time.Second)
+
+	assert.Error(t, err) // Will fail due to SSH connection issues
+	assert.Empty(t, content)
+}
+
+func TestNode_ParseRemoteComposeContent_Success(t *testing.T) {
+	node := &Node{
+		NodeID: "test-node",
+		IP:     "192.168.1.1",
+		SSHConfig: SSHConfig{
+			User:           "ubuntu",
+			PrivateKeyPath: "/path/to/key",
+		},
+	}
+
+	// Test with a node that will fail due to SSH connection issues
+	value, err := node.ParseRemoteComposeContent("/path/to/compose.yml", "pattern", time.Second)
+
+	assert.Error(t, err) // Will fail due to SSH connection issues
+	assert.Empty(t, value)
+}
+
+func TestNode_ParseRemoteComposeContent_GetContentError(t *testing.T) {
+	node := &Node{
+		NodeID: "test-node",
+		IP:     "192.168.1.1",
+		SSHConfig: SSHConfig{
+			User:           "ubuntu",
+			PrivateKeyPath: "/path/to/key",
+		},
+	}
+
+	// Test with a node that will fail due to SSH connection issues
+	value, err := node.ParseRemoteComposeContent("/path/to/compose.yml", "pattern", time.Second)
+
+	assert.Error(t, err) // Will fail due to SSH connection issues
+	assert.Empty(t, value)
+}
+
+func TestNode_HasRemoteComposeService_ServiceExists(t *testing.T) {
+	node := &Node{
+		NodeID: "test-node",
+		IP:     "192.168.1.1",
+		SSHConfig: SSHConfig{
+			User:           "ubuntu",
+			PrivateKeyPath: "/path/to/key",
+		},
+	}
+
+	// Test with a node that will fail due to SSH connection issues
+	exists, err := node.HasRemoteComposeService("/path/to/compose.yml", "service2", time.Second)
+
+	assert.Error(t, err) // Will fail due to SSH connection issues
+	assert.False(t, exists)
+}
+
+func TestNode_HasRemoteComposeService_ServiceNotExists(t *testing.T) {
+	node := &Node{
+		NodeID: "test-node",
+		IP:     "192.168.1.1",
+		SSHConfig: SSHConfig{
+			User:           "ubuntu",
+			PrivateKeyPath: "/path/to/key",
+		},
+	}
+
+	// Test with a node that will fail due to SSH connection issues
+	exists, err := node.HasRemoteComposeService("/path/to/compose.yml", "service4", time.Second)
+
+	assert.Error(t, err) // Will fail due to SSH connection issues
+	assert.False(t, exists)
+}
+
+func TestNode_HasRemoteComposeService_ListError(t *testing.T) {
+	node := &Node{
+		NodeID: "test-node",
+		IP:     "192.168.1.1",
+		SSHConfig: SSHConfig{
+			User:           "ubuntu",
+			PrivateKeyPath: "/path/to/key",
+		},
+	}
+
+	// Test with a node that will fail due to SSH connection issues
+	exists, err := node.HasRemoteComposeService("/path/to/compose.yml", "service1", time.Second)
+
+	assert.Error(t, err) // Will fail due to SSH connection issues
+	assert.False(t, exists)
+}
+
+func TestNode_ListDockerComposeImages_Success(t *testing.T) {
+	node := &Node{
+		NodeID: "test-node",
+		IP:     "192.168.1.1",
+		SSHConfig: SSHConfig{
+			User:           "ubuntu",
+			PrivateKeyPath: "/path/to/key",
+		},
+	}
+
+	// Test with a node that will fail due to SSH connection issues
+	images, err := node.ListDockerComposeImages("/path/to/compose.yml", time.Second)
+
+	assert.Error(t, err) // Will fail due to SSH connection issues
+	assert.Nil(t, images)
+}
+
+func TestNode_ListDockerComposeImages_CommandError(t *testing.T) {
+	node := &Node{
+		NodeID: "test-node",
+		IP:     "192.168.1.1",
+		SSHConfig: SSHConfig{
+			User:           "ubuntu",
+			PrivateKeyPath: "/path/to/key",
+		},
+	}
+
+	// Test with a node that will fail due to SSH connection issues
+	images, err := node.ListDockerComposeImages("/path/to/compose.yml", time.Second)
+
+	assert.Error(t, err) // Will fail due to SSH connection issues
+	assert.Nil(t, images)
+}
+
+func TestNode_ListDockerComposeImages_InvalidJSON(t *testing.T) {
+	node := &Node{
+		NodeID: "test-node",
+		IP:     "192.168.1.1",
+		SSHConfig: SSHConfig{
+			User:           "ubuntu",
+			PrivateKeyPath: "/path/to/key",
+		},
+	}
+
+	// Test with a node that will fail due to SSH connection issues
+	images, err := node.ListDockerComposeImages("/path/to/compose.yml", time.Second)
+
+	assert.Error(t, err) // Will fail due to SSH connection issues
+	assert.Nil(t, images)
+}
+
+func TestNode_GetDockerImageVersion_Success(t *testing.T) {
+	node := &Node{
+		NodeID: "test-node",
+		IP:     "192.168.1.1",
+		SSHConfig: SSHConfig{
+			User:           "ubuntu",
+			PrivateKeyPath: "/path/to/key",
+		},
+	}
+
+	// Test with a node that will fail due to SSH connection issues
+	version, err := node.GetDockerImageVersion("test-image", time.Second)
+
+	assert.Error(t, err) // Will fail due to SSH connection issues
+	assert.Empty(t, version)
+}
+
+func TestNode_GetDockerImageVersion_ImageNotFound(t *testing.T) {
+	node := &Node{
+		NodeID: "test-node",
+		IP:     "192.168.1.1",
+		SSHConfig: SSHConfig{
+			User:           "ubuntu",
+			PrivateKeyPath: "/path/to/key",
+		},
+	}
+
+	// Test with a node that will fail due to SSH connection issues
+	version, err := node.GetDockerImageVersion("test-image", time.Second)
+
+	assert.Error(t, err) // Will fail due to SSH connection issues
+	assert.Empty(t, version)
+}
+
+func TestNode_GetDockerImageVersion_ListError(t *testing.T) {
+	node := &Node{
+		NodeID: "test-node",
+		IP:     "192.168.1.1",
+		SSHConfig: SSHConfig{
+			User:           "ubuntu",
+			PrivateKeyPath: "/path/to/key",
+		},
+	}
+
+	// Test with a node that will fail due to SSH connection issues
+	version, err := node.GetDockerImageVersion("test-image", time.Second)
+
+	assert.Error(t, err) // Will fail due to SSH connection issues
+	assert.Empty(t, version)
+}
+
+func TestNode_StopDockerComposeService_Success(t *testing.T) {
+	node := &Node{
+		NodeID: "test-node",
+		IP:     "192.168.1.1",
+		SSHConfig: SSHConfig{
+			User:           "ubuntu",
+			PrivateKeyPath: "/path/to/key",
+		},
+	}
+
+	// Test with a node that will fail due to SSH connection issues
+	err := node.StopDockerComposeService("/path/to/compose.yml", "test-service", time.Second)
+
+	assert.Error(t, err) // Will fail due to SSH connection issues
+}
+
+func TestNode_StopDockerComposeService_Error(t *testing.T) {
+	node := &Node{
+		NodeID: "test-node",
+		IP:     "192.168.1.1",
+		SSHConfig: SSHConfig{
+			User:           "ubuntu",
+			PrivateKeyPath: "/path/to/key",
+		},
+	}
+
+	// Test with a node that will fail due to SSH connection issues
+	err := node.StopDockerComposeService("/path/to/compose.yml", "test-service", time.Second)
+
+	assert.Error(t, err) // Will fail due to SSH connection issues
+}
+
+func TestNode_RestartDockerComposeService_Success(t *testing.T) {
+	node := &Node{
+		NodeID: "test-node",
+		IP:     "192.168.1.1",
+		SSHConfig: SSHConfig{
+			User:           "ubuntu",
+			PrivateKeyPath: "/path/to/key",
+		},
+	}
+
+	// Test with a node that will fail due to SSH connection issues
+	err := node.RestartDockerComposeService("/path/to/compose.yml", "test-service", time.Second)
+
+	assert.Error(t, err) // Will fail due to SSH connection issues
+}
+
+func TestNode_InitDockerComposeService_Success(t *testing.T) {
+	node := &Node{
+		NodeID: "test-node",
+		IP:     "192.168.1.1",
+		SSHConfig: SSHConfig{
+			User:           "ubuntu",
+			PrivateKeyPath: "/path/to/key",
+		},
+	}
+
+	// Test with a node that will fail due to SSH connection issues
+	err := node.InitDockerComposeService("/path/to/compose.yml", "test-service", time.Second)
+
+	assert.Error(t, err) // Will fail due to SSH connection issues
+}

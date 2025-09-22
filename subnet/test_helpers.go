@@ -7,5 +7,5 @@ import "time"
 
 // Helper function to add delay between tests to avoid rate limiting
 func addTestDelay() {
-	time.Sleep(2 * time.Second)
+	time.Sleep(5 * time.Second) // 5 second delay to avoid 429 errors when running full test suite
 }

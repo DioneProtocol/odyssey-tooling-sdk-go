@@ -84,6 +84,7 @@ func TestWalletCreation(t *testing.T) {
 
 func TestWalletCreationNilConfig(t *testing.T) {
 	// Sequential to avoid rate limiting
+	addTestDelay() // Add delay to avoid rate limiting
 
 	// Test nil config separately to avoid panic
 	ctx := context.Background()
@@ -739,7 +740,7 @@ func TestWalletLedgerSupport(t *testing.T) {
 
 // Helper function to add delay between tests to avoid rate limiting
 func addTestDelay() {
-	time.Sleep(2 * time.Second) // Increased from 500ms to 2s
+	time.Sleep(5 * time.Second) // Increased to 5s to avoid 429 errors when running full test suite
 }
 
 // Benchmark tests for wallet operations
@@ -1074,6 +1075,7 @@ func TestWalletDeterministicAddressGeneration(t *testing.T) {
 }
 
 func TestAddressEncodingDifference(t *testing.T) {
+	addTestDelay() // Add delay to avoid rate limiting
 	// Test to demonstrate why the same raw address produces different suffixes
 	testPrivateKeyHex := "56289e99c94b6912bfc12adc093c9b51124f0dc54ac7a766b2bc5ccf558d8027"
 
@@ -1352,6 +1354,7 @@ func TestWalletAChainFromPrivateKey(t *testing.T) {
 }
 
 func TestWalletPrivateKeyValidation(t *testing.T) {
+	addTestDelay() // Add delay to avoid rate limiting
 	tests := []struct {
 		name        string
 		privateKey  string
