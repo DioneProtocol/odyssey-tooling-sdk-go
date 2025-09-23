@@ -29,8 +29,19 @@ const maxCopy = 2147483648 // 2 GB
 
 // Sanitize archive file pathing from "G305: Zip Slip vulnerability"
 func sanitizeArchivePath(d, t string) (v string, err error) {
+	// Normalize path separators to prevent mixed separator attacks
+	normalizedTarget := filepath.ToSlash(t)
+
+	// Check for zip slip patterns
+	if strings.Contains(normalizedTarget, "../") || strings.Contains(normalizedTarget, "..\\") {
+		return "", fmt.Errorf("%s: %s", "content filepath is tainted", t)
+	}
+
 	v = filepath.Join(d, t)
-	if strings.HasPrefix(v, filepath.Clean(d)) {
+	cleanBase := filepath.Clean(d)
+	cleanPath := filepath.Clean(v)
+
+	if strings.HasPrefix(cleanPath, cleanBase) {
 		return v, nil
 	}
 
@@ -73,14 +84,14 @@ func extractZip(zipfile []byte, outputDir string) error {
 		}
 
 		if f.FileInfo().IsDir() {
-			if err := os.MkdirAll(path, f.Mode()); err != nil {
+			if err := os.MkdirAll(path, 0755); err != nil {
 				return fmt.Errorf("failed creating directory from zip entry: %w", err)
 			}
 		} else {
-			if err := os.MkdirAll(filepath.Dir(path), f.Mode()); err != nil {
+			if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
 				return fmt.Errorf("failed creating file from zip entry: %w", err)
 			}
-			f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
+			f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 			if err != nil {
 				return fmt.Errorf("failed opening file from zip entry: %w", err)
 			}

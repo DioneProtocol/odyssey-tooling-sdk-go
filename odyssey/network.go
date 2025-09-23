@@ -5,6 +5,7 @@ package odyssey
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
@@ -78,11 +79,19 @@ func NewNetwork(kind NetworkKind, id uint32, endpoint string) Network {
 }
 
 func TestnetNetwork() Network {
-	return NewNetwork(Testnet, constants.TestnetID, TestnetAPIEndpoint)
+	endpoint := TestnetAPIEndpoint
+	if os.Getenv("LOCAL_NODE") == "true" {
+		endpoint = "http://127.0.0.1:9650"
+	}
+	return NewNetwork(Testnet, constants.TestnetID, endpoint)
 }
 
 func MainnetNetwork() Network {
 	return NewNetwork(Mainnet, constants.MainnetID, MainnetAPIEndpoint)
+}
+
+func DevnetNetwork() Network {
+	return NewNetwork(Devnet, 0, "http://127.0.0.1:9650")
 }
 
 func (n Network) GenesisParams() *genesis.Params {
@@ -126,6 +135,12 @@ func NetworkFromURI(uri string) Network {
 		return TestnetNetwork()
 	case MainnetAPIEndpoint:
 		return MainnetNetwork()
+	case "http://127.0.0.1:9650":
+		// Local node endpoint - use testnet configuration when LOCAL_NODE=true
+		if os.Getenv("LOCAL_NODE") == "true" {
+			return TestnetNetwork()
+		}
+		return UndefinedNetwork
 	default:
 		// For unknown endpoints, return undefined network
 		return UndefinedNetwork

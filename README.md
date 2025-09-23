@@ -32,6 +32,57 @@ To update the SDK use `go get -u` to retrieve the latest version of the SDK.
 
 	go get -u github.com/DioneProtocol/odyssey-tooling-sdk-go
 
+### Local Development and Testing
+
+#### Setting up a Local Testnet Node
+
+For local development and testing, you can run a local Dione Protocol testnet node using Docker. This eliminates 429 rate limiting errors and provides faster test execution.
+
+1. **Clone and set up the odysseygo-installer repository:**
+   ```bash
+   git clone https://github.com/DioneProtocol/odysseygo-installer.git
+   cd odysseygo-installer/docker
+   ```
+   
+   Follow the instructions in the repository to run an archival node for testnet.
+
+2. **Verify the node is running:**
+   ```bash
+   curl -X POST http://127.0.0.1:9650/ext/info \
+     -H "Content-Type: application/json" \
+     -d '{"jsonrpc":"2.0","id":1,"method":"info.getNodeID"}'
+   ```
+
+#### Running Tests with Local Node
+
+The SDK automatically detects and uses the local node when the `LOCAL_NODE` environment variable is set to `true`.
+
+**Run all tests with local node:**
+```bash
+LOCAL_NODE=true go test ./... -timeout 10m
+```
+
+**Run specific package tests:**
+```bash
+LOCAL_NODE=true go test ./wallet -v
+LOCAL_NODE=true go test ./evm -v
+LOCAL_NODE=true go test ./subnet -v
+```
+
+**Get test coverage:**
+```bash
+LOCAL_NODE=true go test ./... -coverprofile=coverage.out -timeout 10m
+go tool cover -func=coverage.out
+```
+
+**Benefits of using local node:**
+- ✅ **No 429 rate limiting errors**
+- ✅ **Faster test execution** (local vs remote)
+- ✅ **More reliable testing** (no network dependencies)
+- ✅ **Consistent test environment**
+
+**Note:** When `LOCAL_NODE=true` is not set, tests will use the official testnet endpoints and may experience rate limiting.
+
 ## Quick Examples
 
 ### Subnet SDK Example
