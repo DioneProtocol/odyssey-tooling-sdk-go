@@ -6,7 +6,7 @@
 |---------|------------|-------------|
 | `key/` | `key_test.go` | Soft key support, key creation, address generation |
 | `subnet/` | `subnet_test.go`, `add_validator_subnet_test.go` | Subnet creation, deployment, validator management |
-| `node/` | `create_test.go`, `add_validator_primary_test.go`, `utils_test.go` | Node creation, validator staking, AWS integration |
+| `node/` | `create_test.go`, `add_validator_primary_test.go`, `utils_test.go`, `docker_compose_test.go`, `destroy_test.go` | Node creation, validator staking, AWS integration, Docker compose management, node destruction |
 | `evm/` | `contract_test.go` | Smart contract support, ABI parsing |
 | `utils/` | `file_test.go`, `strings_test.go`, `ssh_test.go`, `common_test.go` | File operations, string utilities, SSH validation |
 | `cloud/aws/` | `aws_test.go` | AWS integration, security groups, CIDR validation |
@@ -50,6 +50,7 @@
 | `utils/` | `common_test.go`, `e2e_test.go`, `file_test.go`, `github_test.go`, `http_test.go`, `net_test.go`, `ssh_test.go`, `staking_test.go`, `strings_test.go`, `utils_test.go` | Comprehensive utility functions testing including file operations, networking, HTTP, SSH, staking, and string utilities |
 | `node/` | `add_validator_primary_test.go`, `cloud_test.go`, `create_integration_test.go`, `create_test.go`, `destroy_test.go`, `docker_compose_test.go`, `edge_cases_test.go`, `monitoring_test.go`, `node_test.go`, `ssh_test.go`, `supported_test.go`, `utils_extended_test.go`, `utils_test.go` | Comprehensive node management testing including cloud operations, Docker compose, monitoring, SSH, validation, and edge cases |
 | `install/` | `install_test.go`, `archive_test.go`, `test_utils.go`, `integration_test.go` | Comprehensive archive management testing including ZIP/TAR.GZ extraction, security validation (zip slip prevention), file permissions, large file handling, and GitHub release installation |
+| `monitoring/` | `monitoring_test.go` | Complete monitoring package testing including Grafana dashboards, Prometheus, Loki, and Promtail configuration generation |
 
 ## **CURRENT TESTS COVERAGE**
 
@@ -66,7 +67,7 @@
 | `cloud/gcp/` | **0.0%** | 🔴 No Coverage |
 | `interchain/` | **0.0%** | 🔴 No Coverage |
 | `ledger/` | **0.0%** | 🔴 No Coverage |
-| `monitoring/` | **0.0%** | 🔴 No Coverage |
+| `monitoring/` | **79.5%** | ✅ Excellent |
 | `validator/` | **0.0%** | 🔴 No Coverage |
 | `process/` | **0.0%** | 🔴 No Coverage |
 | `odyssey/` | **0.0%** | 🔴 No Coverage |
@@ -76,12 +77,12 @@
 
 ## **TOTAL NEW COVERAGE**
 
-**Total Current Coverage: 45.8% of statements**
+**Total Current Coverage: 46.4% of statements**
 
 **Coverage Improvement:**
 - **Original Coverage**: ~8.2% of statements
-- **New Coverage Added**: ~37.6% of statements (wallet + key + evm + utils + subnet + install + node + cloud/aws package contributions)
-- **Total Current Coverage**: 45.8% of statements
+- **New Coverage Added**: ~38.2% of statements (wallet + key + evm + utils + subnet + install + node + cloud/aws + monitoring package contributions)
+- **Total Current Coverage**: 46.4% of statements
 
 ---
 
