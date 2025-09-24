@@ -51,6 +51,7 @@
 | `node/` | `add_validator_primary_test.go`, `cloud_test.go`, `create_integration_test.go`, `create_test.go`, `destroy_test.go`, `docker_compose_test.go`, `edge_cases_test.go`, `monitoring_test.go`, `node_test.go`, `ssh_test.go`, `supported_test.go`, `utils_extended_test.go`, `utils_test.go` | Comprehensive node management testing including cloud operations, Docker compose, monitoring, SSH, validation, and edge cases |
 | `install/` | `install_test.go`, `archive_test.go`, `test_utils.go`, `integration_test.go` | Comprehensive archive management testing including ZIP/TAR.GZ extraction, security validation (zip slip prevention), file permissions, large file handling, and GitHub release installation |
 | `monitoring/` | `monitoring_test.go` | Complete monitoring package testing including Grafana dashboards, Prometheus, Loki, and Promtail configuration generation |
+| `process/` | `process_test.go` | Comprehensive process management testing including process execution, lifecycle management, PID tracking, cleanup, and signal handling |
 
 ## **CURRENT TESTS COVERAGE**
 
@@ -69,7 +70,7 @@
 | `ledger/` | **0.0%** | 🔴 No Coverage |
 | `monitoring/` | **79.5%** | ✅ Excellent |
 | `validator/` | **0.0%** | 🔴 No Coverage |
-| `process/` | **0.0%** | 🔴 No Coverage |
+| `process/` | **86.7%** | ✅ Excellent |
 | `odyssey/` | **0.0%** | 🔴 No Coverage |
 | `vm/` | **0.0%** | 🔴 No Coverage |
 | `multisig/` | **0.0%** | 🔴 No Coverage |
@@ -77,12 +78,12 @@
 
 ## **TOTAL NEW COVERAGE**
 
-**Total Current Coverage: 46.4% of statements**
+**Total Current Coverage: 47.5% of statements**
 
 **Coverage Improvement:**
 - **Original Coverage**: ~8.2% of statements
-- **New Coverage Added**: ~38.2% of statements (wallet + key + evm + utils + subnet + install + node + cloud/aws + monitoring package contributions)
-- **Total Current Coverage**: 46.4% of statements
+- **New Coverage Added**: ~39.3% of statements (wallet + key + evm + utils + subnet + install + node + cloud/aws + monitoring + process package contributions)
+- **Total Current Coverage**: 47.5% of statements
 
 ---
 
