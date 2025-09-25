@@ -40,17 +40,17 @@
 | `process/` | **86.7%** | ✅ Excellent |
 | `odyssey/` | **98.4%** | ✅ Excellent |
 | `vm/` | **100.0%** | ✅ Perfect |
-| `multisig/` | **0.0%** | 🔴 No Coverage |
+| `multisig/` | **81.5%** | ✅ Excellent |
 | `constants/` | **0.0%** | 🔴 No Coverage |
 
 ## **TOTAL NEW COVERAGE**
 
-**Total Current Coverage: 49.0% of statements**
+**Total Current Coverage: 50.9% of statements**
 
 **Coverage Improvement:**
 - **Original Coverage**: ~8.2% of statements
-- **New Coverage Added**: ~40.8% of statements (wallet + key + evm + utils + subnet + install + node + cloud/aws + monitoring + process + odyssey + vm package contributions)
-- **Total Current Coverage**: 49.0% of statements
+- **New Coverage Added**: ~42.7% of statements (wallet + key + evm + utils + subnet + install + node + cloud/aws + monitoring + process + odyssey + vm + multisig package contributions)
+- **Total Current Coverage**: 50.9% of statements
 
 ---
 
