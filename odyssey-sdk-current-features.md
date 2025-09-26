@@ -1,9 +1,9 @@
-# Avalanche Tooling Go SDK - Supported Features
+# Odyssey Tooling Go SDK - Supported Features
 
 ## Core Features (Currently Supported - v0.3.0)
 
 ### 1. Subnet Management
-- Subnet Creation: Create subnets on Fuji testnet and Mainnet
+- Subnet Creation: Create subnets on Odyssey testnet and Mainnet
 - Blockchain Creation: Deploy blockchains within subnets
 - Subnet Genesis: Generate and configure subnet genesis files
 - Subnet EVM Support: Full Subnet-EVM integration with customizable parameters
@@ -11,7 +11,7 @@
 - Subnet Validator Management: Add validators to existing subnets
 
 ### 2. Node Management
-- Node Creation: Deploy Avalanche nodes on cloud platforms
+- Node Creation: Deploy Odyssey nodes on cloud platforms
 - Node Types Supported:
   - Validator Nodes: For validating Primary Network and Subnets
   - API Nodes: For providing API access to the network
@@ -48,7 +48,7 @@
 - Smart Contract Deployment: Deploy and interact with EVM contracts
 - Contract Interaction: Call contract functions and read state
 - Gas Management: Configure gas limits and fee structures
-- Precompiles Support: Access to Avalanche-specific precompiles
+- Precompiles Support: Access to Odyssey-specific precompiles
 
 ### 8. Monitoring & Observability
 - Grafana Dashboards: Pre-configured monitoring dashboards
@@ -64,7 +64,7 @@
 - Multi-chain Support: Connect multiple blockchains
 
 ### 10. Network Support
-- Fuji Testnet: Full testnet support
+- Odyssey Testnet: Full testnet support
 - Mainnet: Production network support
 - Custom Networks: Support for custom network configurations
 - Network Switching: Easy switching between networks
@@ -86,11 +86,11 @@
 - ARM64: Support for ARM64 architecture (Apple Silicon, AWS Graviton)
 
 ## Dependencies & Integrations
-- AvalancheGo: Core Avalanche node software
+- OdysseyGo: Core Odyssey node software
 - Subnet-EVM: EVM-compatible subnet implementation
 - Coreth: D-Chain implementation
 - AWM Relayer: Cross-chain messaging relay
 - Teleporter: Cross-chain messaging protocol
 
 ## Summary
-This SDK provides a comprehensive toolkit for building, deploying, and managing Avalanche infrastructure, from simple node deployment to complex multi-chain applications with cross-chain messaging capabilities.
+This SDK provides a comprehensive toolkit for building, deploying, and managing Odyssey infrastructure, from simple node deployment to complex multi-chain applications with cross-chain messaging capabilities.

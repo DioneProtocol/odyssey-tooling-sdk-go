@@ -21,7 +21,7 @@ import (
 
 	"github.com/DioneProtocol/coreth/utils"
 	"github.com/DioneProtocol/odysseygo/ids"
-	commonAvago "github.com/DioneProtocol/odysseygo/wallet/subnet/primary/common"
+	commonOdysseyGo "github.com/DioneProtocol/odysseygo/wallet/subnet/primary/common"
 	"github.com/DioneProtocol/subnet-evm/commontype"
 	"github.com/DioneProtocol/subnet-evm/core"
 	"github.com/DioneProtocol/subnet-evm/params"
@@ -278,9 +278,9 @@ func (c *Subnet) Commit(ms multisig.Multisig, wallet wallet.Wallet, waitForTxAcc
 	for i := 0; i < repeats; i++ {
 		ctx, cancel := utilsSDK.GetAPILargeContext()
 		defer cancel()
-		options := []commonAvago.Option{commonAvago.WithContext(ctx)}
+		options := []commonOdysseyGo.Option{commonOdysseyGo.WithContext(ctx)}
 		if !waitForTxAcceptance {
-			options = append(options, commonAvago.WithAssumeDecided())
+			options = append(options, commonOdysseyGo.WithAssumeDecided())
 		}
 		// TODO: split error checking and recovery between issuing and waiting for status
 		issueTxErr = wallet.O().IssueTx(tx, options...)

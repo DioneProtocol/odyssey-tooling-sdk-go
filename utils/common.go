@@ -167,10 +167,10 @@ func RandomString(length int) string {
 	return string(result)
 }
 
-func SupportedAvagoArch() []string {
+func SupportedOdysseyGoArch() []string {
 	return []string{string(types.ArchitectureTypeArm64), string(types.ArchitectureTypeX8664)}
 }
 
 func ArchSupported(arch string) bool {
-	return slices.Contains(SupportedAvagoArch(), arch)
+	return slices.Contains(SupportedOdysseyGoArch(), arch)
 }

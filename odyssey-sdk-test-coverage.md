@@ -45,12 +45,13 @@
 
 ## **TOTAL NEW COVERAGE**
 
-**Total Current Coverage: 50.9% of statements**
+**Total Current Coverage With Features Flags on: 51.5% of statements**
+**Total Current Coverage With Features Flags off: 50.2% of statements**
 
 **Coverage Improvement:**
 - **Original Coverage**: ~8.2% of statements
-- **New Coverage Added**: ~42.7% of statements (wallet + key + evm + utils + subnet + install + node + cloud/aws + monitoring + process + odyssey + vm + multisig package contributions)
-- **Total Current Coverage**: 50.9% of statements
+- **New Coverage Added**: ~43.3% of statements (wallet + key + evm + utils + subnet + install + node + cloud/aws + monitoring + process + odyssey + vm + multisig package contributions)
+- **Total Current Coverage**: 51.5% of statements
 
 ---
 

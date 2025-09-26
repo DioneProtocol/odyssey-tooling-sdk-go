@@ -595,8 +595,8 @@ func TestRandomString(t *testing.T) {
 	}
 }
 
-func TestSupportedAvagoArch(t *testing.T) {
-	archs := SupportedAvagoArch()
+func TestSupportedOdysseyGoArch(t *testing.T) {
+	archs := SupportedOdysseyGoArch()
 	assert.NotEmpty(t, archs)
 	assert.Contains(t, archs, string(types.ArchitectureTypeArm64))
 	assert.Contains(t, archs, string(types.ArchitectureTypeX8664))

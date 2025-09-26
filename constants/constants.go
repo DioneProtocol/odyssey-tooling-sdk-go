@@ -88,13 +88,25 @@ const (
 	RelayerRepoName  = "awm-relayer"
 	RelayerBinName   = "awm-relayer"
 
-	// Feature flags - Set to false to disable functionality
-	RelayerEnabled    = false
-	TeleporterEnabled = false
-
 	// Odyssey Chain specific feature flags
 	OdysseyCoreEnabled    = true
 	OdysseyTestnetEnabled = true
 	OdysseyMainnetEnabled = true
 	OdysseyDevnetEnabled  = false
+)
+
+// Feature flags - Set to false to disable functionality
+var (
+	RelayerEnabled    = false
+	TeleporterEnabled = false
+
+	// Cloud integration feature flags
+	AWSIntegrationEnabled = true
+	GCPIntegrationEnabled = true
+
+	// Infrastructure feature flags
+	DockerSupportEnabled      = true
+	InstanceManagementEnabled = true
+	SecurityGroupsEnabled     = true
+	SSHKeyManagementEnabled   = true
 )

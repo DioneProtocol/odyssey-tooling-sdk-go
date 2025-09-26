@@ -6,7 +6,7 @@ The official Odyssey Tooling Go SDK library.
 in between releases ***
 
 Current version (v0.0.1) currently supports: 
-- Create Subnet and Create Blockchain in a Subnet in Fuji / Mainnet. 
+- Create Subnet and Create Blockchain in a Subnet in Testnet / Mainnet. 
 - Create Odyssey Node (Validator / API / Monitoring / Load Test Node) & install all required
 dependencies (odysseygo, gcc, Promtail, Grafana, etc).
 - Enable Odyssey nodes to validate Primary Network
@@ -87,7 +87,7 @@ go tool cover -func=coverage.out
 
 ### Subnet SDK Example
 
-This example shows how to create a Subnet Genesis, deploy the Subnet into Fuji Network and create
+This example shows how to create a Subnet Genesis, deploy the Subnet into Testnet Network and create
 a blockchain in the Subnet. 
 
 This examples also shows how to create a key pair to pay for transactions, how to create a Wallet
@@ -117,7 +117,7 @@ import (
 	"time"
 )
 
-// Creates a Subnet Genesis, deploys the Subnet into Fuji Network using CreateSubnetTx
+// Creates a Subnet Genesis, deploys the Subnet into Testnet Network using CreateSubnetTx
 // and creates a blockchain in the Subnet using CreateChainTx
 func DeploySubnet() {
 	subnetParams := getDefaultSubnetEVMGenesis()
@@ -166,7 +166,7 @@ func DeploySubnet() {
 	subnetID, _ := newSubnet.Commit(*deploySubnetTx, wallet, true)
 	fmt.Printf("subnetID %s \n", subnetID.String())
 
-	// we need to wait to allow the transaction to reach other nodes in Fuji
+	// we need to wait to allow the transaction to reach other nodes in Testnet
 	time.Sleep(2 * time.Second)
 
 	newSubnet.SetSubnetAuthKeys(subnetAuthKeys)
@@ -181,7 +181,7 @@ func DeploySubnet() {
 
 // Add a validator to Subnet
 func AddSubnetValidator() {
-	// We are using existing Subnet that we have already deployed on Fuji
+	// We are using existing Subnet that we have already deployed on Testnet
 	subnetParams := subnet.SubnetParams{
 		GenesisFilePath: "GENESIS_FILE_PATH",
 		Name:            "SUBNET_NAME",
@@ -366,9 +366,9 @@ func CreateNodes() {
 		odysseygoVersion  = "v1.11.8"
 	)
 
-	// Create two new Odyssey Validator nodes on Fuji Network on AWS without Elastic IPs
+	// Create two new Odyssey Validator nodes on Testnet Network on AWS without Elastic IPs
 	// attached. Once CreateNodes is completed, the validators will begin bootstrapping process
-	// to Primary Network in Fuji Network. Nodes need to finish bootstrapping process
+	// to Primary Network in Testnet Network. Nodes need to finish bootstrapping process
 	// before they can validate Odyssey Primary Network / Subnet.
 	//
 	// SDK function for nodes to start validating Primary Network / Subnet will be available

@@ -95,6 +95,9 @@ func (h *Node) RunSSHSetupNode() error {
 
 // RunSSHSetupDockerService runs script to setup docker compose service for CLI
 func (h *Node) RunSSHSetupDockerService() error {
+	if !constants.DockerSupportEnabled {
+		return fmt.Errorf("Docker support functionality is disabled. Set constants.DockerSupportEnabled = true to enable")
+	}
 	if h.HasSystemDAvailable() {
 		return h.RunOverSSH(
 			"Setup Docker Service",
@@ -392,7 +395,7 @@ func (h *Node) SyncSubnets(subnetsToTrack []string) error {
 	if err := h.WaitForSSHShell(constants.SSHScriptTimeout); err != nil {
 		return err
 	}
-	avagoVersion, err := h.GetDockerImageVersion(constants.OdysseyGoDockerImage, constants.SSHScriptTimeout)
+	odysseyGoVersion, err := h.GetDockerImageVersion(constants.OdysseyGoDockerImage, constants.SSHScriptTimeout)
 	if err != nil {
 		return err
 	}
@@ -400,7 +403,7 @@ func (h *Node) SyncSubnets(subnetsToTrack []string) error {
 	if err != nil {
 		return err
 	}
-	if err := h.ComposeSSHSetupNode(networkName, subnetsToTrack, avagoVersion, withMonitoring); err != nil {
+	if err := h.ComposeSSHSetupNode(networkName, subnetsToTrack, odysseyGoVersion, withMonitoring); err != nil {
 		return err
 	}
 	if err := h.RestartDockerCompose(constants.SSHScriptTimeout); err != nil {

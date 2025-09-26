@@ -32,12 +32,12 @@ func (h *Node) ComposeSSHSetupNode(networkID string, subnetsToTrack []string, od
 		}
 	}
 	h.Logger.Infof("odysseyCLI folder structure created on remote node %s after %s", folderStructure, time.Since(startTime))
-	avagoDockerImage := fmt.Sprintf("%s:%s", constants.OdysseyGoDockerImage, odysseyGoVersion)
-	h.Logger.Infof("Preparing OdysseyGo Docker image %s on %s[%s]", avagoDockerImage, h.NodeID, h.IP)
-	if err := h.PrepareDockerImageWithRepo(avagoDockerImage, constants.OdysseyGoGitRepo, odysseyGoVersion); err != nil {
+	odysseyGoDockerImage := fmt.Sprintf("%s:%s", constants.OdysseyGoDockerImage, odysseyGoVersion)
+	h.Logger.Infof("Preparing OdysseyGo Docker image %s on %s[%s]", odysseyGoDockerImage, h.NodeID, h.IP)
+	if err := h.PrepareDockerImageWithRepo(odysseyGoDockerImage, constants.OdysseyGoGitRepo, odysseyGoVersion); err != nil {
 		return err
 	}
-	h.Logger.Infof("OdysseyGo Docker image %s ready on %s[%s] after %s", avagoDockerImage, h.NodeID, h.IP, time.Since(startTime))
+	h.Logger.Infof("OdysseyGo Docker image %s ready on %s[%s] after %s", odysseyGoDockerImage, h.NodeID, h.IP, time.Since(startTime))
 	if err := h.RunSSHRenderOdysseyNodeConfig(networkID, subnetsToTrack); err != nil {
 		return err
 	}
@@ -56,6 +56,9 @@ func (h *Node) ComposeSSHSetupNode(networkID string, subnetsToTrack []string, od
 }
 
 func (h *Node) ComposeSSHSetupLoadTest() error {
+	if !constants.DockerSupportEnabled {
+		return fmt.Errorf("Docker support functionality is disabled. Set constants.DockerSupportEnabled = true to enable")
+	}
 	return h.ComposeOverSSH("Compose Node",
 		constants.SSHScriptTimeout,
 		"templates/odysseygo.docker-compose.yml",
@@ -72,6 +75,9 @@ func (h *Node) WasNodeSetupWithMonitoring() (bool, error) {
 
 // ComposeSSHSetupMonitoring sets up monitoring using docker-compose.
 func (h *Node) ComposeSSHSetupMonitoring() error {
+	if !constants.DockerSupportEnabled {
+		return fmt.Errorf("Docker support functionality is disabled. Set constants.DockerSupportEnabled = true to enable")
+	}
 	grafanaConfigFile, grafanaDashboardsFile, grafanaLokiDatasourceFile, grafanaPromDatasourceFile, err := prepareGrafanaConfig()
 	if err != nil {
 		return err
@@ -115,6 +121,9 @@ func (h *Node) ComposeSSHSetupMonitoring() error {
 }
 
 func (h *Node) ComposeSSHSetupAWMRelayer() error {
+	if !constants.DockerSupportEnabled {
+		return fmt.Errorf("Docker support functionality is disabled. Set constants.DockerSupportEnabled = true to enable")
+	}
 	return h.ComposeOverSSH("Setup AWM Relayer",
 		constants.SSHScriptTimeout,
 		"templates/awmrelayer.docker-compose.yml",

@@ -1,6 +1,6 @@
-# Avalanche Tooling SDK Setup Guide
+# Odyssey Tooling SDK Setup Guide
 
-This guide will walk you through installing Go 1.21.11 on WSL and setting up the Avalanche Tooling SDK in a hybrid Windows 11 + WSL environment.
+This guide will walk you through installing Go 1.21.11 on WSL and setting up the Odyssey Tooling SDK in a hybrid Windows 11 + WSL environment.
 
 ## Prerequisites
 
@@ -60,7 +60,7 @@ source ~/.bashrc
 go version
 ```
 
-## Step 2: Access the Avalanche Tooling SDK
+## Step 2: Access the Odyssey Tooling SDK
 
 ### Option A: If you already have the repository on Windows 11
 

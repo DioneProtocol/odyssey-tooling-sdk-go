@@ -68,6 +68,9 @@ func NewAwsCloud(ctx context.Context, awsProfile, region string) (*AwsCloud, err
 
 // CreateSecurityGroup creates a security group
 func (c *AwsCloud) CreateSecurityGroup(groupName, description string) (string, error) {
+	if !constants.SecurityGroupsEnabled {
+		return "", fmt.Errorf("security groups functionality is disabled. Set constants.SecurityGroupsEnabled = true to enable")
+	}
 	createSGOutput, err := c.ec2Client.CreateSecurityGroup(c.ctx, &ec2.CreateSecurityGroupInput{
 		GroupName:   aws.String(groupName),
 		Description: aws.String(description),
@@ -763,6 +766,9 @@ func (c *AwsCloud) ChangeInstanceType(instanceID, instanceType string) error {
 // awsRegion: The AWS region to use for the request.
 // Returns the ID of the created security group and an error, if any.
 func CreateSecurityGroup(ctx context.Context, securityGroupName, awsProfile, awsRegion string) (string, error) {
+	if !constants.SecurityGroupsEnabled {
+		return "", fmt.Errorf("security groups functionality is disabled. Set constants.SecurityGroupsEnabled = true to enable")
+	}
 	ec2Svc, err := NewAwsCloud(
 		ctx,
 		awsProfile,

@@ -84,6 +84,24 @@ func CreateNodes(
 	ctx context.Context,
 	nodeParams *NodeParams,
 ) ([]Node, error) {
+	// Check feature flags for cloud integration
+	if nodeParams.CloudParams.Cloud() == AWSCloud && !constants.AWSIntegrationEnabled {
+		return nil, fmt.Errorf("AWS integration functionality is disabled. Set constants.AWSIntegrationEnabled = true to enable")
+	}
+	if nodeParams.CloudParams.Cloud() == GCPCloud && !constants.GCPIntegrationEnabled {
+		return nil, fmt.Errorf("GCP integration functionality is disabled. Set constants.GCPIntegrationEnabled = true to enable")
+	}
+
+	// Check feature flags for infrastructure components
+	if !constants.InstanceManagementEnabled {
+		return nil, fmt.Errorf("instance management functionality is disabled. Set constants.InstanceManagementEnabled = true to enable")
+	}
+	if !constants.DockerSupportEnabled {
+		return nil, fmt.Errorf("Docker support functionality is disabled. Set constants.DockerSupportEnabled = true to enable")
+	}
+	if !constants.SSHKeyManagementEnabled {
+		return nil, fmt.Errorf("SSH key management functionality is disabled. Set constants.SSHKeyManagementEnabled = true to enable")
+	}
 	nodes, err := createCloudInstances(ctx, *nodeParams.CloudParams, nodeParams.Count, nodeParams.UseStaticIP, nodeParams.SSHPrivateKeyPath)
 	if err != nil {
 		return nil, err
@@ -126,6 +144,22 @@ func preCreateCheck(cp CloudParams, count int, sshPrivateKeyPath string) error {
 
 // createCloudInstances launches the specified number of instances on the selected cloud platform.
 func createCloudInstances(ctx context.Context, cp CloudParams, count int, useStaticIP bool, sshPrivateKeyPath string) ([]Node, error) {
+	// Check feature flags for cloud integration
+	if cp.Cloud() == AWSCloud && !constants.AWSIntegrationEnabled {
+		return nil, fmt.Errorf("AWS integration functionality is disabled. Set constants.AWSIntegrationEnabled = true to enable")
+	}
+	if cp.Cloud() == GCPCloud && !constants.GCPIntegrationEnabled {
+		return nil, fmt.Errorf("GCP integration functionality is disabled. Set constants.GCPIntegrationEnabled = true to enable")
+	}
+
+	// Check feature flags for infrastructure components
+	if !constants.InstanceManagementEnabled {
+		return nil, fmt.Errorf("instance management functionality is disabled. Set constants.InstanceManagementEnabled = true to enable")
+	}
+	if !constants.SSHKeyManagementEnabled {
+		return nil, fmt.Errorf("SSH key management functionality is disabled. Set constants.SSHKeyManagementEnabled = true to enable")
+	}
+
 	if err := preCreateCheck(cp, count, sshPrivateKeyPath); err != nil {
 		return nil, err
 	}
@@ -256,11 +290,11 @@ func provisionHost(node Node, nodeParams *NodeParams) error {
 	for _, role := range nodeParams.Roles {
 		switch role {
 		case Validator:
-			if err := provisionAvagoHost(node, nodeParams); err != nil {
+			if err := provisionOdysseyGoHost(node, nodeParams); err != nil {
 				return err
 			}
 		case API:
-			if err := provisionAvagoHost(node, nodeParams); err != nil {
+			if err := provisionOdysseyGoHost(node, nodeParams); err != nil {
 				return err
 			}
 		case Loadtest:
@@ -285,7 +319,7 @@ func provisionHost(node Node, nodeParams *NodeParams) error {
 	return nil
 }
 
-func provisionAvagoHost(node Node, nodeParams *NodeParams) error {
+func provisionOdysseyGoHost(node Node, nodeParams *NodeParams) error {
 	const withMonitoring = true
 	if err := node.RunSSHSetupNode(); err != nil {
 		return err

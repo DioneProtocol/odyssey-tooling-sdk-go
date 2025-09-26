@@ -602,6 +602,15 @@ func TestNode_SSHConnectionMemoryLeaks(t *testing.T) {
 }
 
 func TestNode_SSHConnectionErrorMessages(t *testing.T) {
+	// Save original SSH key management flag value
+	originalSSHKeyManagement := constants.SSHKeyManagementEnabled
+	defer func() {
+		constants.SSHKeyManagementEnabled = originalSSHKeyManagement
+	}()
+
+	// Enable SSH key management for this test
+	constants.SSHKeyManagementEnabled = true
+
 	node := Node{
 		IP: "192.168.1.1",
 		SSHConfig: SSHConfig{

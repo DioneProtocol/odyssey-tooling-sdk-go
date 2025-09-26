@@ -170,6 +170,15 @@ func TestNode_MonitorNodes(t *testing.T) {
 }
 
 func TestNode_ProvisioningFunctions(t *testing.T) {
+	// Save original Docker support flag value
+	originalDockerSupport := constants.DockerSupportEnabled
+	defer func() {
+		constants.DockerSupportEnabled = originalDockerSupport
+	}()
+
+	// Enable Docker support for this test
+	constants.DockerSupportEnabled = true
+
 	tests := []struct {
 		name        string
 		node        Node
@@ -410,7 +419,7 @@ func TestProvisionAvagoHost(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			err := provisionAvagoHost(tt.node, tt.nodeParams)
+			err := provisionOdysseyGoHost(tt.node, tt.nodeParams)
 			if tt.expectError {
 				assert.Error(t, err)
 			} else {
@@ -604,6 +613,15 @@ func TestNode_MonitoringConfiguration(t *testing.T) {
 }
 
 func TestNode_MonitoringEdgeCases(t *testing.T) {
+	// Save original Docker support flag value
+	originalDockerSupport := constants.DockerSupportEnabled
+	defer func() {
+		constants.DockerSupportEnabled = originalDockerSupport
+	}()
+
+	// Enable Docker support for this test
+	constants.DockerSupportEnabled = true
+
 	tests := []struct {
 		name        string
 		operation   func() error
