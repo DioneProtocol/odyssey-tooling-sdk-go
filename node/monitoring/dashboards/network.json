@@ -2655,7 +2655,7 @@
         {
           "datasource": "Prometheus",
           "exemplar": true,
-          "expr": "increase(odyssey_X_blks_accepted_count{job=\"odysseygo\"}[5m]) ",
+          "expr": "increase(odyssey_A_blks_accepted_count{job=\"odysseygo\"}[5m]) ",
           "hide": true,
           "interval": "",
           "legendFormat": "",
@@ -2664,7 +2664,7 @@
         {
           "datasource": "Prometheus",
           "exemplar": true,
-          "expr": "increase(odyssey_C_blks_accepted_count{job=\"odysseygo\"}[5m]) ",
+          "expr": "increase(odyssey_D_blks_accepted_count{job=\"odysseygo\"}[5m]) ",
           "hide": true,
           "interval": "",
           "legendFormat": "",
@@ -2673,7 +2673,7 @@
         {
           "datasource": "Prometheus",
           "exemplar": true,
-          "expr": "increase(odyssey_P_blks_accepted_count{job=\"odysseygo\"}[5m])",
+          "expr": "increase(odyssey_O_blks_accepted_count{job=\"odysseygo\"}[5m])",
           "hide": true,
           "interval": "",
           "legendFormat": "",
@@ -2887,9 +2887,9 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "odyssey_X_benchlist_benched_weight{instance=~\"$host\"}/1000000000",
+          "expr": "odyssey_A_benchlist_benched_weight{instance=~\"$host\"}/1000000000",
           "interval": "",
-          "legendFormat": "X chain",
+          "legendFormat": "A chain",
           "range": true,
           "refId": "A"
         },
@@ -2899,10 +2899,10 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "odyssey_P_benchlist_benched_weight{instance=~\"$host\"}/1000000000",
+          "expr": "odyssey_O_benchlist_benched_weight{instance=~\"$host\"}/1000000000",
           "hide": false,
           "interval": "",
-          "legendFormat": "P Chain",
+          "legendFormat": "O Chain",
           "range": true,
           "refId": "B"
         },
@@ -2912,10 +2912,10 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "odyssey_C_benchlist_benched_weight{instance=~\"$host\"}/1000000000",
+          "expr": "odyssey_D_benchlist_benched_weight{instance=~\"$host\"}/1000000000",
           "hide": false,
           "interval": "",
-          "legendFormat": "C Chain",
+          "legendFormat": "D Chain",
           "range": true,
           "refId": "C"
         }
@@ -4475,7 +4475,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "increase(odyssey_P_handler_expired{instance=~\"$host\"}[1m])+increase(odyssey_C_handler_expired{instance=~\"$host\"}[1m])+increase(odyssey_X_handler_expired{instance=~\"$host\"}[1m])",
+          "expr": "increase(odyssey_O_handler_expired{instance=~\"$host\"}[1m])+increase(odyssey_D_handler_expired{instance=~\"$host\"}[1m])+increase(odyssey_A_handler_expired{instance=~\"$host\"}[1m])",
           "interval": "",
           "legendFormat": "Messages Dropped",
           "range": true,

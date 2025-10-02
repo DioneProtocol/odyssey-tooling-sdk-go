@@ -210,7 +210,7 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
-      "description": "Number of accepted and rejected blocks on the X chain in the last minute",
+      "description": "Number of accepted and rejected blocks on the A chain in the last minute",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -276,7 +276,7 @@
       "id": 16,
       "links": [
         {
-          "title": "X Chain dashboard",
+          "title": "A Chain dashboard",
           "url": "/d/ceRH2Am7z/a-chain?orgId=1"
         }
       ],
@@ -304,7 +304,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "round(increase(odyssey_X_blks_accepted_count{instance=~\"$host\", job=\"odysseygo\"}[1m]))>0",
+          "expr": "round(increase(odyssey_A_blks_accepted_count{instance=~\"$host\", job=\"odysseygo\"}[1m]))>0",
           "interval": "",
           "legendFormat": "Accepted",
           "range": true,
@@ -316,7 +316,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "round(increase(odyssey_X_blks_rejected_count{instance=~\"$host\", job=\"odysseygo\"}[1m]))>0",
+          "expr": "round(increase(odyssey_A_blks_rejected_count{instance=~\"$host\", job=\"odysseygo\"}[1m]))>0",
           "hide": false,
           "interval": "",
           "legendFormat": "Rejected",
@@ -324,7 +324,7 @@
           "refId": "B"
         }
       ],
-      "title": "X Chain Blocks",
+      "title": "A Chain Blocks",
       "type": "timeseries"
     },
     {
@@ -382,7 +382,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "round(increase(odyssey_X_blks_built{instance=~\"$host\", job=\"odysseygo\"}[1d]))",
+          "expr": "round(increase(odyssey_A_blks_built{instance=~\"$host\", job=\"odysseygo\"}[1d]))",
           "interval": "",
           "legendFormat": "Proposed P blocks",
           "range": true,
@@ -397,7 +397,7 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
-      "description": "Number of accepted and rejected blocks on the P chain in the last minute.",
+      "description": "Number of accepted and rejected blocks on the O chain in the last minute.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -462,7 +462,7 @@
       "id": 21,
       "links": [
         {
-          "title": "P Chain dashboard",
+          "title": "O Chain dashboard",
           "url": "/d/uWlS20i7z/o-chain?orgId=1"
         }
       ],
@@ -490,7 +490,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "round(increase(odyssey_P_blks_accepted_count{instance=~\"$host\",job=\"odysseygo\"}[1m]))>0",
+          "expr": "round(increase(odyssey_O_blks_accepted_count{instance=~\"$host\",job=\"odysseygo\"}[1m]))>0",
           "interval": "",
           "legendFormat": "Accepted",
           "range": true,
@@ -502,7 +502,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "round(increase(odyssey_P_blks_rejected_count{instance=~\"$host\",job=\"odysseygo\"}[1m]))>0",
+          "expr": "round(increase(odyssey_O_blks_rejected_count{instance=~\"$host\",job=\"odysseygo\"}[1m]))>0",
           "hide": false,
           "interval": "",
           "legendFormat": "Rejected",
@@ -510,7 +510,7 @@
           "refId": "B"
         }
       ],
-      "title": "P Chain Blocks",
+      "title": "O Chain Blocks",
       "type": "timeseries"
     },
     {
@@ -568,7 +568,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "round(increase(odyssey_P_blks_built{instance=~\"$host\", job=\"odysseygo\"}[1d]))",
+          "expr": "round(increase(odyssey_O_blks_built{instance=~\"$host\", job=\"odysseygo\"}[1d]))",
           "interval": "",
           "legendFormat": "Proposed P blocks",
           "range": true,
@@ -947,7 +947,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "odyssey_P_vm_total_staked{instance=~\"$host\", job=\"odysseygo\"}/1000000000",
+          "expr": "odyssey_O_vm_total_staked{instance=~\"$host\", job=\"odysseygo\"}/1000000000",
           "interval": "",
           "legendFormat": "DIONE",
           "range": true,
@@ -1022,7 +1022,7 @@
             "type": "prometheus"
           },
           "editorMode": "code",
-          "expr": "odyssey_P_percent_connected{instance=~\"$host\", job=\"odysseygo\"}",
+          "expr": "odyssey_O_percent_connected{instance=~\"$host\", job=\"odysseygo\"}",
           "interval": "",
           "legendFormat": "",
           "range": true,
@@ -1208,7 +1208,7 @@
       "id": 23,
       "links": [
         {
-          "title": "C Chain dashboard",
+          "title": "D Chain dashboard",
           "url": "/d/Gl1I20mnk/d-chain?orgId=1"
         }
       ],
@@ -1236,7 +1236,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "round(increase(odyssey_C_blks_accepted_count{instance=~\"$host\", job=\"odysseygo\"}[1m]))>0",
+          "expr": "round(increase(odyssey_D_blks_accepted_count{instance=~\"$host\", job=\"odysseygo\"}[1m]))>0",
           "interval": "",
           "legendFormat": "Accepted",
           "range": true,
@@ -1248,7 +1248,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "round(increase(odyssey_C_blks_rejected_count{instance=~\"$host\", job=\"odysseygo\"}[1m]))>0",
+          "expr": "round(increase(odyssey_D_blks_rejected_count{instance=~\"$host\", job=\"odysseygo\"}[1m]))>0",
           "hide": false,
           "interval": "",
           "legendFormat": "Rejected",
@@ -1256,7 +1256,7 @@
           "refId": "B"
         }
       ],
-      "title": "C Chain Blocks",
+      "title": "D Chain Blocks",
       "type": "timeseries"
     },
     {
@@ -1318,7 +1318,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "round(increase(odyssey_C_blks_built{instance=~\"$host\", job=\"odysseygo\"}[1d]))",
+          "expr": "round(increase(odyssey_D_blks_built{instance=~\"$host\", job=\"odysseygo\"}[1d]))",
           "interval": "",
           "legendFormat": "Built C blocks",
           "range": true,
@@ -1384,9 +1384,9 @@
             "type": "prometheus"
           },
           "editorMode": "code",
-          "expr": "round(increase(odyssey_X_blks_accepted_count{instance=~\"$host\", job=\"odysseygo\"}[1m]))",
+          "expr": "round(increase(odyssey_A_blks_accepted_count{instance=~\"$host\", job=\"odysseygo\"}[1m]))",
           "interval": "",
-          "legendFormat": "X Chain",
+          "legendFormat": "A Chain",
           "range": true,
           "refId": "A"
         },
@@ -1395,10 +1395,10 @@
             "type": "prometheus"
           },
           "editorMode": "code",
-          "expr": "round(increase(odyssey_P_blks_accepted_count{instance=~\"$host\", job=\"odysseygo\"}[1m]))",
+          "expr": "round(increase(odyssey_O_blks_accepted_count{instance=~\"$host\", job=\"odysseygo\"}[1m]))",
           "hide": false,
           "interval": "",
-          "legendFormat": "P Chain",
+          "legendFormat": "O Chain",
           "range": true,
           "refId": "B"
         },
@@ -1407,10 +1407,10 @@
             "type": "prometheus"
           },
           "editorMode": "code",
-          "expr": "round(increase(odyssey_C_blks_accepted_count{instance=~\"$host\", job=\"odysseygo\"}[1m]))",
+          "expr": "round(increase(odyssey_D_blks_accepted_count{instance=~\"$host\", job=\"odysseygo\"}[1m]))",
           "hide": false,
           "interval": "",
-          "legendFormat": "C Chain",
+          "legendFormat": "D Chain",
           "range": true,
           "refId": "C"
         }
@@ -1482,9 +1482,9 @@
             "type": "prometheus"
           },
           "editorMode": "code",
-          "expr": "odyssey_X_blks_processing{instance=~\"$host\", job=\"odysseygo\"}",
+          "expr": "odyssey_A_blks_processing{instance=~\"$host\", job=\"odysseygo\"}",
           "interval": "",
-          "legendFormat": "X Chain",
+          "legendFormat": "A Chain",
           "range": true,
           "refId": "A"
         },
@@ -1493,10 +1493,10 @@
             "type": "prometheus"
           },
           "editorMode": "code",
-          "expr": "odyssey_P_blks_processing{instance=~\"$host\", job=\"odysseygo\"}",
+          "expr": "odyssey_O_blks_processing{instance=~\"$host\", job=\"odysseygo\"}",
           "hide": false,
           "interval": "",
-          "legendFormat": "P Chain",
+          "legendFormat": "O Chain",
           "range": true,
           "refId": "B"
         },
@@ -1505,10 +1505,10 @@
             "type": "prometheus"
           },
           "editorMode": "code",
-          "expr": "odyssey_C_blks_processing{instance=~\"$host\", job=\"odysseygo\"}",
+          "expr": "odyssey_D_blks_processing{instance=~\"$host\", job=\"odysseygo\"}",
           "hide": false,
           "interval": "",
-          "legendFormat": "C Chain",
+          "legendFormat": "D Chain",
           "range": true,
           "refId": "C"
         }
@@ -1571,9 +1571,9 @@
             "type": "prometheus"
           },
           "editorMode": "code",
-          "expr": "odyssey_X_benchlist_benched_num{instance=~\"$host\", job=\"odysseygo\"}",
+          "expr": "odyssey_A_benchlist_benched_num{instance=~\"$host\", job=\"odysseygo\"}",
           "interval": "",
-          "legendFormat": "X Chain",
+          "legendFormat": "A Chain",
           "range": true,
           "refId": "A"
         },
@@ -1582,10 +1582,10 @@
             "type": "prometheus"
           },
           "editorMode": "code",
-          "expr": "odyssey_P_benchlist_benched_num{instance=~\"$host\", job=\"odysseygo\"}",
+          "expr": "odyssey_O_benchlist_benched_num{instance=~\"$host\", job=\"odysseygo\"}",
           "hide": false,
           "interval": "",
-          "legendFormat": "P Chain",
+          "legendFormat": "O Chain",
           "range": true,
           "refId": "B"
         },
@@ -1594,10 +1594,10 @@
             "type": "prometheus"
           },
           "editorMode": "code",
-          "expr": "odyssey_C_benchlist_benched_num{instance=~\"$host\", job=\"odysseygo\"}",
+          "expr": "odyssey_D_benchlist_benched_num{instance=~\"$host\", job=\"odysseygo\"}",
           "hide": false,
           "interval": "",
-          "legendFormat": "C Chain",
+          "legendFormat": "D Chain",
           "range": true,
           "refId": "C"
         }
@@ -1671,9 +1671,9 @@
             "type": "prometheus"
           },
           "editorMode": "code",
-          "expr": "(increase(odyssey_X_handler_chits_count{instance=~\"$host\", job=\"odysseygo\"}[1m]) + 1) / (increase(odyssey_X_handler_chits_count{instance=~\"$host\", job=\"odysseygo\"}[1m]) + increase(odyssey_X_handler_query_failed_count{instance=~\"$host\", job=\"odysseygo\"}[1m]) + 1)",
+          "expr": "(increase(odyssey_A_handler_chits_count{instance=~\"$host\", job=\"odysseygo\"}[1m]) + 1) / (increase(odyssey_A_handler_chits_count{instance=~\"$host\", job=\"odysseygo\"}[1m]) + increase(odyssey_A_handler_query_failed_count{instance=~\"$host\", job=\"odysseygo\"}[1m]) + 1)",
           "interval": "",
-          "legendFormat": "X Chain",
+          "legendFormat": "A Chain",
           "range": true,
           "refId": "A"
         },
@@ -1682,10 +1682,10 @@
             "type": "prometheus"
           },
           "editorMode": "code",
-          "expr": "(increase(odyssey_P_handler_chits_count{instance=~\"$host\", job=\"odysseygo\"}[1m]) + 1) / (increase(odyssey_P_handler_chits_count{instance=~\"$host\", job=\"odysseygo\"}[1m]) + increase(odyssey_P_handler_query_failed_count{instance=~\"$host\", job=\"odysseygo\"}[1m]) + 1)",
+          "expr": "(increase(odyssey_O_handler_chits_count{instance=~\"$host\", job=\"odysseygo\"}[1m]) + 1) / (increase(odyssey_O_handler_chits_count{instance=~\"$host\", job=\"odysseygo\"}[1m]) + increase(odyssey_O_handler_query_failed_count{instance=~\"$host\", job=\"odysseygo\"}[1m]) + 1)",
           "hide": false,
           "interval": "",
-          "legendFormat": "P Chain",
+          "legendFormat": "O Chain",
           "range": true,
           "refId": "B"
         },
@@ -1694,10 +1694,10 @@
             "type": "prometheus"
           },
           "editorMode": "code",
-          "expr": "(increase(odyssey_C_handler_chits_count{instance=~\"$host\", job=\"odysseygo\"}[1m]) + 1) / (increase(odyssey_C_handler_chits_count{instance=~\"$host\", job=\"odysseygo\"}[1m]) + increase(odyssey_C_handler_query_failed_count{instance=~\"$host\", job=\"odysseygo\"}[1m]) + 1)",
+          "expr": "(increase(odyssey_D_handler_chits_count{instance=~\"$host\", job=\"odysseygo\"}[1m]) + 1) / (increase(odyssey_D_handler_chits_count{instance=~\"$host\", job=\"odysseygo\"}[1m]) + increase(odyssey_D_handler_query_failed_count{instance=~\"$host\", job=\"odysseygo\"}[1m]) + 1)",
           "hide": false,
           "interval": "",
-          "legendFormat": "C Chain",
+          "legendFormat": "D Chain",
           "range": true,
           "refId": "C"
         }

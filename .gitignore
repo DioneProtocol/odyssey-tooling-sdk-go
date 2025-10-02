@@ -23,3 +23,4 @@
 .env
 go.mod
 odyssey-sdk-functionalities.md
+monitoring-demo/
