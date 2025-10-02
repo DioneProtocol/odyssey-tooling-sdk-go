@@ -16,6 +16,11 @@ import (
 
 // OdysseygoTCPClient returns the connection to the node.
 func (h *Node) OdysseygoTCPClient() (*net.Conn, error) {
+	// Check feature flag for SSH key management
+	if !constants.SSHKeyManagementEnabled {
+		return nil, fmt.Errorf("SSH key management functionality is disabled. Set constants.SSHKeyManagementEnabled = true to enable")
+	}
+
 	if !h.Connected() {
 		if err := h.Connect(0); err != nil {
 			return nil, err
@@ -36,6 +41,11 @@ func (h *Node) OdysseygoTCPClient() (*net.Conn, error) {
 
 // OdysseygoRPCClient returns the RPC client to the node.
 func (h *Node) OdysseygoRPCClient() (*rpc.Client, error) {
+	// Check feature flag for SSH key management
+	if !constants.SSHKeyManagementEnabled {
+		return nil, fmt.Errorf("SSH key management functionality is disabled. Set constants.SSHKeyManagementEnabled = true to enable")
+	}
+
 	proxy, err := h.OdysseygoTCPClient()
 	if err != nil {
 		return nil, err
@@ -45,6 +55,11 @@ func (h *Node) OdysseygoRPCClient() (*rpc.Client, error) {
 
 // Post sends a POST request to the node at the specified path with the provided body.
 func (h *Node) Post(path string, requestBody string) ([]byte, error) {
+	// Check feature flag for SSH key management
+	if !constants.SSHKeyManagementEnabled {
+		return nil, fmt.Errorf("SSH key management functionality is disabled. Set constants.SSHKeyManagementEnabled = true to enable")
+	}
+
 	if path == "" {
 		path = "/ext/info"
 	}
@@ -62,6 +77,11 @@ func (h *Node) Post(path string, requestBody string) ([]byte, error) {
 
 // WaitForPort waits for the SSH port to become available on the node.
 func (h *Node) WaitForPort(port uint, timeout time.Duration) error {
+	// Check feature flag for SSH key management
+	if !constants.SSHKeyManagementEnabled {
+		return fmt.Errorf("SSH key management functionality is disabled. Set constants.SSHKeyManagementEnabled = true to enable")
+	}
+
 	if port == 0 {
 		port = constants.SSHTCPPort
 	}

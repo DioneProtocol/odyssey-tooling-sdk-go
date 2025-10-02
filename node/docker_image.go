@@ -4,6 +4,7 @@
 package node
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
@@ -11,6 +12,11 @@ import (
 
 // PullDockerImage pulls a docker image on a remote node.
 func (h *Node) PullDockerImage(image string) error {
+	// Check feature flag for Docker support
+	if !constants.DockerSupportEnabled {
+		return fmt.Errorf("Docker support functionality is disabled. Set constants.DockerSupportEnabled = true to enable")
+	}
+
 	h.Logger.Infof("Pulling docker image %s on %s", image, h.NodeID)
 	_, err := h.Commandf(nil, constants.SSHLongRunningScriptTimeout, "docker pull %s", image)
 	return err
@@ -18,6 +24,11 @@ func (h *Node) PullDockerImage(image string) error {
 
 // DockerLocalImageExists checks if a docker image exists on a remote node.
 func (h *Node) DockerLocalImageExists(image string) (bool, error) {
+	// Check feature flag for Docker support
+	if !constants.DockerSupportEnabled {
+		return false, fmt.Errorf("Docker support functionality is disabled. Set constants.DockerSupportEnabled = true to enable")
+	}
+
 	output, err := h.Command(nil, constants.SSHLongRunningScriptTimeout, "docker images --format '{{.Repository}}:{{.Tag}}'")
 	if err != nil {
 		return false, err
@@ -37,12 +48,22 @@ func parseDockerImageListOutput(output []byte) []string {
 
 // BuildDockerImage builds a docker image on a remote node.
 func (h *Node) BuildDockerImage(image string, path string, dockerfile string) error {
+	// Check feature flag for Docker support
+	if !constants.DockerSupportEnabled {
+		return fmt.Errorf("Docker support functionality is disabled. Set constants.DockerSupportEnabled = true to enable")
+	}
+
 	_, err := h.Commandf(nil, constants.SSHLongRunningScriptTimeout, "cd %s && docker build -q --build-arg GO_VERSION=%s -t %s -f %s .", path, constants.BuildEnvGolangVersion, image, dockerfile)
 	return err
 }
 
 // BuildDockerImageFromGitRepo builds a docker image from a git repo on a remote node.
 func (h *Node) BuildDockerImageFromGitRepo(image string, gitRepo string, commit string) error {
+	// Check feature flag for Docker support
+	if !constants.DockerSupportEnabled {
+		return fmt.Errorf("Docker support functionality is disabled. Set constants.DockerSupportEnabled = true to enable")
+	}
+
 	if commit == "" {
 		commit = "HEAD"
 	}
@@ -69,6 +90,11 @@ func (h *Node) BuildDockerImageFromGitRepo(image string, gitRepo string, commit 
 
 // PrepareDockerImageWithRepo prepares a docker image on a remote node.
 func (h *Node) PrepareDockerImageWithRepo(image string, gitRepo string, commit string) error {
+	// Check feature flag for Docker support
+	if !constants.DockerSupportEnabled {
+		return fmt.Errorf("Docker support functionality is disabled. Set constants.DockerSupportEnabled = true to enable")
+	}
+
 	localImageExists, _ := h.DockerLocalImageExists(image)
 	if localImageExists {
 		h.Logger.Infof("Docker image %s is FOUND on %s", image, h.NodeID)

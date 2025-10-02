@@ -4,6 +4,7 @@
 package node
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
@@ -15,6 +16,11 @@ import (
 // networkID is the ID of the network to be used
 // trackSubnets is the list of subnets to track
 func (h *Node) RunSSHRenderOdysseyNodeConfig(networkID string, trackSubnets []string) error {
+	// Check feature flag for SSH key management
+	if !constants.SSHKeyManagementEnabled {
+		return fmt.Errorf("SSH key management functionality is disabled. Set constants.SSHKeyManagementEnabled = true to enable")
+	}
+
 	avagoConf := remoteconfig.PrepareOdysseyConfig(h.IP, networkID, trackSubnets)
 
 	nodeConf, err := remoteconfig.RenderOdysseyNodeConfig(avagoConf)

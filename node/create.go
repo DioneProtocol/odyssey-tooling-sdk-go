@@ -84,6 +84,14 @@ func CreateNodes(
 	ctx context.Context,
 	nodeParams *NodeParams,
 ) ([]Node, error) {
+	// Validate input parameters
+	if nodeParams == nil {
+		return nil, fmt.Errorf("nodeParams cannot be nil")
+	}
+	if nodeParams.CloudParams == nil {
+		return nil, fmt.Errorf("cloudParams cannot be nil")
+	}
+
 	// Check feature flags for cloud integration
 	if nodeParams.CloudParams.Cloud() == AWSCloud && !constants.AWSIntegrationEnabled {
 		return nil, fmt.Errorf("AWS integration functionality is disabled. Set constants.AWSIntegrationEnabled = true to enable")

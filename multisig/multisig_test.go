@@ -1368,10 +1368,11 @@ func TestGetNetworkProduction(t *testing.T) {
 		tx := &txs.Tx{Unsigned: &txs.CreateSubnetTx{}}
 		ms := New(tx)
 
-		// Test that GetNetworkID returns 0 for default transaction
+		// Test that GetNetworkID fails with unexpected unsigned tx type
 		networkID, err := ms.GetNetworkID()
-		require.NoError(t, err)
+		assert.Error(t, err)
 		assert.Equal(t, uint32(0), networkID)
+		assert.Contains(t, err.Error(), "unexpected unsigned tx type")
 
 		// Test that GetNetwork fails with unexpected unsigned tx type
 		network, err := ms.GetNetwork()
