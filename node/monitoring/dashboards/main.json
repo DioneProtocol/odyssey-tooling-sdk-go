@@ -384,12 +384,12 @@
           "exemplar": true,
           "expr": "round(increase(odyssey_A_blks_built{instance=~\"$host\", job=\"odysseygo\"}[1d]))",
           "interval": "",
-          "legendFormat": "Proposed P blocks",
+          "legendFormat": "Proposed A blocks",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Proposed X blocks",
+      "title": "Proposed A blocks",
       "type": "stat"
     },
     {
@@ -570,12 +570,12 @@
           "exemplar": true,
           "expr": "round(increase(odyssey_O_blks_built{instance=~\"$host\", job=\"odysseygo\"}[1d]))",
           "interval": "",
-          "legendFormat": "Proposed P blocks",
+          "legendFormat": "Proposed O blocks",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Proposed P blocks",
+      "title": "Proposed O blocks",
       "type": "stat"
     },
     {
@@ -1320,12 +1320,12 @@
           "exemplar": true,
           "expr": "round(increase(odyssey_D_blks_built{instance=~\"$host\", job=\"odysseygo\"}[1d]))",
           "interval": "",
-          "legendFormat": "Built C blocks",
+          "legendFormat": "Built D blocks",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Proposed C blocks",
+      "title": "Proposed D blocks",
       "type": "stat"
     },
     {
