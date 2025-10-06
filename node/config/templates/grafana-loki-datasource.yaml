@@ -5,7 +5,7 @@ datasources:
     type: loki
     access: proxy
     orgId: 1
-    url: http://loki:23101
+    url: http://loki:3100
     editable: false
     jsonData:
       timeout: 60
