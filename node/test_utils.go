@@ -86,7 +86,7 @@ func (th *TestHelper) CreateTestNodeParams() *NodeParams {
 		Network:           odyssey.TestnetNetwork(),
 		SubnetIDs:         []string{},
 		SSHPrivateKeyPath: "/path/to/key",
-		OdysseyGoVersion:  "v1.11.8",
+		OdysseyGoVersion:  "v1.10.11",
 		UseStaticIP:       false,
 	}
 }

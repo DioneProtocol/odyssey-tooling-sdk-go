@@ -294,7 +294,7 @@ func TestProvisionOdysseyGoHost(t *testing.T) {
 			nodeParams: &NodeParams{
 				Network:          odyssey.TestnetNetwork(),
 				SubnetIDs:        []string{"subnet1"},
-				OdysseyGoVersion: "v1.11.8",
+				OdysseyGoVersion: "v1.10.11",
 			},
 			expectError: true, // Will fail due to no connection
 		},
@@ -304,7 +304,7 @@ func TestProvisionOdysseyGoHost(t *testing.T) {
 			nodeParams: &NodeParams{
 				Network:          odyssey.TestnetNetwork(),
 				SubnetIDs:        []string{"subnet1"},
-				OdysseyGoVersion: "v1.11.8",
+				OdysseyGoVersion: "v1.10.11",
 			},
 			expectError: true,
 		},
@@ -317,7 +317,7 @@ func TestProvisionOdysseyGoHost(t *testing.T) {
 			nodeParams: &NodeParams{
 				Network:          odyssey.TestnetNetwork(),
 				SubnetIDs:        []string{"subnet1"},
-				OdysseyGoVersion: "v1.11.8",
+				OdysseyGoVersion: "v1.10.11",
 			},
 			expectError: true,
 		},
@@ -330,7 +330,7 @@ func TestProvisionOdysseyGoHost(t *testing.T) {
 			nodeParams: &NodeParams{
 				Network:          odyssey.MainnetNetwork(),
 				SubnetIDs:        []string{},
-				OdysseyGoVersion: "v1.11.8",
+				OdysseyGoVersion: "v1.10.11",
 			},
 			expectError: true,
 		},
@@ -343,7 +343,7 @@ func TestProvisionOdysseyGoHost(t *testing.T) {
 			nodeParams: &NodeParams{
 				Network:          odyssey.DevnetNetwork(),
 				SubnetIDs:        []string{"subnet1", "subnet2"},
-				OdysseyGoVersion: "v1.11.8",
+				OdysseyGoVersion: "v1.10.11",
 			},
 			expectError: true,
 		},
@@ -586,7 +586,7 @@ func TestCreateNodes_EdgeCases(t *testing.T) {
 				Roles:             []SupportedRole{Validator},
 				Network:           odyssey.TestnetNetwork(),
 				SSHPrivateKeyPath: "/path/to/key",
-				OdysseyGoVersion:  "v1.11.8",
+				OdysseyGoVersion:  "v1.10.11",
 				UseStaticIP:       false,
 			},
 			expectError: true,
@@ -603,7 +603,7 @@ func TestCreateNodes_EdgeCases(t *testing.T) {
 				Roles:             []SupportedRole{Validator},
 				Network:           odyssey.TestnetNetwork(),
 				SSHPrivateKeyPath: "/path/to/key",
-				OdysseyGoVersion:  "v1.11.8",
+				OdysseyGoVersion:  "v1.10.11",
 				UseStaticIP:       false,
 			},
 			expectError: true,
@@ -620,7 +620,7 @@ func TestCreateNodes_EdgeCases(t *testing.T) {
 				Roles:             []SupportedRole{},
 				Network:           odyssey.TestnetNetwork(),
 				SSHPrivateKeyPath: "/path/to/key",
-				OdysseyGoVersion:  "v1.11.8",
+				OdysseyGoVersion:  "v1.10.11",
 				UseStaticIP:       false,
 			},
 			expectError: true,
@@ -637,7 +637,7 @@ func TestCreateNodes_EdgeCases(t *testing.T) {
 				Roles:             []SupportedRole{Validator},
 				Network:           odyssey.TestnetNetwork(),
 				SSHPrivateKeyPath: "",
-				OdysseyGoVersion:  "v1.11.8",
+				OdysseyGoVersion:  "v1.10.11",
 				UseStaticIP:       false,
 			},
 			expectError: true,
@@ -736,7 +736,7 @@ func TestCreateNodes_NetworkTypes(t *testing.T) {
 				Roles:             []SupportedRole{Validator},
 				Network:           tt.network,
 				SSHPrivateKeyPath: "/path/to/key",
-				OdysseyGoVersion:  "v1.11.8",
+				OdysseyGoVersion:  "v1.10.11",
 				UseStaticIP:       false,
 			}
 
@@ -841,7 +841,7 @@ func TestCreateNodes_RoleCombinations(t *testing.T) {
 				Roles:             tt.roles,
 				Network:           odyssey.TestnetNetwork(),
 				SSHPrivateKeyPath: "/path/to/key",
-				OdysseyGoVersion:  "v1.11.8",
+				OdysseyGoVersion:  "v1.10.11",
 				UseStaticIP:       false,
 			}
 

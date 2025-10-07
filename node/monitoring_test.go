@@ -272,7 +272,7 @@ func TestProvisionHost(t *testing.T) {
 			nodeParams: &NodeParams{
 				Roles:            []SupportedRole{Validator},
 				Network:          odyssey.TestnetNetwork(),
-				OdysseyGoVersion: "v1.11.8",
+				OdysseyGoVersion: "v1.10.11",
 			},
 			expectError: true, // Will fail due to no connection
 		},
@@ -288,7 +288,7 @@ func TestProvisionHost(t *testing.T) {
 			nodeParams: &NodeParams{
 				Roles:            []SupportedRole{API},
 				Network:          odyssey.TestnetNetwork(),
-				OdysseyGoVersion: "v1.11.8",
+				OdysseyGoVersion: "v1.10.11",
 			},
 			expectError: true, // Will fail due to no connection
 		},
@@ -395,7 +395,7 @@ func TestProvisionAvagoHost(t *testing.T) {
 			nodeParams: &NodeParams{
 				Roles:            []SupportedRole{Validator},
 				Network:          odyssey.TestnetNetwork(),
-				OdysseyGoVersion: "v1.11.8",
+				OdysseyGoVersion: "v1.10.11",
 			},
 			expectError: true, // Will fail due to no connection
 		},
@@ -411,7 +411,7 @@ func TestProvisionAvagoHost(t *testing.T) {
 			nodeParams: &NodeParams{
 				Roles:            []SupportedRole{API},
 				Network:          odyssey.TestnetNetwork(),
-				OdysseyGoVersion: "v1.11.8",
+				OdysseyGoVersion: "v1.10.11",
 			},
 			expectError: true, // Will fail due to no connection
 		},

@@ -30,7 +30,7 @@ func TestRenderComposeFile(t *testing.T) {
 			templateVars: dockerComposeInputs{
 				WithMonitoring:   true,
 				WithOdysseygo:    true,
-				OdysseygoVersion: "v1.11.8",
+				OdysseygoVersion: "v1.10.11",
 				E2E:              false,
 				E2EIP:            "",
 				E2ESuffix:        "",
@@ -44,7 +44,7 @@ func TestRenderComposeFile(t *testing.T) {
 			templateVars: dockerComposeInputs{
 				WithMonitoring:   false,
 				WithOdysseygo:    true,
-				OdysseygoVersion: "v1.11.8",
+				OdysseygoVersion: "v1.10.11",
 				E2E:              false,
 				E2EIP:            "",
 				E2ESuffix:        "",
@@ -58,7 +58,7 @@ func TestRenderComposeFile(t *testing.T) {
 			templateVars: dockerComposeInputs{
 				WithMonitoring:   true,
 				WithOdysseygo:    true,
-				OdysseygoVersion: "v1.11.8",
+				OdysseygoVersion: "v1.10.11",
 				E2E:              true,
 				E2EIP:            "192.168.1.1",
 				E2ESuffix:        "test",
@@ -72,7 +72,7 @@ func TestRenderComposeFile(t *testing.T) {
 			templateVars: dockerComposeInputs{
 				WithMonitoring:   true,
 				WithOdysseygo:    true,
-				OdysseygoVersion: "v1.11.8",
+				OdysseygoVersion: "v1.10.11",
 				E2E:              false,
 				E2EIP:            "",
 				E2ESuffix:        "",
@@ -208,7 +208,7 @@ func TestDockerComposeInputs(t *testing.T) {
 			inputs: dockerComposeInputs{
 				WithMonitoring:   true,
 				WithOdysseygo:    true,
-				OdysseygoVersion: "v1.11.8",
+				OdysseygoVersion: "v1.10.11",
 				E2E:              true,
 				E2EIP:            "192.168.1.1",
 				E2ESuffix:        "test",
@@ -236,7 +236,7 @@ func TestDockerComposeInputs(t *testing.T) {
 			inputs: dockerComposeInputs{
 				WithMonitoring:   false,
 				WithOdysseygo:    true,
-				OdysseygoVersion: "v1.11.8",
+				OdysseygoVersion: "v1.10.11",
 				E2E:              false,
 				E2EIP:            "",
 				E2ESuffix:        "",
@@ -288,7 +288,7 @@ func TestNode_DockerComposeOperations(t *testing.T) {
 		{
 			name: "ComposeSSHSetupNode",
 			operation: func() error {
-				return node.ComposeSSHSetupNode("testnet", []string{}, "v1.11.8", true)
+				return node.ComposeSSHSetupNode("testnet", []string{}, "v1.10.11", true)
 			},
 			expectError: true, // Will fail due to no connection
 		},

@@ -45,7 +45,7 @@ func TestCreateNodes(t *testing.T) {
 	// Odyssey-CLI dependency by Odyssey nodes will be deprecated in the next release
 	// of Odyssey Tooling SDK
 	const (
-		odysseyGoVersion = "v1.11.8"
+		odysseyGoVersion = "v1.10.11"
 	)
 
 	// Create two new Odyssey Validator nodes on Testnet Network on AWS without Elastic IPs
