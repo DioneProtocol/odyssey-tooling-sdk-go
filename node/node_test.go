@@ -202,43 +202,6 @@ func TestNode_GetSSHClient(t *testing.T) {
 	// For now, we test the nil case
 }
 
-func TestNode_GetCloudID(t *testing.T) {
-	tests := []struct {
-		name     string
-		node     Node
-		expected string
-	}{
-		{
-			name: "AWS node ID",
-			node: Node{
-				NodeID: "aws_node_12345",
-			},
-			expected: "12345",
-		},
-		{
-			name: "GCP node ID",
-			node: Node{
-				NodeID: "gcp_node_67890",
-			},
-			expected: "67890",
-		},
-		{
-			name: "Regular node ID",
-			node: Node{
-				NodeID: "regular_node_id",
-			},
-			expected: "regular_node_id",
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			result := tt.node.GetCloudID()
-			assert.Equal(t, tt.expected, result)
-		})
-	}
-}
-
 func TestNode_Connected(t *testing.T) {
 	node := &Node{}
 	assert.False(t, node.Connected())

@@ -5,10 +5,7 @@ package vm
 
 import (
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/utils"
-	"github.com/DioneProtocol/subnet-evm/params"
 	"github.com/DioneProtocol/subnet-evm/precompile/allowlist"
-	"github.com/DioneProtocol/subnet-evm/precompile/contracts/deployerallowlist"
-	"github.com/DioneProtocol/subnet-evm/precompile/contracts/txallowlist"
 
 	// "github.com/DioneProtocol/subnet-evm/precompile/contracts/warp"
 	"github.com/ethereum/go-ethereum/common"
@@ -33,44 +30,6 @@ import (
 // 	// For now, return empty config to avoid compilation errors
 // 	return warpConfig
 // }
-
-// AddTeleporterAddressesToAllowLists adds teleporter-related addresses (main funded key, messenger
-// deploy key, relayer key) to the allow list of relevant enabled precompiles
-func AddTeleporterAddressesToAllowLists(
-	config params.ChainConfig,
-	teleporterAddress string,
-	teleporterMessengerDeployerAddress string,
-	relayerAddress string,
-) params.ChainConfig {
-	// tx allow list:
-	// teleporterAddress funds the other two and also deploys the registry
-	// teleporterMessengerDeployerAddress deploys the messenger
-	// relayerAddress is used by the relayer to send txs to the target chain
-	for _, address := range []string{teleporterAddress, teleporterMessengerDeployerAddress, relayerAddress} {
-		precompileConfig := config.GenesisPrecompiles[txallowlist.ConfigKey]
-		if precompileConfig != nil {
-			txAllowListConfig := precompileConfig.(*txallowlist.Config)
-			txAllowListConfig.AllowListConfig = addAddressToAllowed(
-				txAllowListConfig.AllowListConfig,
-				address,
-			)
-		}
-	}
-	// contract deploy allow list:
-	// teleporterAddress deploys the registry
-	// teleporterMessengerDeployerAddress deploys the messenger
-	for _, address := range []string{teleporterAddress, teleporterMessengerDeployerAddress} {
-		precompileConfig := config.GenesisPrecompiles[deployerallowlist.ConfigKey]
-		if precompileConfig != nil {
-			txAllowListConfig := precompileConfig.(*deployerallowlist.Config)
-			txAllowListConfig.AllowListConfig = addAddressToAllowed(
-				txAllowListConfig.AllowListConfig,
-				address,
-			)
-		}
-	}
-	return config
-}
 
 // adds an address to the given allowlist, as an Allowed address,
 // if it is not yet Admin, Manager or Allowed

@@ -307,13 +307,6 @@ func TestNode_DockerComposeOperations(t *testing.T) {
 			expectError: true, // Will fail due to no connection
 		},
 		{
-			name: "ComposeSSHSetupAWMRelayer",
-			operation: func() error {
-				return node.ComposeSSHSetupAWMRelayer()
-			},
-			expectError: true, // Will fail due to no connection
-		},
-		{
 			name: "StartDockerCompose",
 			operation: func() error {
 				return node.StartDockerCompose(time.Second)
@@ -407,7 +400,6 @@ func TestDockerComposeConstants(t *testing.T) {
 	assert.NotEmpty(t, constants.ServiceGrafana)
 	assert.NotEmpty(t, constants.ServiceLoki)
 	assert.NotEmpty(t, constants.ServicePromtail)
-	assert.NotEmpty(t, constants.ServiceAWMRelayer)
 }
 
 func TestNode_DockerComposeEdgeCases(t *testing.T) {

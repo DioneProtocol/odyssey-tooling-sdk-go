@@ -198,7 +198,7 @@ func TestProvisionHost_ValidRoles(t *testing.T) {
 		},
 		{
 			name:        "All roles",
-			roles:       []SupportedRole{Validator, API, Loadtest, Monitor, AWMRelayer},
+			roles:       []SupportedRole{Validator, API, Loadtest, Monitor},
 			expectError: true, // Will fail due to SSH connection
 		},
 	}

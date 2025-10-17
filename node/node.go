@@ -53,16 +53,6 @@ type Node struct {
 	// SSH configuration for the node
 	SSHConfig SSHConfig
 
-	// Cloud is the cloud service that the node is on
-	// Full list of cloud service:
-	// - AWS
-	// - GCP
-	// - Docker
-	Cloud SupportedCloud
-
-	// CloudConfig is the cloud specific configuration for the node
-	CloudConfig CloudParams
-
 	// connection to the node
 	connection *goph.Client
 
@@ -126,18 +116,6 @@ func (h *Node) GetConnection() *goph.Client {
 // Returns a pointer to an ssh.Client.
 func (h *Node) GetSSHClient() *ssh.Client {
 	return h.connection.Client
-}
-
-// GetCloudID returns the cloudID for the node if it is a cloud node
-func (h *Node) GetCloudID() string {
-	switch {
-	case strings.HasPrefix(h.NodeID, constants.AWSNodeIDPrefix+"_"):
-		return strings.TrimPrefix(h.NodeID, constants.AWSNodeIDPrefix+"_")
-	case strings.HasPrefix(h.NodeID, constants.GCPNodeIDPrefix+"_"):
-		return strings.TrimPrefix(h.NodeID, constants.GCPNodeIDPrefix+"_")
-	default:
-		return h.NodeID
-	}
 }
 
 // Connect starts a new SSH connection with the provided private key.

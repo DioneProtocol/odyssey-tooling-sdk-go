@@ -33,7 +33,7 @@ func ValidatePrimaryNetwork() {
 			User:           constants.RemoteHostUser,
 			PrivateKeyPath: "NODE_KEYPAIR_PRIVATE_KEY_PATH",
 		},
-		// Role of the node can be 	Validator, API, AWMRelayer, Loadtest, or Monitor
+		// Role of the node can be 	Validator, API, Loadtest, or Monitor
 		Roles: []node.SupportedRole{node.Validator},
 	}
 

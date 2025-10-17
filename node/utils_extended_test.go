@@ -94,14 +94,14 @@ func TestIsOdysseyGoNode(t *testing.T) {
 		{
 			name: "Node with Validator and other roles",
 			node: Node{
-				Roles: []SupportedRole{Validator, AWMRelayer},
+				Roles: []SupportedRole{Validator, Monitor},
 			},
 			expected: true,
 		},
 		{
 			name: "Node with API and other roles",
 			node: Node{
-				Roles: []SupportedRole{API, AWMRelayer},
+				Roles: []SupportedRole{API, Monitor},
 			},
 			expected: true,
 		},
@@ -286,7 +286,7 @@ func TestGetPrometheusTargets(t *testing.T) {
 			nodes: []Node{
 				{
 					IP:    "192.168.1.1",
-					Roles: []SupportedRole{Validator, AWMRelayer},
+					Roles: []SupportedRole{Validator, Monitor},
 				},
 			},
 			expectedOG:      []string{"'192.168.1.1:9650'"},
@@ -298,7 +298,7 @@ func TestGetPrometheusTargets(t *testing.T) {
 			nodes: []Node{
 				{
 					IP:    "192.168.1.1",
-					Roles: []SupportedRole{API, AWMRelayer},
+					Roles: []SupportedRole{API, Monitor},
 				},
 			},
 			expectedOG:      []string{"'192.168.1.1:9650'"},
@@ -436,6 +436,7 @@ func TestGetPublicKeyFromSSHKey_EdgeCases(t *testing.T) {
 }
 
 func TestGetDefaultProjectNameFromGCPCredentials_EdgeCases(t *testing.T) {
+	t.Skip("GCP functionality has been removed from this SDK")
 	// Create a temporary directory for test files
 	tempDir := t.TempDir()
 

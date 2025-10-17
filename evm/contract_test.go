@@ -108,18 +108,6 @@ func TestGetABIMaps(t *testing.T) {
 		values   interface{}
 		expected []map[string]interface{}
 	}
-	type TeleporterFeeInfo struct {
-		FeeTokenAddress common.Address
-		Amount          *big.Int
-	}
-	type TeleporterMessageInput struct {
-		DestinationBlockchainID [32]byte
-		DestinationAddress      common.Address
-		FeeInfo                 TeleporterFeeInfo
-		RequiredGasLimit        *big.Int
-		AllowedRelayerAddresses []common.Address
-		Message                 []byte
-	}
 	type BoolInput struct {
 		FieldName bool
 	}
@@ -218,7 +206,17 @@ func TestGetABIMaps(t *testing.T) {
 			desc:  "sendCrossChainMessage input",
 			input: "(bytes32, address, (address, uint256), uint256, [address], bytes)",
 			values: []interface{}{
-				TeleporterMessageInput{},
+				struct {
+					DestinationBlockchainID [32]byte
+					DestinationAddress      common.Address
+					FeeInfo                 struct {
+						FeeTokenAddress common.Address
+						Amount          *big.Int
+					}
+					RequiredGasLimit        *big.Int
+					AllowedRelayerAddresses []common.Address
+					Message                 []byte
+				}{},
 			},
 			expected: []map[string]interface{}{
 				{

@@ -119,13 +119,3 @@ func (h *Node) ComposeSSHSetupMonitoring() error {
 		"templates/monitoring.docker-compose.yml",
 		dockerComposeInputs{})
 }
-
-func (h *Node) ComposeSSHSetupAWMRelayer() error {
-	if !constants.DockerSupportEnabled {
-		return fmt.Errorf("Docker support functionality is disabled. Set constants.DockerSupportEnabled = true to enable")
-	}
-	return h.ComposeOverSSH("Setup AWM Relayer",
-		constants.SSHScriptTimeout,
-		"templates/awmrelayer.docker-compose.yml",
-		dockerComposeInputs{})
-}

@@ -30,7 +30,7 @@ func saveRunFile(pid int, runFilePath string) error {
 		return err
 	}
 	if err := os.WriteFile(runFilePath, bs, constants.WriteReadReadPerms); err != nil {
-		return fmt.Errorf("could not write awm relayer run file to %s: %w", runFilePath, err)
+		return fmt.Errorf("could not write run file to %s: %w", runFilePath, err)
 	}
 	return nil
 }
@@ -58,7 +58,7 @@ func removeRunFile(runFilePath string) error {
 	if runFilePath != "" {
 		err := os.Remove(runFilePath)
 		if err != nil {
-			err = fmt.Errorf("failed removing relayer run file %s: %w", runFilePath, err)
+			err = fmt.Errorf("failed removing run file %s: %w", runFilePath, err)
 		}
 		return err
 	}
@@ -161,14 +161,14 @@ func Cleanup(
 			}
 		}()
 		if err := proc.Signal(os.Interrupt); err != nil {
-			return fmt.Errorf("failed sending interrupt signal to relayer process with pid %d: %w", pid, err)
+			return fmt.Errorf("failed sending interrupt signal to process with pid %d: %w", pid, err)
 		}
 		ctx, cancel := context.WithTimeout(context.Background(), timeout)
 		defer cancel()
 		select {
 		case <-ctx.Done():
 			if err := proc.Signal(os.Kill); err != nil {
-				return fmt.Errorf("failed killing relayer process with pid %d: %w", pid, err)
+				return fmt.Errorf("failed killing process with pid %d: %w", pid, err)
 			}
 		case <-waitedCh:
 		}

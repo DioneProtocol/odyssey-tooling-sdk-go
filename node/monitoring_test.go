@@ -31,13 +31,6 @@ func TestNode_MonitorNodes(t *testing.T) {
 					PrivateKeyPath: "/path/to/key",
 				},
 				Roles: []SupportedRole{Monitor},
-				CloudConfig: CloudParams{
-					Region: "us-east-1",
-					AWSConfig: &AWSConfig{
-						AWSProfile:           "default",
-						AWSSecurityGroupName: "test-sg",
-					},
-				},
 			},
 			nodes:       []Node{},
 			clusterName: "test-cluster",
@@ -52,25 +45,11 @@ func TestNode_MonitorNodes(t *testing.T) {
 					PrivateKeyPath: "/path/to/key",
 				},
 				Roles: []SupportedRole{Monitor},
-				CloudConfig: CloudParams{
-					Region: "us-east-1",
-					AWSConfig: &AWSConfig{
-						AWSProfile:           "default",
-						AWSSecurityGroupName: "test-sg",
-					},
-				},
 			},
 			nodes: []Node{
 				{
 					IP:    "192.168.1.2",
 					Roles: []SupportedRole{Validator},
-					CloudConfig: CloudParams{
-						Region: "us-east-1",
-						AWSConfig: &AWSConfig{
-							AWSProfile:           "default",
-							AWSSecurityGroupName: "test-sg",
-						},
-					},
 				},
 			},
 			clusterName: "test-cluster",
@@ -86,36 +65,15 @@ func TestNode_MonitorNodes(t *testing.T) {
 					PrivateKeyPath: "/path/to/key",
 				},
 				Roles: []SupportedRole{Monitor},
-				CloudConfig: CloudParams{
-					Region: "us-east-1",
-					AWSConfig: &AWSConfig{
-						AWSProfile:           "default",
-						AWSSecurityGroupName: "test-sg",
-					},
-				},
 			},
 			nodes: []Node{
 				{
 					IP:    "192.168.1.2",
 					Roles: []SupportedRole{Validator},
-					CloudConfig: CloudParams{
-						Region: "us-east-1",
-						AWSConfig: &AWSConfig{
-							AWSProfile:           "default",
-							AWSSecurityGroupName: "test-sg",
-						},
-					},
 				},
 				{
 					IP:    "192.168.1.3",
 					Roles: []SupportedRole{API},
-					CloudConfig: CloudParams{
-						Region: "us-east-1",
-						AWSConfig: &AWSConfig{
-							AWSProfile:           "default",
-							AWSSecurityGroupName: "test-sg",
-						},
-					},
 				},
 			},
 			clusterName: "test-cluster",
@@ -130,25 +88,11 @@ func TestNode_MonitorNodes(t *testing.T) {
 					PrivateKeyPath: "/path/to/key",
 				},
 				Roles: []SupportedRole{Monitor},
-				CloudConfig: CloudParams{
-					Region: "us-east-1",
-					AWSConfig: &AWSConfig{
-						AWSProfile:           "default",
-						AWSSecurityGroupName: "test-sg",
-					},
-				},
 			},
 			nodes: []Node{
 				{
 					IP:    "192.168.1.2",
 					Roles: []SupportedRole{Validator},
-					CloudConfig: CloudParams{
-						Region: "us-east-1",
-						AWSConfig: &AWSConfig{
-							AWSProfile:           "default",
-							AWSSecurityGroupName: "test-sg",
-						},
-					},
 				},
 			},
 			clusterName: "",
@@ -241,7 +185,7 @@ func TestNode_ProvisioningFunctions(t *testing.T) {
 			case "RunSSHSetupMonitoringFolders":
 				err = tt.node.RunSSHSetupMonitoringFolders()
 			case "RunSSHSetupPromtailConfig":
-				err = tt.node.RunSSHSetupPromtailConfig("127.0.0.1", 3100, "node-1", "test-cluster", "test-subnet")
+				err = tt.node.RunSSHSetupPromtailConfig("127.0.0.1", 3100, "node-1", "test-cluster")
 			}
 
 			if tt.expectError {
@@ -317,20 +261,6 @@ func TestProvisionHost(t *testing.T) {
 			},
 			nodeParams: &NodeParams{
 				Roles: []SupportedRole{Loadtest},
-			},
-			expectError: true, // Will fail due to no connection
-		},
-		{
-			name: "Valid AWM relayer node",
-			node: Node{
-				IP: "192.168.1.1",
-				SSHConfig: SSHConfig{
-					User:           "ubuntu",
-					PrivateKeyPath: "/path/to/key",
-				},
-			},
-			nodeParams: &NodeParams{
-				Roles: []SupportedRole{AWMRelayer},
 			},
 			expectError: true, // Will fail due to no connection
 		},
@@ -482,37 +412,6 @@ func TestProvisionMonitoringHost(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			err := provisionMonitoringHost(tt.node)
-			if tt.expectError {
-				assert.Error(t, err)
-			} else {
-				assert.NoError(t, err)
-			}
-		})
-	}
-}
-
-func TestProvisionAWMRelayerHost(t *testing.T) {
-	tests := []struct {
-		name        string
-		node        Node
-		expectError bool
-	}{
-		{
-			name: "Valid AWM relayer node",
-			node: Node{
-				IP: "192.168.1.1",
-				SSHConfig: SSHConfig{
-					User:           "ubuntu",
-					PrivateKeyPath: "/path/to/key",
-				},
-			},
-			expectError: true, // Will fail due to no connection
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			err := provisionAWMRelayerHost(tt.node)
 			if tt.expectError {
 				assert.Error(t, err)
 			} else {
@@ -691,7 +590,7 @@ func TestNode_MonitoringTimeoutHandling(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			node := Node{}
-			err := node.RunSSHSetupPromtailConfig("127.0.0.1", 3100, "node-1", "test-cluster", "test-subnet")
+			err := node.RunSSHSetupPromtailConfig("127.0.0.1", 3100, "node-1", "test-cluster")
 			assert.Error(t, err) // Will fail due to no connection, but timeout should be handled
 		})
 	}
@@ -707,7 +606,7 @@ func TestNode_MonitoringValidation(t *testing.T) {
 			name: "Invalid promtail config - empty IP",
 			operation: func() error {
 				node := Node{}
-				return node.RunSSHSetupPromtailConfig("", 3100, "node-1", "test-cluster", "test-subnet")
+				return node.RunSSHSetupPromtailConfig("", 3100, "node-1", "test-cluster")
 			},
 			expectError: true,
 		},
@@ -715,7 +614,7 @@ func TestNode_MonitoringValidation(t *testing.T) {
 			name: "Invalid promtail config - zero port",
 			operation: func() error {
 				node := Node{}
-				return node.RunSSHSetupPromtailConfig("127.0.0.1", 0, "node-1", "test-cluster", "test-subnet")
+				return node.RunSSHSetupPromtailConfig("127.0.0.1", 0, "node-1", "test-cluster")
 			},
 			expectError: true,
 		},
@@ -723,7 +622,7 @@ func TestNode_MonitoringValidation(t *testing.T) {
 			name: "Invalid promtail config - empty node ID",
 			operation: func() error {
 				node := Node{}
-				return node.RunSSHSetupPromtailConfig("127.0.0.1", 3100, "", "test-cluster", "test-subnet")
+				return node.RunSSHSetupPromtailConfig("127.0.0.1", 3100, "", "test-cluster")
 			},
 			expectError: true,
 		},

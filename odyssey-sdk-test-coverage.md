@@ -9,9 +9,6 @@
 | `node/` | 1.7% |
 | `evm/` | 25.7% |
 | `utils/` | 20.0% |
-| `cloud/aws/` | 5.1% |
-| `cloud/gcp/` | 0% |
-| `interchain/` | 0% |
 | `install/` | 0% |
 | `ledger/` | 0% |
 | `monitoring/` | 0% |
@@ -36,9 +33,6 @@
 | `utils/` | **68.8%** | ✅ Very Good |
 | `subnet/` | **68.8%** | ⚠️ Good (some integration test failures) |
 | `install/` | **61.6%** | ✅ Good |
-| `cloud/aws/` | **9.2%** | 🟡 Partial |
-| `cloud/gcp/` | **0.0%** | 🔴 No Coverage |
-| `interchain/` | **0.0%** | 🔴 No Coverage |
 | `ledger/` | **0.0%** | 🔴 No Coverage |
 | `validator/` | **0.0%** | 🔴 No Coverage |
 | `constants/` | **0.0%** | ⚪ Constants only (no executable statements) |

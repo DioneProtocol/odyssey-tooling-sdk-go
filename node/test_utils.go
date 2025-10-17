@@ -42,22 +42,6 @@ func (th *TestHelper) CreateTestNode() Node {
 			User:           "ubuntu",
 			PrivateKeyPath: "/path/to/key",
 		},
-		Cloud: AWSCloud,
-		CloudConfig: CloudParams{
-			Region:       "us-east-1",
-			ImageID:      "ami-12345678",
-			InstanceType: "c5.2xlarge",
-			AWSConfig: &AWSConfig{
-				AWSProfile:           "default",
-				AWSKeyPair:           "test-keypair",
-				AWSSecurityGroupID:   "sg-12345678",
-				AWSSecurityGroupName: "test-sg",
-				AWSVolumeSize:        100,
-				AWSVolumeType:        "gp3",
-				AWSVolumeIOPS:        1000,
-				AWSVolumeThroughput:  500,
-			},
-		},
 		Roles:  []SupportedRole{Validator},
 		Logger: odyssey.LeveledLogger{},
 	}
@@ -66,28 +50,12 @@ func (th *TestHelper) CreateTestNode() Node {
 // CreateTestNodeParams creates test node parameters
 func (th *TestHelper) CreateTestNodeParams() *NodeParams {
 	return &NodeParams{
-		CloudParams: &CloudParams{
-			Region:       "us-east-1",
-			ImageID:      "ami-12345678",
-			InstanceType: "c5.2xlarge",
-			AWSConfig: &AWSConfig{
-				AWSProfile:           "default",
-				AWSKeyPair:           "test-keypair",
-				AWSSecurityGroupID:   "sg-12345678",
-				AWSSecurityGroupName: "test-sg",
-				AWSVolumeSize:        100,
-				AWSVolumeType:        "gp3",
-				AWSVolumeIOPS:        1000,
-				AWSVolumeThroughput:  500,
-			},
-		},
 		Count:             1,
 		Roles:             []SupportedRole{Validator},
 		Network:           odyssey.TestnetNetwork(),
 		SubnetIDs:         []string{},
 		SSHPrivateKeyPath: "/path/to/key",
 		OdysseyGoVersion:  "v1.10.13",
-		UseStaticIP:       false,
 	}
 }
 
@@ -147,11 +115,10 @@ func (th *TestHelper) AssertNodeProperties(node Node, expectedNodeID, expectedIP
 	require.Equal(th.t, expectedRoles, node.Roles)
 }
 
-// AssertCloudParams validates cloud parameters
-func (th *TestHelper) AssertCloudParams(cp CloudParams, expectedRegion, expectedImageID, expectedInstanceType string) {
-	require.Equal(th.t, expectedRegion, cp.Region)
-	require.Equal(th.t, expectedImageID, cp.ImageID)
-	require.Equal(th.t, expectedInstanceType, cp.InstanceType)
+// AssertCloudParams validates cloud parameters - removed with cloud functionality
+func (th *TestHelper) AssertCloudParams(cp interface{}, expectedRegion, expectedImageID, expectedInstanceType string) {
+	// Cloud functionality has been removed
+	th.t.Skip("Cloud functionality has been removed")
 }
 
 // CreateTestNodes creates multiple test nodes
@@ -195,42 +162,11 @@ func (th *TestHelper) AssertNoError(err error) {
 	require.NoError(th.t, err)
 }
 
-// CreateTestCloudParams creates test cloud parameters for different clouds
-func (th *TestHelper) CreateTestCloudParams(cloud SupportedCloud) *CloudParams {
-	switch cloud {
-	case AWSCloud:
-		return &CloudParams{
-			Region:       "us-east-1",
-			ImageID:      "ami-12345678",
-			InstanceType: "c5.2xlarge",
-			AWSConfig: &AWSConfig{
-				AWSProfile:           "default",
-				AWSKeyPair:           "test-keypair",
-				AWSSecurityGroupID:   "sg-12345678",
-				AWSSecurityGroupName: "test-sg",
-				AWSVolumeSize:        100,
-				AWSVolumeType:        "gp3",
-				AWSVolumeIOPS:        1000,
-				AWSVolumeThroughput:  500,
-			},
-		}
-	case GCPCloud:
-		return &CloudParams{
-			Region:       "us-east1",
-			ImageID:      "projects/ubuntu-os-cloud/global/images/ubuntu-2004-lts",
-			InstanceType: "e2-standard-8",
-			GCPConfig: &GCPConfig{
-				GCPProject:     "test-project",
-				GCPCredentials: "/path/to/credentials.json",
-				GCPNetwork:     "test-network",
-				GCPZone:        "us-east1-b",
-				GCPVolumeSize:  100,
-				GCPSSHKey:      "ssh-rsa AAAAB3NzaC1yc2E...",
-			},
-		}
-	default:
-		return &CloudParams{}
-	}
+// CreateTestCloudParams creates test cloud parameters for different clouds - removed with cloud functionality
+func (th *TestHelper) CreateTestCloudParams(cloud interface{}) interface{} {
+	// Cloud functionality has been removed
+	th.t.Skip("Cloud functionality has been removed")
+	return nil
 }
 
 // CreateTestNodeWithRole creates a test node with specific role
@@ -240,12 +176,11 @@ func (th *TestHelper) CreateTestNodeWithRole(role SupportedRole) Node {
 	return node
 }
 
-// CreateTestNodeWithCloud creates a test node with specific cloud
-func (th *TestHelper) CreateTestNodeWithCloud(cloud SupportedCloud) Node {
-	node := th.CreateTestNode()
-	node.Cloud = cloud
-	node.CloudConfig = *th.CreateTestCloudParams(cloud)
-	return node
+// CreateTestNodeWithCloud creates a test node with specific cloud - removed with cloud functionality
+func (th *TestHelper) CreateTestNodeWithCloud(cloud interface{}) Node {
+	// Cloud functionality has been removed
+	th.t.Skip("Cloud functionality has been removed")
+	return Node{}
 }
 
 // AssertRoleCombination validates role combinations

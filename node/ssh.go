@@ -11,12 +11,8 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
-	"strings"
-	"sync"
 	"text/template"
 	"time"
-
-	awsAPI "github.com/DioneProtocol/odyssey-tooling-sdk-go/cloud/aws"
 
 	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
 	remoteconfig "github.com/DioneProtocol/odyssey-tooling-sdk-go/node/config"
@@ -117,16 +113,6 @@ func (h *Node) RunSSHRestartOdysseygo() error {
 	return h.RestartDockerComposeService(remoteComposeFile, constants.ServiceOdysseygo, constants.SSHLongRunningScriptTimeout)
 }
 
-// RunSSHStartAWMRelayerService runs script to start an AWM Relayer Service
-func (h *Node) RunSSHStartAWMRelayerService() error {
-	return h.StartDockerComposeService(utils.GetRemoteComposeFile(), constants.ServiceAWMRelayer, constants.SSHLongRunningScriptTimeout)
-}
-
-// RunSSHStopAWMRelayerService runs script to start an AWM Relayer Service
-func (h *Node) RunSSHStopAWMRelayerService() error {
-	return h.StopDockerComposeService(utils.GetRemoteComposeFile(), constants.ServiceAWMRelayer, constants.SSHLongRunningScriptTimeout)
-}
-
 // RunSSHUpgradeOdysseygo runs script to upgrade odysseygo
 func (h *Node) RunSSHUpgradeOdysseygo(odysseyGoVersion string) error {
 	withMonitoring, err := h.WasNodeSetupWithMonitoring()
@@ -174,7 +160,7 @@ func (h *Node) RunSSHSetupPrometheusConfig(odysseyGoPorts, machinePorts, loadTes
 			return err
 		}
 	}
-	cloudNodePrometheusConfigTemp := utils.GetRemoteComposeServicePath(constants.ServicePrometheus, "prometheus.yml")
+	nodePrometheusConfigTemp := utils.GetRemoteComposeServicePath(constants.ServicePrometheus, "prometheus.yml")
 	promConfig, err := os.CreateTemp("", constants.ServicePrometheus)
 	if err != nil {
 		return err
@@ -186,7 +172,7 @@ func (h *Node) RunSSHSetupPrometheusConfig(odysseyGoPorts, machinePorts, loadTes
 
 	return h.Upload(
 		promConfig.Name(),
-		cloudNodePrometheusConfigTemp,
+		nodePrometheusConfigTemp,
 		constants.SSHFileOpsTimeout,
 	)
 }
@@ -197,7 +183,7 @@ func (h *Node) RunSSHSetupLokiConfig(port int) error {
 			return err
 		}
 	}
-	cloudNodeLokiConfigTemp := utils.GetRemoteComposeServicePath(constants.ServiceLoki, "loki.yml")
+	nodeLokiConfigTemp := utils.GetRemoteComposeServicePath(constants.ServiceLoki, "loki.yml")
 	lokiConfig, err := os.CreateTemp("", constants.ServiceLoki)
 	if err != nil {
 		return err
@@ -208,42 +194,30 @@ func (h *Node) RunSSHSetupLokiConfig(port int) error {
 	}
 	return h.Upload(
 		lokiConfig.Name(),
-		cloudNodeLokiConfigTemp,
+		nodeLokiConfigTemp,
 		constants.SSHFileOpsTimeout,
 	)
 }
 
-func (h *Node) RunSSHSetupPromtailConfig(lokiIP string, lokiPort int, cloudID string, nodeID string, chainID string) error {
+func (h *Node) RunSSHSetupPromtailConfig(lokiIP string, lokiPort int, nodeID string, chainID string) error {
 	for _, folder := range remoteconfig.PromtailFoldersToCreate() {
 		if err := h.MkdirAll(folder, constants.SSHFileOpsTimeout); err != nil {
 			return err
 		}
 	}
-	cloudNodePromtailConfigTemp := utils.GetRemoteComposeServicePath(constants.ServicePromtail, "promtail.yml")
+	nodePromtailConfigTemp := utils.GetRemoteComposeServicePath(constants.ServicePromtail, "promtail.yml")
 	promtailConfig, err := os.CreateTemp("", constants.ServicePromtail)
 	if err != nil {
 		return err
 	}
 	defer os.Remove(promtailConfig.Name())
 
-	if err := monitoring.WritePromtailConfig(promtailConfig.Name(), lokiIP, strconv.Itoa(lokiPort), cloudID, nodeID, chainID); err != nil {
+	if err := monitoring.WritePromtailConfig(promtailConfig.Name(), lokiIP, strconv.Itoa(lokiPort), lokiIP, nodeID, chainID); err != nil {
 		return err
 	}
 	return h.Upload(
 		promtailConfig.Name(),
-		cloudNodePromtailConfigTemp,
-		constants.SSHFileOpsTimeout,
-	)
-}
-
-func (h *Node) RunSSHUploadNodeAWMRelayerConfig(nodeInstanceDirPath string) error {
-	cloudAWMRelayerConfigDir := filepath.Join(constants.CloudNodeCLIConfigBasePath, constants.ServicesDir, constants.AWMRelayerInstallDir)
-	if err := h.MkdirAll(cloudAWMRelayerConfigDir, constants.SSHFileOpsTimeout); err != nil {
-		return err
-	}
-	return h.Upload(
-		filepath.Join(nodeInstanceDirPath, constants.ServicesDir, constants.AWMRelayerInstallDir, constants.AWMRelayerConfigFilename),
-		filepath.Join(cloudAWMRelayerConfigDir, constants.AWMRelayerConfigFilename),
+		nodePromtailConfigTemp,
 		constants.SSHFileOpsTimeout,
 	)
 }
@@ -260,29 +234,30 @@ func (h *Node) RunSSHGetNewSubnetEVMRelease(subnetEVMReleaseURL, subnetEVMArchiv
 
 // RunSSHUploadStakingFiles uploads staking files to a remote host via SSH.
 func (h *Node) RunSSHUploadStakingFiles(keyPath string) error {
+	localStakingPath := "/home/ubuntu/.odysseygo/staking/"
 	if err := h.MkdirAll(
-		constants.CloudNodeStakingPath,
+		localStakingPath,
 		constants.SSHFileOpsTimeout,
 	); err != nil {
 		return err
 	}
 	if err := h.Upload(
 		filepath.Join(keyPath, constants.StakerCertFileName),
-		filepath.Join(constants.CloudNodeStakingPath, constants.StakerCertFileName),
+		filepath.Join(localStakingPath, constants.StakerCertFileName),
 		constants.SSHFileOpsTimeout,
 	); err != nil {
 		return err
 	}
 	if err := h.Upload(
 		filepath.Join(keyPath, constants.StakerKeyFileName),
-		filepath.Join(constants.CloudNodeStakingPath, constants.StakerKeyFileName),
+		filepath.Join(localStakingPath, constants.StakerKeyFileName),
 		constants.SSHFileOpsTimeout,
 	); err != nil {
 		return err
 	}
 	return h.Upload(
 		filepath.Join(keyPath, constants.BLSKeyFileName),
-		filepath.Join(constants.CloudNodeStakingPath, constants.BLSKeyFileName),
+		filepath.Join(localStakingPath, constants.BLSKeyFileName),
 		constants.SSHFileOpsTimeout,
 	)
 }
@@ -300,86 +275,9 @@ func (h *Node) RunSSHSetupMonitoringFolders() error {
 // MonitorNodes links all the nodes specified with the monitoring node
 // so that the monitoring host can start tracking the validator nodes metrics and collecting their
 // logs
+// Cloud functionality has been removed from this SDK.
 func (h *Node) MonitorNodes(ctx context.Context, targets []Node, chainID string) error {
-	// nodesSet is a map with keys being format of targets.AWSProfile-targets.Region-targets.securityGroupName
-	nodesSet := make(map[string]bool) // New empty set
-	for _, node := range targets {
-		nodeSetKeyName := fmt.Sprintf("%s|%s|%s", node.CloudConfig.AWSConfig.AWSProfile, node.CloudConfig.Region, node.CloudConfig.AWSConfig.AWSSecurityGroupName)
-		nodesSet[nodeSetKeyName] = true
-	}
-	for nodeKey := range nodesSet {
-		nodeInfo := strings.Split(nodeKey, "|")
-		// Whitelist access to monitoring host IP address
-		if err := awsAPI.WhitelistMonitoringAccess(ctx, nodeInfo[0], nodeInfo[1], nodeInfo[2], h.IP); err != nil {
-			return fmt.Errorf("unable to whitelist monitoring access for node %s due to %s", h.NodeID, err.Error())
-		}
-	}
-	// necessary checks
-	if !isMonitoringNode(*h) {
-		return fmt.Errorf("%s is not a monitoring node", h.NodeID)
-	}
-	for _, target := range targets {
-		if isMonitoringNode(target) {
-			return fmt.Errorf("target %s can't be a monitoring node", target.NodeID)
-		}
-	}
-	if err := h.WaitForSSHShell(constants.SSHScriptTimeout); err != nil {
-		return err
-	}
-	// setup monitoring for nodes
-	remoteComposeFile := utils.GetRemoteComposeFile()
-	wg := sync.WaitGroup{}
-	wgResults := NodeResults{}
-	for _, target := range targets {
-		wg.Add(1)
-		go func(nodeResults *NodeResults, target Node) {
-			defer wg.Done()
-			if err := target.RunSSHSetupPromtailConfig(h.IP, constants.OdysseygoLokiPort, h.NodeID, h.NodeID, chainID); err != nil {
-				nodeResults.AddResult(target.NodeID, nil, err)
-				return
-			}
-			if err := target.RestartDockerComposeService(remoteComposeFile, constants.ServicePromtail, constants.SSHScriptTimeout); err != nil {
-				nodeResults.AddResult(target.NodeID, nil, err)
-				return
-			}
-		}(&wgResults, target)
-	}
-	wg.Wait()
-	if wgResults.HasErrors() {
-		return wgResults.Error()
-	}
-	// provide dashboards for targets
-	tmpdir, err := os.MkdirTemp("", constants.ServiceGrafana)
-	if err != nil {
-		return err
-	}
-	defer os.RemoveAll(tmpdir)
-	if err := monitoring.Setup(tmpdir); err != nil {
-		return err
-	}
-	if err := h.RunSSHSetupMonitoringFolders(); err != nil {
-		return err
-	}
-	if err := h.RunSSHCopyMonitoringDashboards(tmpdir); err != nil {
-		return err
-	}
-	odysseyGoPorts, machinePorts, ltPorts := getPrometheusTargets(targets)
-	h.Logger.Infof("odysseyGoPorts: %v, machinePorts: %v, ltPorts: %v", odysseyGoPorts, machinePorts, ltPorts)
-	// reconfigure monitoring instance
-	if err := h.RunSSHSetupLokiConfig(constants.OdysseygoLokiPort); err != nil {
-		return err
-	}
-	if err := h.RestartDockerComposeService(remoteComposeFile, constants.ServiceLoki, constants.SSHScriptTimeout); err != nil {
-		return err
-	}
-	if err := h.RunSSHSetupPrometheusConfig(odysseyGoPorts, machinePorts, ltPorts); err != nil {
-		return err
-	}
-	if err := h.RestartDockerComposeService(remoteComposeFile, constants.ServicePrometheus, constants.SSHScriptTimeout); err != nil {
-		return err
-	}
-
-	return nil
+	return fmt.Errorf("cloud functionality has been removed from this SDK. Please use local monitoring setup instead")
 }
 
 // SyncSubnets reconfigures odysseygo to sync subnets

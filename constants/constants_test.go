@@ -17,25 +17,6 @@ func TestConstants(t *testing.T) {
 		{"UbuntuVersionLTS", UbuntuVersionLTS, "20.04"},
 		{"BuildEnvGolangVersion", BuildEnvGolangVersion, "1.22.1"},
 
-		// Cloud constants
-		{"CloudOperationTimeout", CloudOperationTimeout, 2 * time.Minute},
-		{"CloudServerStorageSize", CloudServerStorageSize, 1000},
-
-		// AWS constants
-		{"AWSCloudServerRunningState", AWSCloudServerRunningState, "running"},
-		{"AWSDefaultInstanceType", AWSDefaultInstanceType, "c5.2xlarge"},
-		{"AWSNodeIDPrefix", AWSNodeIDPrefix, "aws_node"},
-
-		// GCP constants
-		{"GCPDefaultImageProvider", GCPDefaultImageProvider, "dioneprotocol-experimental"},
-		{"GCPDefaultInstanceType", GCPDefaultInstanceType, "e2-standard-8"},
-		{"GCPImageFilter", GCPImageFilter, "family=odysseycli-ubuntu-2204 AND architecture=x86_64"},
-		{"GCPEnvVar", GCPEnvVar, "GOOGLE_APPLICATION_CREDENTIALS"},
-		{"GCPDefaultAuthKeyPath", GCPDefaultAuthKeyPath, "~/.config/gcloud/application_default_credentials.json"},
-		{"GCPStaticIPPrefix", GCPStaticIPPrefix, "static-ip"},
-		{"GCPErrReleasingStaticIP", GCPErrReleasingStaticIP, "failed to release gcp static ip"},
-		{"GCPNodeIDPrefix", GCPNodeIDPrefix, "gcp_node"},
-
 		// Port constants
 		{"SSHTCPPort", SSHTCPPort, 22},
 		{"OdysseygoAPIPort", OdysseygoAPIPort, 9650},
@@ -59,9 +40,6 @@ func TestConstants(t *testing.T) {
 		{"RemoteHostUser", RemoteHostUser, "ubuntu"},
 
 		// Node constants
-		{"CloudNodeCLIConfigBasePath", CloudNodeCLIConfigBasePath, "/home/ubuntu/.odyssey-cli/"},
-		{"CloudNodeStakingPath", CloudNodeStakingPath, "/home/ubuntu/.odysseygo/staking/"},
-		{"CloudNodeConfigPath", CloudNodeConfigPath, "/home/ubuntu/.odysseygo/configs/"},
 		{"ServicesDir", ServicesDir, "services"},
 		{"DashboardsDir", DashboardsDir, "dashboards"},
 
@@ -71,7 +49,6 @@ func TestConstants(t *testing.T) {
 		{"ServiceGrafana", ServiceGrafana, "grafana"},
 		{"ServicePrometheus", ServicePrometheus, "prometheus"},
 		{"ServiceLoki", ServiceLoki, "loki"},
-		{"ServiceAWMRelayer", ServiceAWMRelayer, "awm-relayer"},
 
 		// Permission constants
 		{"DefaultPerms755", DefaultPerms755, 0o755},
@@ -85,10 +62,6 @@ func TestConstants(t *testing.T) {
 		{"OdysseyGoGitRepo", OdysseyGoGitRepo, "https://github.com/DioneProtocol/odysseygo"},
 		{"SubnetEVMRepoName", SubnetEVMRepoName, "subnet-evm"},
 
-		// AWM Relayer constants
-		{"AWMRelayerInstallDir", AWMRelayerInstallDir, "awm-relayer"},
-		{"AWMRelayerConfigFilename", AWMRelayerConfigFilename, "awm-relayer-config.json"},
-
 		// File name constants
 		{"StakerCertFileName", StakerCertFileName, "staker.crt"},
 		{"StakerKeyFileName", StakerKeyFileName, "staker.key"},
@@ -96,9 +69,6 @@ func TestConstants(t *testing.T) {
 
 		// GitHub constants
 		{"DioneProtocolOrg", DioneProtocolOrg, "DioneProtocol"},
-		{"ICMRepoName", ICMRepoName, "teleporter"},
-		{"RelayerRepoName", RelayerRepoName, "awm-relayer"},
-		{"RelayerBinName", RelayerBinName, "awm-relayer"},
 
 		// Feature flag constants
 		{"OdysseyCoreEnabled", OdysseyCoreEnabled, true},
@@ -122,10 +92,6 @@ func TestFeatureFlags(t *testing.T) {
 		flag     *bool
 		expected bool
 	}{
-		{"RelayerEnabled", &RelayerEnabled, false},
-		{"TeleporterEnabled", &TeleporterEnabled, false},
-		{"AWSIntegrationEnabled", &AWSIntegrationEnabled, true},
-		{"GCPIntegrationEnabled", &GCPIntegrationEnabled, true},
 		{"DockerSupportEnabled", &DockerSupportEnabled, true},
 		{"InstanceManagementEnabled", &InstanceManagementEnabled, true},
 		{"SecurityGroupsEnabled", &SecurityGroupsEnabled, true},
@@ -141,33 +107,8 @@ func TestFeatureFlags(t *testing.T) {
 	}
 }
 
-func TestFeatureFlagModification(t *testing.T) {
-	// Test that feature flags can be modified
-	originalRelayerEnabled := RelayerEnabled
-	originalTeleporterEnabled := TeleporterEnabled
-
-	// Modify flags
-	RelayerEnabled = true
-	TeleporterEnabled = true
-
-	// Verify changes
-	if !RelayerEnabled {
-		t.Error("RelayerEnabled should be true after modification")
-	}
-	if !TeleporterEnabled {
-		t.Error("TeleporterEnabled should be true after modification")
-	}
-
-	// Restore original values
-	RelayerEnabled = originalRelayerEnabled
-	TeleporterEnabled = originalTeleporterEnabled
-}
-
 func TestTimeConstants(t *testing.T) {
 	// Test time-based constants
-	if CloudOperationTimeout != 2*time.Minute {
-		t.Errorf("CloudOperationTimeout = %v, expected %v", CloudOperationTimeout, 2*time.Minute)
-	}
 
 	if APIRequestTimeout != 30*time.Second {
 		t.Errorf("APIRequestTimeout = %v, expected %v", APIRequestTimeout, 30*time.Second)
