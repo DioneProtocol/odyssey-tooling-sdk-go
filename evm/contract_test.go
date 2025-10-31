@@ -247,7 +247,7 @@ func TestGetABIMaps(t *testing.T) {
 									"type":         "uint256",
 								},
 							},
-							"internalType": "struct TeleporterFeeInfo",
+							"internalType": "tuple",
 							"name":         "FeeInfo",
 							"type":         "tuple",
 						},

@@ -196,7 +196,8 @@ func TestNode_GetConnection(t *testing.T) {
 
 func TestNode_GetSSHClient(t *testing.T) {
 	node := &Node{}
-	assert.Panics(t, func() { _ = node.GetSSHClient() })
+	// Should return nil when connection is nil (no panic)
+	assert.Nil(t, node.GetSSHClient())
 
 	// This would require a real goph.Client to test properly
 	// For now, we test the nil case

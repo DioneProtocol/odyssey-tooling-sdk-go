@@ -272,9 +272,6 @@ func (c *Subnet) Commit(ms multisig.Multisig, wallet wallet.Wallet, waitForTxAcc
 		sleepBetweenRepeats = 2 * time.Second
 	)
 	var issueTxErr error
-	if err != nil {
-		return ids.Empty, err
-	}
 	for i := 0; i < repeats; i++ {
 		ctx, cancel := utilsSDK.GetAPILargeContext()
 		defer cancel()

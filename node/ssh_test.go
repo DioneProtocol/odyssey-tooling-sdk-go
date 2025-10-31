@@ -355,6 +355,31 @@ func TestNode_SSHConnectionRetryLogic(t *testing.T) {
 	assert.False(t, node.Connected())
 }
 
+func TestNode_SSHConnectionRetryDelay(t *testing.T) {
+	node := Node{
+		IP: "192.168.1.1",
+		SSHConfig: SSHConfig{
+			User:           "ubuntu",
+			PrivateKeyPath: "/path/to/key",
+		},
+	}
+
+	// Verify that retries include delays between attempts
+	// The connection should fail quickly on first attempt, but subsequent retries
+	// should have delays (via SSHSleepBetweenChecks constant)
+	start := time.Now()
+	err := node.Connect(0)
+	elapsed := time.Since(start)
+
+	assert.Error(t, err)
+	// With 5 retries and delays between retries (after first attempt),
+	// the total time should be at least 4 * SSHSleepBetweenChecks
+	// (minimum: 4 delays if all retries fail quickly)
+	minExpectedTime := 4 * constants.SSHSleepBetweenChecks
+	assert.GreaterOrEqual(t, elapsed, minExpectedTime,
+		"Retry logic should include delays between attempts")
+}
+
 func TestNode_SSHConnectionContext(t *testing.T) {
 	// Test context cancellation
 	_, cancel := context.WithCancel(context.Background())

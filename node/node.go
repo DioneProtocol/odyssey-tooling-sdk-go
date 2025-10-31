@@ -115,6 +115,9 @@ func (h *Node) GetConnection() *goph.Client {
 // GetSSHClient returns the SSH client for the Node.
 // Returns a pointer to an ssh.Client.
 func (h *Node) GetSSHClient() *ssh.Client {
+	if h.connection == nil {
+		return nil
+	}
 	return h.connection.Client
 }
 
@@ -128,7 +131,13 @@ func (h *Node) Connect(port uint) error {
 	}
 	var err error
 	for i := 0; h.connection == nil && i < sshConnectionRetries; i++ {
+		if i > 0 {
+			time.Sleep(constants.SSHSleepBetweenChecks)
+		}
 		h.connection, err = NewNodeConnection(h, port)
+		if h.connection != nil {
+			break
+		}
 	}
 	if err != nil {
 		return fmt.Errorf("failed to connect to node %s: %w", h.IP, err)
@@ -383,12 +392,17 @@ func (h *Node) FileExists(path string) (bool, error) {
 
 	sftp, err := h.connection.NewSftp()
 	if err != nil {
-		return false, nil
+		return false, err
 	}
 	defer sftp.Close()
 	_, err = sftp.Stat(path)
 	if err != nil {
-		return false, nil
+		// Check if error is "file not found" vs other errors
+		// SFTP returns error code 2 (SSH_FX_NO_SUCH_FILE) for file not found
+		if strings.Contains(err.Error(), "no such file") || strings.Contains(err.Error(), "not found") {
+			return false, nil // File doesn't exist, return false with no error
+		}
+		return false, err // Other errors should be propagated
 	}
 	return true, nil
 }

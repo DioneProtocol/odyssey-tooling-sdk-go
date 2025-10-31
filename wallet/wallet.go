@@ -33,6 +33,9 @@ func New(ctx context.Context, config *primary.WalletConfig) (Wallet, error) {
 		ctx,
 		config,
 	)
+	if err != nil {
+		return Wallet{}, err
+	}
 
 	// Determine network from URI and create keychain with proper network
 	network := odyssey.NetworkFromURI(config.URI)
@@ -42,13 +45,17 @@ func New(ctx context.Context, config *primary.WalletConfig) (Wallet, error) {
 		Wallet:   wallet,
 		Keychain: kc,
 		config:   config,
-	}, err
+	}, nil
 }
 
 // SecureWalletIsChangeOwner ensures that a fee paying address (wallet's keychain) will receive
 // the change UTXO and not a randomly selected auth key that may not be paying fees
 func (w *Wallet) SecureWalletIsChangeOwner() {
 	addrs := w.Addresses()
+	if len(addrs) == 0 {
+		// No addresses available, cannot set change owner
+		return
+	}
 	changeAddr := addrs[0]
 	// sets change to go to wallet addr (instead of any other subnet auth key)
 	changeOwner := &secp256k1fx.OutputOwners{
