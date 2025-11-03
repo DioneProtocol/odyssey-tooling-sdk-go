@@ -131,13 +131,8 @@ func (h *Node) Connect(port uint) error {
 	}
 	var err error
 	for i := 0; h.connection == nil && i < sshConnectionRetries; i++ {
-		if i > 0 {
-			time.Sleep(constants.SSHSleepBetweenChecks)
-		}
 		h.connection, err = NewNodeConnection(h, port)
-		if h.connection != nil {
-			break
-		}
+		time.Sleep(constants.SSHSleepBetweenChecks)
 	}
 	if err != nil {
 		return fmt.Errorf("failed to connect to node %s: %w", h.IP, err)
