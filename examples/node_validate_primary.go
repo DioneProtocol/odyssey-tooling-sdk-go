@@ -42,6 +42,9 @@ func ValidatePrimaryNetwork() {
 		panic(err)
 	}
 
+	// Network configuration (Testnet / Mainnet / Devnet)
+	network := odyssey.TestnetNetwork()
+
 	validatorParams := validator.PrimaryNetworkValidatorParams{
 		NodeID: nodeID,
 		// Validate Primary Network for 48 hours
@@ -51,7 +54,6 @@ func ValidatePrimaryNetwork() {
 	}
 
 	// Key that will be used for paying the transaction fee of AddValidator Tx
-	network := odyssey.TestnetNetwork()
 	keychain, err := keychain.NewKeychain(network, "PRIVATE_KEY_FILEPATH", nil)
 	if err != nil {
 		panic(err)
@@ -70,7 +72,7 @@ func ValidatePrimaryNetwork() {
 		panic(err)
 	}
 
-	txID, err := node.ValidatePrimaryNetwork(odyssey.TestnetNetwork(), validatorParams, wallet)
+	txID, err := node.ValidatePrimaryNetwork(network, validatorParams, wallet)
 	if err != nil {
 		panic(err)
 	}
