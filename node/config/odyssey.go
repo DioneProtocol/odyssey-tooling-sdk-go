@@ -76,19 +76,19 @@ func RenderOdysseyDChainConfig(config OdysseyConfigInputs) ([]byte, error) {
 }
 
 func GetRemoteBLSKeyFile() string {
-	return filepath.Join(constants.CloudNodeStakingPath, constants.BLSKeyFileName)
+	return filepath.Join("/home/ubuntu/.odysseygo/staking/", constants.BLSKeyFileName)
 }
 
 func GetRemoteOdysseyNodeConfig() string {
-	return filepath.Join(constants.CloudNodeConfigPath, "node.json")
+	return filepath.Join("/home/ubuntu/.odysseygo/configs/", "node.json")
 }
 
 func GetRemoteOdysseyDChainConfig() string {
-	return filepath.Join(constants.CloudNodeConfigPath, "chains", "C", "config.json")
+	return filepath.Join("/home/ubuntu/.odysseygo/configs/", "chains", "C", "config.json")
 }
 
 func GetRemoteOdysseyGenesis() string {
-	return filepath.Join(constants.CloudNodeConfigPath, "genesis.json")
+	return filepath.Join("/home/ubuntu/.odysseygo/configs/", "genesis.json")
 }
 
 func OdysseyFolderToCreate() []string {
@@ -100,6 +100,5 @@ func OdysseyFolderToCreate() []string {
 		"/home/ubuntu/.odysseygo/configs/chains/C",
 		"/home/ubuntu/.odysseygo/staking",
 		"/home/ubuntu/.odysseygo/plugins",
-		"/home/ubuntu/.odyssey-cli/services/awm-relayer",
 	}
 }

@@ -52,8 +52,7 @@ func AddSubnetValidator() {
 			User:           constants.RemoteHostUser,
 			PrivateKeyPath: "NODE_KEYPAIR_PRIVATE_KEY_PATH",
 		},
-		// Role is the role that we expect the host to be (Validator, API, AWMRelayer, Loadtest or
-		// Monitor)
+		// Role is the role that we expect the host to be (Validator, API, Loadtest or Monitor)
 		Roles: []node.SupportedRole{node.Validator},
 	}
 

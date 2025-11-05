@@ -471,77 +471,6 @@ func TestNode_InvalidSSHConfig(t *testing.T) {
 	}
 }
 
-func TestNode_InvalidCloudConfig(t *testing.T) {
-	tests := []struct {
-		name        string
-		cloudConfig CloudParams
-		expectError bool
-	}{
-		{
-			name: "Empty region",
-			cloudConfig: CloudParams{
-				Region:       "",
-				ImageID:      "ami-12345678",
-				InstanceType: "c5.2xlarge",
-			},
-			expectError: true,
-		},
-		{
-			name: "Empty image ID",
-			cloudConfig: CloudParams{
-				Region:       "us-east-1",
-				ImageID:      "",
-				InstanceType: "c5.2xlarge",
-			},
-			expectError: true,
-		},
-		{
-			name: "Empty instance type",
-			cloudConfig: CloudParams{
-				Region:       "us-east-1",
-				ImageID:      "ami-12345678",
-				InstanceType: "",
-			},
-			expectError: true,
-		},
-		{
-			name: "Invalid AWS config",
-			cloudConfig: CloudParams{
-				Region:       "us-east-1",
-				ImageID:      "ami-12345678",
-				InstanceType: "c5.2xlarge",
-				AWSConfig: &AWSConfig{
-					AWSProfile: "", // Empty profile
-				},
-			},
-			expectError: true,
-		},
-		{
-			name: "Invalid GCP config",
-			cloudConfig: CloudParams{
-				Region:       "us-east1",
-				ImageID:      "projects/ubuntu-os-cloud/global/images/ubuntu-2004-lts",
-				InstanceType: "e2-standard-8",
-				GCPConfig: &GCPConfig{
-					GCPProject: "", // Empty project
-				},
-			},
-			expectError: true,
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			err := tt.cloudConfig.Validate()
-			if tt.expectError {
-				assert.Error(t, err)
-			} else {
-				assert.NoError(t, err)
-			}
-		})
-	}
-}
-
 func TestNode_InvalidRoleCombinations(t *testing.T) {
 	tests := []struct {
 		name        string
@@ -585,7 +514,7 @@ func TestNode_InvalidRoleCombinations(t *testing.T) {
 		},
 		{
 			name:        "Valid multiple roles",
-			roles:       []SupportedRole{Validator, AWMRelayer},
+			roles:       []SupportedRole{Validator, Monitor},
 			expectError: false,
 		},
 	}

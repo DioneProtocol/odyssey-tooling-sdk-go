@@ -6,35 +6,10 @@ package node
 import (
 	"context"
 	"fmt"
-
-	awsAPI "github.com/DioneProtocol/odyssey-tooling-sdk-go/cloud/aws"
-	gcpAPI "github.com/DioneProtocol/odyssey-tooling-sdk-go/cloud/gcp"
 )
 
 // Destroy destroys a node.
+// Cloud functionality has been removed from this SDK.
 func (h *Node) Destroy(ctx context.Context) error {
-	switch h.Cloud {
-	case AWSCloud:
-		ec2Svc, err := awsAPI.NewAwsCloud(
-			ctx,
-			h.CloudConfig.AWSConfig.AWSProfile,
-			h.CloudConfig.Region,
-		)
-		if err != nil {
-			return err
-		}
-		return ec2Svc.DestroyAWSNode(h.NodeID)
-	case GCPCloud:
-		gcpSvc, err := gcpAPI.NewGcpCloud(
-			ctx,
-			h.CloudConfig.GCPConfig.GCPProject,
-			h.CloudConfig.GCPConfig.GCPCredentials,
-		)
-		if err != nil {
-			return err
-		}
-		return gcpSvc.DestroyGCPNode(h.CloudConfig.Region, h.NodeID)
-	default:
-		return fmt.Errorf("unsupported cloud type: %s", h.Cloud.String())
-	}
+	return fmt.Errorf("cloud functionality has been removed from this SDK. Please use local node management instead")
 }

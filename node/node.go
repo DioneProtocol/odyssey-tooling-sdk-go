@@ -53,16 +53,6 @@ type Node struct {
 	// SSH configuration for the node
 	SSHConfig SSHConfig
 
-	// Cloud is the cloud service that the node is on
-	// Full list of cloud service:
-	// - AWS
-	// - GCP
-	// - Docker
-	Cloud SupportedCloud
-
-	// CloudConfig is the cloud specific configuration for the node
-	CloudConfig CloudParams
-
 	// connection to the node
 	connection *goph.Client
 
@@ -125,19 +115,10 @@ func (h *Node) GetConnection() *goph.Client {
 // GetSSHClient returns the SSH client for the Node.
 // Returns a pointer to an ssh.Client.
 func (h *Node) GetSSHClient() *ssh.Client {
-	return h.connection.Client
-}
-
-// GetCloudID returns the cloudID for the node if it is a cloud node
-func (h *Node) GetCloudID() string {
-	switch {
-	case strings.HasPrefix(h.NodeID, constants.AWSNodeIDPrefix+"_"):
-		return strings.TrimPrefix(h.NodeID, constants.AWSNodeIDPrefix+"_")
-	case strings.HasPrefix(h.NodeID, constants.GCPNodeIDPrefix+"_"):
-		return strings.TrimPrefix(h.NodeID, constants.GCPNodeIDPrefix+"_")
-	default:
-		return h.NodeID
+	if h.connection == nil {
+		return nil
 	}
+	return h.connection.Client
 }
 
 // Connect starts a new SSH connection with the provided private key.
@@ -151,6 +132,7 @@ func (h *Node) Connect(port uint) error {
 	var err error
 	for i := 0; h.connection == nil && i < sshConnectionRetries; i++ {
 		h.connection, err = NewNodeConnection(h, port)
+		time.Sleep(constants.SSHSleepBetweenChecks)
 	}
 	if err != nil {
 		return fmt.Errorf("failed to connect to node %s: %w", h.IP, err)
@@ -405,12 +387,17 @@ func (h *Node) FileExists(path string) (bool, error) {
 
 	sftp, err := h.connection.NewSftp()
 	if err != nil {
-		return false, nil
+		return false, err
 	}
 	defer sftp.Close()
 	_, err = sftp.Stat(path)
 	if err != nil {
-		return false, nil
+		// Check if error is "file not found" vs other errors
+		// SFTP returns error code 2 (SSH_FX_NO_SUCH_FILE) for file not found
+		if strings.Contains(err.Error(), "no such file") || strings.Contains(err.Error(), "not found") {
+			return false, nil // File doesn't exist, return false with no error
+		}
+		return false, err // Other errors should be propagated
 	}
 	return true, nil
 }

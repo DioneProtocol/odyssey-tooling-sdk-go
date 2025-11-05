@@ -65,7 +65,7 @@ func TestSaveRunFile_InvalidPath(t *testing.T) {
 	invalidPath := "/invalid/path/that/does/not/exist/test.pid"
 	err := saveRunFile(12345, invalidPath)
 	assert.Error(t, err)
-	assert.Contains(t, err.Error(), "could not write awm relayer run file")
+	assert.Contains(t, err.Error(), "could not write run file")
 }
 
 func TestLoadRunFile(t *testing.T) {

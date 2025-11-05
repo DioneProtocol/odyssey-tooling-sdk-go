@@ -5,8 +5,6 @@ package utils
 import (
 	"os"
 	"path/filepath"
-
-	"github.com/DioneProtocol/odyssey-tooling-sdk-go/constants"
 )
 
 // FileExists checks if a file exists.
@@ -54,11 +52,11 @@ func ExpandHome(path string) string {
 
 // RemoteComposeFile returns the path to the remote docker-compose file
 func GetRemoteComposeFile() string {
-	return filepath.Join(constants.CloudNodeCLIConfigBasePath, "services", "docker-compose.yml")
+	return filepath.Join("/home/ubuntu/.odyssey-cli/", "services", "docker-compose.yml")
 }
 
 // GetRemoteComposeServicePath returns the path to the remote service directory
 func GetRemoteComposeServicePath(serviceName string, dirs ...string) string {
-	servicePrefix := filepath.Join(constants.CloudNodeCLIConfigBasePath, "services", serviceName)
+	servicePrefix := filepath.Join("/home/ubuntu/.odyssey-cli/", "services", serviceName)
 	return filepath.Join(append([]string{servicePrefix}, dirs...)...)
 }

@@ -301,6 +301,51 @@ func TestWalletSecureChangeOwner(t *testing.T) {
 	}
 }
 
+func TestWalletSecureChangeOwnerEmptyAddresses(t *testing.T) {
+	// Test that SecureWalletIsChangeOwner doesn't panic when wallet has addresses
+	// The network automatically uses local node when LOCAL_NODE=true is set
+	// Note: We cannot test empty addresses scenario directly as wallet creation requires addresses,
+	// but the fix ensures the function checks len(addrs) == 0 before accessing addrs[0]
+
+	ctx := context.Background()
+	network := odyssey.TestnetNetwork()
+
+	// Create a temporary key file for testing
+	tempKeyPath := t.TempDir() + "/test.pk"
+
+	// Create keychain using the production approach
+	keychain, err := keychain.NewKeychain(network, tempKeyPath, nil)
+	require.NoError(t, err)
+	require.NotNil(t, keychain)
+
+	// Create wallet using the production approach
+	wallet, err := New(
+		ctx,
+		&primary.WalletConfig{
+			URI:              network.Endpoint,
+			DIONEKeychain:    keychain.Keychain,
+			EthKeychain:      secp256k1fx.NewKeychain(),
+			OChainTxsToFetch: nil,
+		},
+	)
+	require.NoError(t, err)
+
+	// Verify wallet has addresses
+	addresses := wallet.Addresses()
+	require.NotEmpty(t, addresses, "Wallet should have addresses")
+
+	// This should not panic - it should set the change owner
+	require.NotPanics(t, func() {
+		wallet.SecureWalletIsChangeOwner()
+	}, "SecureWalletIsChangeOwner should not panic when wallet has addresses")
+
+	// Verify that options were added since there were addresses
+	require.NotEmpty(t, wallet.options, "Options should be added when there are addresses")
+
+	// Document that the fix prevents panic when addresses slice is empty
+	// The fix checks len(addrs) == 0 before accessing addrs[0]
+}
+
 func TestWalletSetAuthKeys(t *testing.T) {
 	// Sequential to avoid rate limiting
 	addTestDelay() // Add delay to avoid rate limiting
@@ -605,9 +650,11 @@ func TestWalletErrorHandling(t *testing.T) {
 			OChainTxsToFetch: nil,
 		}
 
-		_, err = New(ctx, config)
+		wallet, err := New(ctx, config)
 		require.Error(t, err)
 		require.Contains(t, err.Error(), "context canceled")
+		// Verify that on error, we return an empty wallet struct (not partially initialized)
+		require.Equal(t, Wallet{}, wallet, "Wallet should be empty when MakeWallet fails")
 	})
 
 	t.Run("invalid network endpoint", func(t *testing.T) {
@@ -627,8 +674,10 @@ func TestWalletErrorHandling(t *testing.T) {
 			OChainTxsToFetch: nil,
 		}
 
-		_, err = New(ctx, config)
+		wallet, err := New(ctx, config)
 		require.Error(t, err)
+		// Verify that on error, we return an empty wallet struct (not partially initialized)
+		require.Equal(t, Wallet{}, wallet, "Wallet should be empty when MakeWallet fails")
 	})
 }
 
