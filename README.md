@@ -14,9 +14,6 @@ Current version (v1.0.0) currently supports:
 
 Currently, both stored keys and Ledger hardware wallets are supported for transaction building and signing.
 
-Future SDK releases will contain the following features (in order of priority): 
-- Additional Nodes SDK features (Devnet)
-- Additional Subnet SDK features (Custom Subnets)
 
 ## Getting Started
 
