@@ -1,4 +1,4 @@
-// Copyright (C) 2025, Dione Protocol, Inc. All rights reserved.
+// Copyright (C) 2025, Dione Limited. All rights reserved.
 // See the file LICENSE for licensing terms.
 
 package utils
