@@ -1,4 +1,4 @@
-// Copyright (C) 2019-2022, Ava Labs, Inc. All rights reserved.
+// Copyright (c) 2025 Dione Protocol, LLC.
 // See the file LICENSE for licensing terms.
 
 package key
