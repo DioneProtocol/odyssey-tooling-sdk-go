@@ -30,7 +30,7 @@ To update the SDK use `go get -u` to retrieve the latest version of the SDK.
 
 #### Setting up a Local Testnet Node
 
-For local development and testing, you can run a local Dione Protocol testnet node using Docker. This eliminates 429 rate limiting errors and provides faster test execution.
+For local development and testing, you can run a local odyssey testnet node using Docker. This eliminates 429 rate limiting errors and provides faster test execution.
 
 1. **Clone and set up the odysseygo-installer repository:**
    ```bash

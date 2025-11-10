@@ -1,4 +1,4 @@
-// Copyright (c) 2025 Dione Protocol, LLC.
+// Copyright (c) 2025 Dione Limited.
 // See the file LICENSE for licensing terms.
 
 package key
